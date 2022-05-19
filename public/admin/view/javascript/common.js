@@ -171,37 +171,6 @@ $(document).ready(function() {
         toolsPanelScroll();
     });
 
-    //material design routine
-    $('.col-sm-10').removeClass('col-sm-10').addClass('col-sm-12');
-    $('.form-group').addClass('bmd-form-group');
-    $('.btn-link').addClass('btn-primary').removeClass('btn-link');
-	$('.form-group .control-label').removeClass('col-sm-2').addClass('label-small');
-    $('.table').addClass('table-striped');
-    $('.table td .btn').addClass('btn-floating circle btn-sm');
-    $('.table tbody td:last-child .btn').wrap('<div class="d-flex justify-content-center flex-wrap"></div>');
-
-    let tab = $('.nav.nav-tabs').first();
-    tab.addClass('bg-dark');
-	tab.find('li').addClass('nav-item');
-    tab.find('a').addClass('nav-link');
-
-    let langTabs = $('#language');
-    langTabs.addClass('bg-primary');
-    langTabs.find('li').addClass('nav-item');
-    langTabs.find('a').addClass('nav-link');
-
-    //Init material design for input type="radio"
-    $('input[type="radio"]').after('<span class="bmd-radio"></span>');
-
-    //Add checkbox wrapper to table checkboxes
-    $('.table input[type="checkbox"]').wrap('<div class="checkbox"><label></label></div>');
-
-    //Init material design for input type="checkbox"
-    $('input[type="checkbox"]').after('<span class="checkbox-decorator"><span class="check"></span></span>');
-
-    //Init Ripple Click Effect for next elements
-    $('.bootstrap-select, input[type=submit], input[type=reset], input[type=button], button, a').rippleEffect();
-
 	//Highlight active breadcrumb
 	$('.breadcrumb li').last().addClass('active');
 

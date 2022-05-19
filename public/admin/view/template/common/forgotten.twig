@@ -1,4 +1,41 @@
 {{ header }}
+<header id="content">
+  <!-- Background image -->
+  <div id="intro" class="bg-image shadow-2-strong">
+    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.9);">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form class="bg-white-transparent rounded shadow-5-strong p-5">
+              <h2>{{ heading_title }}</h2>
+
+              {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endif %}
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="email" id="input-email" class="form-control" />
+                <label class="form-label" for="input-email">{{ entry_email }}</label>
+              </div>
+
+              <!-- Submit button -->
+              <div class="d-flex justify-content-between align-content-center">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> {{ button_reset }}</button>
+                <a href="{{ cancel }}" class="btn btn-default"><i class="fa fa-reply"></i> {{ button_cancel }}</a>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+</header>
+
 <div id="content">
   <div class="container-fluid"><br />
     <br />
@@ -6,25 +43,18 @@
       <div class="col-sm-offset-4 col-sm-4">
         <div class="panel panel-default">
           <div class="card-header">
-            <h3 class="card-header-title"><i class="fa fa-repeat"></i> {{ heading_title }}</h3>
+            <h3 class="card-header-title"><i class="fa fa-repeat"></i> </h3>
           </div>
           <div class="panel-body">
-            {% if error_warning %}
-            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-            {% endif %}
+
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="input-email" class="control-label label-small">{{ entry_email }}</label>
+                <label for="input-email" class="control-label label-small"></label>
                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                   <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
                 </div>
               </div>
-              <div class="text-right">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> {{ button_reset }}</button>
-                <a href="{{ cancel }}" class="btn btn-default"><i class="fa fa-reply"></i> {{ button_cancel }}</a>
-              </div>
+
             </form>
           </div>
         </div>

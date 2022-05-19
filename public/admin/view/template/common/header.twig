@@ -12,8 +12,8 @@
 {% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script src="view/javascript/jquery/jquery-3.4.1.min.js"></script>
-<link href="view/javascript/mmdb/mmdb.min.css" rel="stylesheet">
-<script src="view/javascript/mmdb/mmdb.min.js"></script>
+<link href="view/javascript/mdb/css/mdb.min.css" rel="stylesheet">
+<script src="view/javascript/mdb/js/mdb.min.js"></script>
 <script src="view/javascript/tinymce/tinymce.min.js"></script>
 <script src="view/javascript/tinymce/langs/{{ code }}.js"></script>
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -44,8 +44,16 @@
   {% endif  %}
 
   <a class="navbar-brand" href="{{ home }}">
-    <img src="view/image/monsters-shop-logo-rect.png" alt="{{ heading_title }}" title="{{ heading_title }}" class="logo"/>
+    <img src="view/image/ninja-store-design/ninja-skype.png" alt="{{ heading_title }}" title="{{ heading_title }}" class="logo"/>
+      <strong>Ninja eCommerce Solution 3</strong>
   </a>
+
+  <ul class="navbar-nav user-menu">
+      {% if not logged %}
+          <li class="nav-item"><a href="{{ href_sign_in }}" class="nav-link">{{ text_sign_in }}</a></li>
+          <li class="nav-item"><a href="{{ href_forgot_password }}" class="nav-link">{{ text_forgot_password }}</a></li>
+      {% endif %}
+  </ul>
 
   <ul class="navbar-nav user-menu">
     {% if logged %}

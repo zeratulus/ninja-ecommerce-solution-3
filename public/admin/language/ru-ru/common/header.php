@@ -22,3 +22,5 @@ $_['text_new_manufacturer']		  = 'Производителя';
 $_['text_new_product']     		  = 'Товар';
 
 $_['text_projects']     		  = 'Задачи';
+$_['text_sign_in']     	    	  = 'Вход';
+$_['text_forgot_password']        = 'Забыли пароль';

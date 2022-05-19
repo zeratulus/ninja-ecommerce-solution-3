@@ -1,54 +1,52 @@
 {{ header }}
-<div id="content">
-  <div class="container-fluid"><br />
-    <br />
-    <div class="row d-flex justify-content-center">
-      <div class="col-sm-offset-4 col-sm-4">
+<header id="content">
+  <!-- Background image -->
+  <div id="intro" class="bg-image shadow-2-strong">
+    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.9);">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form class="bg-white-transparent rounded shadow-5-strong p-5">
+              <h2>{{ text_login }}</h2>
 
-          <div class="panel panel-default">
-            <div class="card-header">
-              <h3 class="card-header-title"><i class="fa fa-lock"></i> {{ text_login }}</h3>
-            </div>
+              {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endif %}
 
-            <div class="panel-body">
-                {% if success %}
-                  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                {% endif %}
-                {% if error_warning %}
-                  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                {% endif %}
-              <form action="{{ action }}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="input-username" class="control-label label-small">{{ entry_username }}</label>
-                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="input-password" class="control-label label-small">{{ entry_password }}</label>
-                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                    <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-                  </div>
-                    {% if forgotten %}
-                      <p class="help-block m-2"><a href="{{ forgotten }}">{{ text_forgotten }}</a></p>
-                    {% endif %}
-                </div>
-                <div class="text-right">
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> {{ button_login }}</button>
-                </div>
-                  {% if redirect %}
-                    <input type="hidden" name="redirect" value="{{ redirect }}" />
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="input-login" class="form-control" />
+                <label class="form-label" for="input-login">{{ entry_username }}</label>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input type="password" id="input-password" class="form-control" />
+                <label class="form-label" for="input-password">{{ entry_password }}</label>
+              </div>
+
+              <!-- 2 column grid layout for inline styling -->
+              <div class="row mb-4">
+                <div class="col d-flex justify-content-center"></div>
+
+                <div class="col text-center">
+                  <!-- Simple link -->
+                  {% if forgotten %}
+                    <a href="{{ forgotten }}">{{ text_forgotten }}</a>
                   {% endif %}
-              </form>
-            </div>
+                </div>
+              </div>
 
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">{{ button_login }}</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <!-- Background image -->
+</header>
 {{ footer }}

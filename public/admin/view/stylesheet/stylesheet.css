@@ -1,0 +1,37 @@
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap";
+* {
+    font-family: 'Roboto', sans-serif;
+}
+.logo {
+    height: 32px;
+    width: auto;
+}
+/* Login Page */
+.bg-white-transparent {
+    background: rgba(255,255,255,0.85);
+}
+#intro {
+    background-image: url(../image/ninja-store-design/ice-mountaine-night-stars.jpg);
+    height: 100vh;
+}
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+    #intro {
+        margin-top: -58.59px;
+    }
+}
+
+#prelogged-admin-navbar .navbar .nav-link {
+    color: #fff !important;
+}
+
+#prelogged-admin-navbar {
+    z-index: 2000;
+}
+.navbar-brand + .navbar-nav.user-menu {
+    justify-content: flex-end;
+}
+.fa-2x {
+    font-size: 20px;
+}

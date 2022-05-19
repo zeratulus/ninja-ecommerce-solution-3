@@ -25,26 +25,29 @@ class ControllerCommonHeader extends \Ninja\AdminController
 		
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
+        $data['href_sign_in'] = $this->getUrl()->link('common/login', '');
+        $data['href_forgot_password'] = $this->getUrl()->link('common/forgotten', '');
+
 		if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {
 			$data['logged'] = '';
 
-			$data['home'] = $this->url->link('common/dashboard', '', true);
+			$data['home'] = $this->url->link('common/dashboard', '');
 		} else {
 			$data['logged'] = true;
 
-			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
-			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
-			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
-			$data['new_category'] = $this->url->link('catalog/category/add', 'user_token=' . $this->session->data['user_token'], true);
-			$data['new_customer'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'], true);
-			$data['new_download'] = $this->url->link('catalog/download/add', 'user_token=' . $this->session->data['user_token'], true);
-			$data['new_manufacturer'] = $this->url->link('catalog/manufacturer/add', 'user_token=' . $this->session->data['user_token'], true);
-			$data['new_product'] = $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'], true);
+			$data['home'] = $this->getUrl()->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+			$data['logout'] = $this->getUrl()->link('common/logout', 'user_token=' . $this->session->data['user_token']);
+			$data['profile'] = $this->getUrl()->link('common/profile', 'user_token=' . $this->session->data['user_token']);
+			$data['new_category'] = $this->getUrl()->link('catalog/category/add', 'user_token=' . $this->session->data['user_token']);
+			$data['new_customer'] = $this->getUrl()->link('user/user/add', 'user_token=' . $this->session->data['user_token']);
+			$data['new_download'] = $this->getUrl()->link('catalog/download/add', 'user_token=' . $this->session->data['user_token']);
+			$data['new_manufacturer'] = $this->getUrl()->link('catalog/manufacturer/add', 'user_token=' . $this->session->data['user_token']);
+			$data['new_product'] = $this->getUrl()->link('catalog/product/add', 'user_token=' . $this->session->data['user_token']);
 
-			$data['projects'] = $this->url->link('support/projects', 'user_token=' . $this->session->data['user_token'], true);
+			$data['projects'] = $this->getUrl()->link('support/projects', 'user_token=' . $this->session->data['user_token']);
             $data['text_projects'] = $this->getLanguage()->get('text_projects');
 
-			$this->load->model('user/user');
+            $this->load->model('user/user');
 	
 			$this->load->model('tool/image');
 	
