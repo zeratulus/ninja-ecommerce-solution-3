@@ -1,5 +1,5 @@
 # ninja-store-3
-Official Ninja Store 3 Repository
+Official Ninja eCommerce Solution 3 Repository
 
  - Wiki https://github.com/zeratulus/ninja-store-3/wiki
  - PSR-1
