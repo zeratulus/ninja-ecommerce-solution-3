@@ -1,0 +1,545 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="d-flex fw justify-content-between align-items-center">
+                <h1>{{ heading_title }}</h1>
+                <div class="pull-right">
+                    <button type="submit" form="form-setting" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-floating btn-sm circle btn-primary">
+                        <i class="fa fa-save"></i>
+                    </button>
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-floating btn-sm circle btn-default">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="col-sm-12">
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h5><i class="fa fa-cog"></i> {{ text_form }}</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-setting">
+
+                    <ul class="nav nav-tabs nav-justified md-tabs sticky-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#tab-categories" data-toggle="tab">{{ text_tickets_categories }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-statuses" data-toggle="tab">{{ text_tickets_statuses }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-users" data-toggle="tab">{{ text_users }}</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab-categories">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="input-title" class="control-label">{{ text_title }}</label>
+                                        <input name="title" type="text" id="input-title" class="form-control validate" value="{{ title }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="textarea-description" class="control-label">{{ text_description }}</label>
+                                        <textarea name="description" id="textarea-description" class="form-control md-textarea validate fw mb-0 pb-0" rows="2" required>{{ description }}</textarea>
+                                    </div>
+                                    <div class="fw d-flex justify-content-end align-items-center mb-1">
+                                        <button type="button" class="btn btn-primary" id="btn-add-category"><i class="fa fa-plus"></i> {{ button_add }}</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="flex-end flex-v-center fw m-2">
+                                        <button type="button" id="btn-delete-categories" class="btn btn-floating circle btn-default btn-sm"><i class="fa fa-trash"></i></button>
+                                    </div>
+                                    <div class="well z-depth-1" id="categories">
+                                        {% if categories is not empty %}
+                                            {% for category in categories %}
+                                                {% if category.getId() in selectedCategories %}
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" checked="checked" class="form-check-input" id="category-{{ category.getId() }}">
+                                                        <label class="form-check-label" for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" class="form-check-input" id="category-{{ category.getId() }}">
+                                                        <label class="form-check-label" for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="flex-center flex-v-center fw">
+                                                <p class="text-center">{{ text_empty }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-statuses">
+                            <div class="row">
+                                <!--<div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        
+                                        <input name="title" type="text" id="input-title" class="form-control validate" value="{{ title }}" required>
+                                        <label for="input-title" data-error="{{ validation_error }}" data-success="{{ validation_success }}">{{ text_title }}</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="support-color-preview flex-center flex-v-center" id="color-preview">
+                                                {% if color > 0 %}
+                                                    <div class="preview z-depth-1 {{ colors[color] }}"></div>
+                                                {% else %}
+                                                    <div class="preview z-depth-1 default-color"></div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <label class="control-label text-black-50 mb-0 pt-0">{{ text_color }}</label>
+                                            <select name="color" class="mdb-select form-group validate" required>
+                                                <option value="" disabled>{{ text_select }}</option>
+                                                {% for id, colorItem in colors %}
+                                                    <option value="{{ id }}"{% if id == color %} selected{% endif %}> {{ colorItem }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="fw flex-end flex-v-center mb-1">
+                                        <button type="button" class="btn btn-primary" id="btn-add-status"><i class="fa fa-plus"></i> {{ button_add }}</button>
+                                    </div>
+                                </div>-->
+
+                                <div class="col-sm-12 col-md-6">
+                                    <!--<div class="flex-end flex-v-center fw">
+                                        <button type="button" id="btn-delete-statuses" class="btn-floating btn-default btn-sm"><i class="fa fa-trash"></i></button>
+                                    </div>-->
+                                    <div class="well z-depth-1" id="statuses">
+                                        {% if statuses is not empty %}
+                                            {% for status in statuses %}
+                                                {% if status.getId() in selectedStatuses %}
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" checked="checked" class="form-check-input" id="status-{{ status.getId() }}">
+                                                        <label class="form-check-label" for="status-{{ status.getId() }}">
+                                                            <div class="flex-between flex-v-center fw">
+                                                                <span class="ticket-category-color {{ status.getColorCss() }}"></span> {{ status.getTitle() }}
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" class="form-check-input" id="status-{{ status.getId() }}">
+                                                        <label class="form-check-label" for="status-{{ status.getId() }}">
+                                                            <div class="flex-between flex-v-center fw">
+                                                                <div class="ticket-category-color {{ status.getColorCss() }} z-depth-1"></div> {{ status.getTitle() }}
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="flex-center flex-v-center fw">
+                                                <p class="text-center">{{ text_empty }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-users">
+
+                            <div class="form-group">
+                                <label for="user-autocomplete">{{ text_user_autocomplete }}</label>
+                                <input type="text" id="user-autocomplete" class="form-control mdb-autocomplete">
+                                <button class="mdb-autocomplete-clear">
+                                    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="https://www.w3.org/2000/svg">
+                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <td>{{ text_users }}</td>
+                                        <td>{{ text_read }}</td>
+                                        <td>{{ text_write }}</td>
+                                        <td>{{ text_create }}</td>
+                                        <td>{{ text_delete }}</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% if users is not empty %}
+                                    {% for user in users %}
+                                        <tr id="user-row-{{ user.getId() }}">
+                                            <td>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="user-{{ user.getId() }}" {% if user.permissions.hasPermission() %} checked {% endif %} disabled>
+                                                    <label class="form-check-label" for="user-{{ user.getId() }}">{{ user.getFullName() }}</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- switch isRead -->
+                                                <div class="switch">
+                                                    <label>
+                                                        {{ text_no }}
+                                                        <input type="checkbox" name="users[{{ user.getId() }}][read]"
+                                                                {% if user.isAdmin() %}
+                                                                    checked disabled
+                                                                {% elseif user.permissions.isRead() %}
+                                                                    checked
+                                                                {% endif %}
+                                                        >
+                                                        <span class="lever"></span> {{ text_yes }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- switch isWrite -->
+                                                <div class="switch">
+                                                    <label>
+                                                        {{ text_no }}
+                                                        <input type="checkbox" name="users[{{ user.getId() }}][write]"
+                                                                {% if user.isAdmin() %}
+                                                                    checked disabled
+                                                                {% elseif user.permissions.isWrite() %}
+                                                                    checked
+                                                                {% endif %}
+                                                        >
+                                                        <span class="lever"></span> {{ text_yes }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- switch isCreate -->
+                                                <div class="switch">
+                                                    <label>
+                                                        {{ text_no }}
+                                                        <input type="checkbox" name="users[{{ user.getId() }}][create]"
+                                                                {% if user.isAdmin() %}
+                                                                    checked disabled
+                                                                {% elseif user.permissions.isCreate() %}
+                                                                    checked
+                                                                {% endif %}
+                                                        >
+                                                        <span class="lever"></span> {{ text_yes }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- switch isDelete -->
+                                                <div class="switch">
+                                                    <label>
+                                                        {{ text_no }}
+                                                        <input type="checkbox" name="users[{{ user.getId() }}][delete]"
+                                                                {% if user.isAdmin() %}
+                                                                    checked disabled
+                                                                {% elseif user.permissions.isDelete() %}
+                                                                    checked
+                                                                {% endif %}
+                                                        >
+                                                        <span class="lever"></span> {{ text_yes }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="btn-floating btn-sm btn-danger" onclick="deleteUser({{ user.getId() }});"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr id="row-empty">
+                                        <td colspan="6" class="text-center">{{ text_empty_users }}</td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function changeColor(color) {
+        $('#color-preview').html('<div class="preview z-depth-1 '+color.trim()+'"></div>');
+    }
+
+    $('select[name="color"]').on('change', function () {
+        let color = $('select[name="color"] option:selected').text();
+        changeColor(color);
+    });
+
+    $('#btn-add-category').on('click', function (e) {
+        e.preventDefault();
+
+        let tab = $('#tab-categories');
+        let inputTitle = tab.find('input[name="title"]');
+        let title = inputTitle.val();
+        let textarea = tab.find('textarea[name="description"]');
+        let desc = textarea.val();
+
+        if (!isEmptyString(title)) {
+            $.post('{{ href_ajax_category_add }}',
+                {
+                    'title': title,
+                    'description': desc,
+                    'project_id': '{{ project_id }}'
+                },
+                function (data) {
+                    if (data.success) {
+                        inputTitle.val('');
+                        textarea.val('');
+
+                        let id = data.id;
+
+                        let html = '<div class="form-check">' +
+                            '<input type="checkbox" name="selected[categories][]" value="'+id+'" class="form-check-input" id="category-'+id+'">' +
+                            '<label class="form-check-label" for="category-'+id+'" tooltip="'+desc+'">'+title+'</label></div>';
+                        tab.find('.well').append(html);
+
+                        inputTitle.parent().removeClass('was-validated');
+
+                        toastr.success('{{ added_category }}');
+                    } else {
+                        toastr.error(data.error);
+                    }
+                }
+            );
+        } else {
+            if (isEmptyString(title)) {
+                toastr.warning('{{ error_empty_title }}');
+                inputTitle.parent().addClass('was-validated');
+                inputTitle.addClass('invalid').focus();
+            } else {
+                inputTitle.removeClass('invalid').addClass('valid');
+            }
+        }
+    });
+
+    $('#btn-delete-categories').on('click', function (e) {
+        e.preventDefault();
+
+        let i, ids = new Array(), checkboxes = $('#categories input[type="checkbox"]:checked');
+        if (typeof checkboxes !== 'undefined') {
+            for (i = 0; i < checkboxes.length; i++) {
+                ids.push(checkboxes[i].value);
+            }
+        }
+
+        if (ids.length > 0) {
+            $.post('{{ href_ajax_category_delete }}',
+                { 'ids': ids },
+                function (data) {
+                    if (data.success) {
+                        for (i = 0; i < data.deleted.length; i++) {
+                            $('#category-' + data.deleted[i]).parent().remove();
+                        }
+                        toastr.success('{{ success_delete }}');
+                    } else {
+                        toastr.error(data.error);
+                    }
+                }
+            );
+        }
+    });
+
+    $('#btn-add-status').on('click', function (e) {
+        e.preventDefault();
+
+        let tab = $('#tab-statuses');
+        let inputTitle = tab.find('input[name="title"]');
+        let title = inputTitle.val();
+        let color = tab.find('select[name="color"]').val();
+        if (!isEmptyString(title)) {
+            $.post('{{ href_ajax_status_add }}',
+                {
+                    'title': title,
+                    'color': color,
+                    'project_id': '{{ project_id }}'
+                },
+                function (data) {
+                    if (data.success) {
+                        inputTitle.val('');
+
+                        let id = data.id;
+                        let colorCss = tab.find('select[name="color"] option:selected').text();
+
+                        let html = '<div class="form-check">' +
+                            '<input type="checkbox" name="selected[statuses][]" value="'+id+'" class="form-check-input" id="status-'+id+'">' +
+                            '<label class="form-check-label" for="status-'+id+'">' +
+                            '<div class="flex-between "><span class="ticket-category-color '+colorCss+'"></span> '+title+'</div></label></div>';
+                        tab.find('.well').append(html);
+
+                        toastr.success('{{ added_status }}');
+                    } else {
+                        toastr.error(data.error);
+                    }
+                }
+            );
+        } else {
+            if (isEmptyString(title)) {
+                toastr.warning('{{ error_empty_title }}');
+                inputTitle.parent().addClass('was-validated');
+                inputTitle.addClass('invalid').focus();
+            } else {
+                inputTitle.removeClass('invalid').addClass('valid');
+            }
+        }
+    });
+
+    //Stop default form submit on enter
+    $('input').on('keypress', function (e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();
+        }
+    });
+
+    function deleteUser(uid) {
+        $.post('{{ href_ajax_delete_user }}',
+            {
+                'uid': uid,
+                'project_id': {{ project_id }}
+            },
+            function (data) {
+                if (data.success) {
+                    toastr.success('{{ text_user_deleted }}', '{{ success_heading }}');
+                }
+                $('#user-row-' + uid).remove();
+            }
+        );
+    }
+
+    $('#user-autocomplete').on('input', function (e) {
+        let input = $('#user-autocomplete');
+        let value = input.val();
+        if (value.length >= 1) {
+            $.post('{{ href_ajax_autocomplete_user }}',
+                { 'search' : value },
+                function (data) {
+                    if (data.success) {
+                        let users = data.users;
+                        $('#user-autocomplete').mdb_autocomplete({
+                            data: data.info
+                        });
+                        $('.mdb-autocomplete-wrap li').off('click');
+                        $('.mdb-autocomplete-wrap li').on('click', function (e) {
+                            let text = $(this).text();
+                            for (let i = 0; i < users.length; i++) {
+                                if (users[i].fullname.toLowerCase() === text.toLowerCase()) {
+//                                    console.log(users[i]);
+                                    let user = users[i];
+                                    let row_id = '#user-row-' + user.uid;
+                                    let html = '<tr id="user-row-'+user.uid+'">\n' +
+                                        '<td>\n' +
+                                        '<div class="form-check">\n' +
+                                        '    <input type="checkbox" class="form-check-input" id="user-'+user.uid+'" checked disabled>\n' +
+                                        '    <label class="form-check-label" for="user-'+user.uid+'">'+user.fullname+'</label>\n' +
+                                        '</div>\n' +
+                                        '</td>\n' +
+                                        '<td>\n' +
+                                        '<!-- switch isRead -->\n' +
+                                        '<div class="switch">\n' +
+                                        '    <label>\n' +
+                                        '        {{ text_no }}\n' +
+                                        '        <input type="checkbox" name="users['+user.uid+'][read]">\n' +
+                                        '        <span class="lever"></span> {{ text_yes }}\n' +
+                                        '    </label>\n' +
+                                        '</div>\n' +
+                                        '</td>\n' +
+                                        '<td>\n' +
+                                        '<!-- switch isWrite -->\n' +
+                                        '<div class="switch">\n' +
+                                        '    <label>\n' +
+                                        '        {{ text_no }}\n' +
+                                        '        <input type="checkbox" name="users['+user.uid+'][write]">\n' +
+                                        '        <span class="lever"></span> {{ text_yes }}\n' +
+                                        '    </label>\n' +
+                                        '</div>\n' +
+                                        '</td>\n' +
+                                        '<td>\n' +
+                                        '<!-- switch isCreate -->\n' +
+                                        '<div class="switch">\n' +
+                                        '    <label>\n' +
+                                        '        {{ text_no }}\n' +
+                                        '        <input type="checkbox" name="users['+user.uid+'][create]">\n' +
+                                        '        <span class="lever"></span> {{ text_yes }}\n' +
+                                        '    </label>\n' +
+                                        '</div>\n' +
+                                        '</td>\n' +
+                                        '<td>\n' +
+                                        '<!-- switch isDelete -->\n' +
+                                        '<div class="switch">\n' +
+                                        '    <label>\n' +
+                                        '        {{ text_no }}\n' +
+                                        '        <input type="checkbox" name="users['+user.uid+'][delete]">\n' +
+                                        '        <span class="lever"></span> {{ text_yes }}\n' +
+                                        '    </label>\n' +
+                                        '</div>\n' +
+                                        '</td>\n' +
+                                        '<td>\n' +
+                                        '<a class="btn-floating btn-sm btn-danger" onclick="deleteUser('+user.uid+');"><i class="fa fa-trash"></i></a>\n' +
+                                        '</td>\n' +
+                                        '</tr>';
+                                    $('#row-empty').remove();
+                                    $('#tab-users table tbody').append(html);
+                                    let switches = $('.switch input');
+                                    switches.off('change');
+                                    switches.on('change', function (e) {
+                                        switchButtonChange(e);
+                                    });
+                                    $(row_id + ' .switch input').change();
+                                    input.val('');
+                                    break;
+                                }
+                            }
+                            $('.mdb-autocomplete-wrap').remove();
+                        });
+                    }
+                }
+            );
+        }
+    });
+
+    $(document).ready(function () {
+        {% if success %}toastr.success('{{ success }}');{% endif %}
+        {% if error_warning %}toastr.error('{{ error_warning }}');{% endif %}
+
+        //Switch\toggle buttons values
+        $('.switch input').on('change', function (e) {
+            switchButtonChange(e);
+        });
+        //Init loaded values
+        $('.switch input').change();
+    });
+</script>
+{{ footer }}

@@ -1,0 +1,39 @@
+{% if categories %}
+<a class="btn btn-primary btn-outline btn-mega-menu" href="#"><i class="fa fa-bars"></i> {{ text_category }}</a>
+
+<div class="mega-menu card card-body" data-trigger=".btn-mega-menu" data-sub-menu-event="click" data-position="relative">
+    <div class="links">
+        {% for category in categories %}
+            {% if category.children %}
+                <a href="{{ category.href }}" class="sub-menu" data-target-id="{{ category.menu_id }}">{{ category.name }}</a>
+            {% else %}
+                <a href="{{ category.href }}">{{ category.name }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="content"></div>
+
+    <!-- Hidden content -->
+    <div class="sub-menu-content" id="default-content">
+        <div class="d-flex justify-content-center align-items-center fw fh">
+            <img src="{{ logo }}" alt="{{ name }}" title="{{ name }}" class="logo-mega-menu">
+        </div>
+    </div>
+
+    {% for category in categories %}
+        {% if category.children %}
+            <div class="sub-menu-content" id="{{ category.menu_id }}">
+                <div class="mega-menu-sub-links" style="column-count: {{ category.column }}">
+                {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+                    {% for child in children %}
+                        <a class="dropdown-item" href="{{ child.href }}">{{ child.name }}</a>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+                <a href="{{ category.href }}" class="dropdown-item see-all">{{ text_all }} {{ category.name }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<script>$('.mega-menu').mmdbMegaMenu();</script>
+{% endif %}

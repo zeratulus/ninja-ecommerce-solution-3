@@ -1,0 +1,122 @@
+<div class="col-sm-12 col-md-9">
+    <div class="card mb-lg-0 mb-4">
+        <div class="card-header white-text primary-color">
+            <h5 class="font-weight-500 my-1 white-text"><i class="fa fa-project-diagram white-text"></i> {{ text_my_tickets }} </h5>
+        </div>
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>{{ text_title }}</td>
+                        <td>{{ text_project }}</td>
+                        <td>{{ text_status }}</td>
+                        <td>{{ text_category }}</td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% if tickets is not empty %}
+                        {% for ticket in tickets %}
+                            <tr class="{% if ticket.getStatus() == 2 %}table-warning{% endif %}{% if ticket.getStatus() == 3 %}table-success{% endif %}">
+                                <td><h5><span class="badge badge-pill {{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
+                                <td>
+                                    <a href="{{ ticket.getTicketHref() }}">
+                                        {{ ticket.getStatusIcon() }}
+                                        <b> {{ ticket.getTitle() }} </b>
+                                    </a>
+                                    {% if ticket.getStatus() == 2 %}
+                                        <div id="counter-{{ ticket.getId() }}"></div>
+                                        <script type="text/javascript">
+                                            $("#counter-{{ ticket.getId() }}").countdown("{{ ticket.getCounterTime() }}", {
+                                                elapse: true,
+                                            }).on('update.countdown', function(event) {
+                                                $("#counter-{{ ticket.getId() }}").html('<div class="badge badge-pill {{ ticket.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</div>');
+                                            });
+                                        </script>
+                                    {% endif %}
+                                </td>
+                                <td class="td-mobile-small">{% set item = projects[ticket.getProjectId()] %} <h5 class="text-right"><span class="badge badge-pill {{ item.getColorCss() }} badge-mobile-text-wrap">{{ item.getTitle() }}</span></h5></td>
+                                <td class="text-center">
+                                    <h5><span class="badge badge-pill {{ ticket.getStatusCss() }}">{{ ticket.getStatusTitle() }}</span></h5>
+                                </td>
+                                <td class="text-right">{{ ticket.getCategoryTitle() }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="5" class="text-center">{{ text_empty_list }}</td></tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <h5><span class="badge badge-pill warning-color">{{ text_tickets_progress }}: {{ in_progress_total_time }}</span></h5>
+                            </td>
+                            <td colspan="3" class="text-right"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-md-3">
+    <div class="card mb-lg-0 mb-4">
+        <div class="card-header white-text primary-color">
+            <h5 class="font-weight-500 my-1 white-text"><i class="fa fa-folder white-text"></i> {{ text_my_projects }} </h5>
+        </div>
+        <div class="card-body p-0">
+            <ul class="nav md-pills flex-start flex-v-start">
+                {% if projects is not empty %}
+                {% for project in projects %}
+                    <li class="nav-item fw p-0 m-0"><a class="nav-link fw text-left" href="{{ project.getLink() }}"> <i class="fa {{ project.getIconCss() }}"></i> {{ project.getTitle() }}</a></li>
+                {% endfor %}
+                {% else %}
+                    <div class="fw flex-center flex-v-center"><h6 class="text-center">{{ text_empty_list }}</h6></div>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-lg-0 mb-4">
+        <div class="card-header white-text primary-color">
+            <h5 class="font-weight-500 my-1 white-text"><i class="fa fa-comments white-text"></i> {{ text_latest_comments }} </h5>
+        </div>
+        <div class="card-body p-0 pb-4">
+            {% if commented_tickets is not empty %}
+            {% for ticket in commented_tickets %}
+            <div class="col-sm-12">
+                <hr>
+                <a href="{{ ticket.getTicketHref() }}">
+                    <h6 class="text-center mt-3 mb-0 pb-0"><span class="badge badge-pill {{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span> - {{ ticket.getTitle() }}</h6>
+                </a>
+                {% for comment in comments[ticket.getId()] %}
+                    <div class="card">
+                        <div class="card-header white p-2">
+                            <div class="fw flex-start flex-v-center">
+                                <img src="{{ comment.getUser().getAvatar() }}" class="avatar-latest-comments">
+                                <div class="fw flex-start flex-wrap">
+                                    <small><b>{{ comment.getUser().getFullName() }}</b></small>
+                                    <small><i class="fa fa-clock-o"></i> {{ comment.getDateString() }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body small-comment p-2">
+                            <div>{{ comment.getHtml() }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+                <h6 class="text-center mt-4">{{ text_empty_list }}</h6>
+            {% endif %}
+        </div>
+    </div>
+</div>

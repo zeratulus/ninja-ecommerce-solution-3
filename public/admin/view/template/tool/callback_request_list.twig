@@ -1,0 +1,90 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-phone"></i> {{ heading_title }}</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <td style="width: 1px;" class="text-center">
+                                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                </td>
+                                <td>{{ entry_name }}</td>
+                                <td>{{ entry_telephone }}</td>
+                                <td>{{ entry_time }}</td>
+                                <td>{{ entry_comment }}</td>
+                                <td>{{ entry_created }}</td>
+                                <td>{{ entry_process_datetime }}</td>
+                                <td>{{ entry_processed }}</td>
+                                <td>{{ entry_action }}</td>
+                            </tr>
+                        </thead>
+                        {% if requests %}
+                            <tbody>
+                            {% for request in requests %}
+                                <tr class="{{ request.processed ? 'table-success' : 'table-warning' }}" data-id="{{ request.id }}">
+                                    <td class="text-center">
+                                        {% if request.id in selected %}
+                                            <input type="checkbox" name="selected[]" value="{{ request.id }}" checked="checked" />
+                                        {% else %}
+                                            <input type="checkbox" name="selected[]" value="{{ request.id }}" />
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ request.name }}</td>
+                                    <td><a href="tel:{{ request.telephone }}">{{ request.telephone }}</a></td>
+                                    <td>{{ request.time }}</td>
+                                    <td>{{ request.comment }}</td>
+                                    <td>{{ request.created }}</td>
+                                    <td>{{ request.process_datetime }}</td>
+                                    <td>{{ statuses[request.processed] }}</td>
+                                    <td>
+                                        {% if not request.processed %}
+                                        <a href="{{ action_process }}&request_id={{ request.id }}" class="btn btn-primary btn-floating circle"><i class="fa fa-check"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% else %}
+                            <tr><td colspan="9" class="text-center">{{ text_empty }}</td></tr>
+                        {% endif %}
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="col-sm-12 col-md-6">
+                        {{ pagination }}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{{ footer }}

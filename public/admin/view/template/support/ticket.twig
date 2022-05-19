@@ -1,0 +1,366 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="fw d-flex justify-content-between align-items-center">
+                <h1>{{ text_task }} #{{ ticket.getId() }} - {{ ticket.getTitle() }}</h1>
+                <div class="pull-right">
+                    {% if user.permissions.isWrite() %} {{ ticket.getEditAction() }} {% endif %}
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-floating circle btn-sm btn-default">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="col-sm-12">
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h5><i class="fa fa-calendar-check-o"></i> {{ text_description }}</h5>
+            </div>
+            <div class="card-body pos-relative">
+                {% if (ticket.getStatus() == 1) and (ticket.getDelegatedToUid() == uid) %}
+                    <!-- btn start task (set in progress status) -->
+                    <button type="button" class="btn btn-floating circle btn-md btn-warning" id="btn-start-task"><i class="fa fa-play"></i></button>
+                {% endif %}
+                {% if (ticket.getStatus() == 2) and (ticket.getDelegatedToUid() == uid) %}
+                    <!-- btn complete task (set completed status) -->
+                    <button type="button" class="btn btn-floating circle btn-md btn-success" id="btn-complete-task"><i class="fa fa-flag-checkered"></i></button>
+                {% endif %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ticket-header">
+                            <h3>{{ text_created }}: {{ ticket.getStartDateString() }}</h3>
+                            <div class="ticket-time-info">
+                                {% if ticket.getStatus() != 3 %}
+                                <div id="counter-{{ ticket.getId() }}"></div>
+                                <script>
+                                    $("#counter-{{ ticket.getId() }}").countdown("{{ ticket.getCounterTime() }}", {
+                                        elapse: true,
+                                    }).on('update.countdown', function(event) {
+                                        $("#counter-{{ ticket.getId() }}").html('<h2><span class="badge badge-pill {{ ticket.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</span></h2>');
+                                    });
+                                </script>
+                                {% elseif ticket.getStatus() == 3 %}
+                                <div id="counter-{{ ticket.getId() }}">
+                                    <h2><span class="badge badge-pill {{ ticket.getStatusCss() }}">{{ ticket.getProgressTime() }}</span></h2>
+                                </div>
+                                {% endif %}
+                                <h5 class="fw d-flex align-items-center justify-content-center">
+                                    <div class="mr-2 z-depth-1 color-preview-15px {{ ticket.getStatusCss() }}"></div>{{ ticket.getStatusTitle() }}</h5>
+                            </div>
+                        </div>
+                        {% if ticket.getDeadline() != '0000-00-00 00:00:00' %}
+                            <h3>{{ text_deadline }}: {{ ticket.getDeadlineDateString() }}</h3>
+                        {% endif %}
+                        {% if ticket.getFinish() != '0000-00-00 00:00:00' %}
+                            <h3>{{ text_finish }}: {{ ticket.getFinishDateString() }}</h3>
+                        {% endif %}
+                        <h3>{{ text_priority }}: {{ priorities[ticket.getPriority()] }}</h3>
+                        <h3>{{ text_category }}: {{ ticket.getCategoryTitle() }}</h3>
+                    </div>
+                    <div class="col-sm-12">
+                        {{ ticket.getDescriptionHtml() }}
+                    </div>
+                </div>
+
+                <div class="row" id="chat-wrapper">
+                    <div class="flex-center fw m-3"><h2 class="text-center"> {{ text_comments }}</h2></div>
+                    <div class="col-sm-12">
+
+                        <div class="">
+
+                            <!-- Grid row -->
+                            <div class="row px-lg-2 px-2">
+                                <div class="col-sm-12">
+
+                                    <div class="chat-message">
+                                        <hr>
+                                        <ul class="list-unstyled chat-1 scrollbar-light-blue p-2" id="chat-messages">
+
+                                            {% if comments is not empty %}
+                                            {% set counter = 0 %}
+                                            {% for comment in comments %}
+                                                {% if counter is odd %}
+                                                    {% set isOddCurrent = 1 %}
+                                                    <li class="d-flex justify-content-between mb-4 flex-wrap-mobile" id="comment-{{ comment.getId() }}-item">
+                                                        <div class="hidden-mobile">
+                                                            <div class="d-flex justify-content-start fw flex-wrap">
+                                                                <div class="d-flex justify-content-center fw">
+                                                                    <img src="{{ comment.getUser().getAvatar() }}" alt="avatar" class="avatar rounded-circle shadow">
+                                                                </div>
+                                                                <div class="d-flex justify-content-center fw">
+                                                                    <small>{{ comment.getUser().getGroupName() }}</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card fw">
+                                                            <div class="card-header">
+                                                                <div class="d-flex justify-content-between align-items-center fw">
+                                                                    <div class="comment-wrap-mobile">
+                                                                        <strong class="primary-font">{{ comment.getUser().getFullName() }}</strong>
+                                                                        <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> {{ comment.getDateString() }}</small>
+                                                                    </div>
+                                                                    {% if comment.getUser().getId() == user_id %}
+                                                                    <div class="comment-tool">
+                                                                        <a class="mr-3" onclick="deleteComment('{{ comment.getId() }}');" data-toggle="tooltip" title="{{ text_delete }}"><i class="fa fa-trash"></i></a>
+                                                                        <a onclick="editComment('{{ comment.getId() }}');" data-toggle="tooltip" title="{{ text_edit_comment }}"><i class="fa fa-pencil"></i></a>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body" id="comment-text-{{ comment.getId() }}">
+                                                                {{ comment.getHtml() }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% else %}
+                                                    {% set isOddCurrent = 0 %}
+                                                    <li class="d-flex justify-content-between mb-4 flex-wrap-mobile" id="comment-{{ comment.getId() }}-item">
+                                                        <div class="card fw mr-4">
+                                                            <div class="card-header">
+                                                                <div class="d-flex justify-content-between align-items-center fw">
+                                                                    <div class="comment-wrap-mobile">
+                                                                        <strong class="primary-font">{{ comment.getUser().getFullName() }}</strong>
+                                                                        <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> {{ comment.getDateString() }}</small>
+                                                                    </div>
+                                                                    {% if comment.getUser().getId() == user_id %}
+                                                                        <div class="comment-tool">
+                                                                            <a class="mr-3" onclick="deleteComment('{{ comment.getId() }}');" data-toggle="tooltip" title="{{ text_delete }}"><i class="fa fa-trash"></i></a>
+                                                                            <a onclick="editComment('{{ comment.getId() }}');" data-toggle="tooltip" title="{{ text_edit_comment }}"><i class="fa fa-pencil"></i></a>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body" id="comment-text-{{ comment.getId() }}">
+                                                                {{ comment.getHtml() }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden-mobile">
+                                                            <div class="f-flex align-items-start justify-content-start fw flex-wrap">
+                                                                <div class="flex-center fw">
+                                                                    <img src="{{ comment.getUser().getAvatar() }}" alt="avatar" class="avatar rounded-circle shadow">
+                                                                </div>
+                                                                <div class="flex-center fw">
+                                                                    <div class="text-center"><small class="text-center">{{ comment.getUser().getGroupName() }}</small></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% set counter = counter + 1 %}
+                                            {% endfor %}
+                                            {% else %}
+                                            <li class="d-flex justify-content-center flex-v-center m-4">
+                                                <p class="mt-3 text-center">{{ text_comments_empty }}</p>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                        <hr>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title"><i class="fa fa-pencil"></i> {{ text_write_comment }}</h4>
+                                                <div class="md-form">
+                                                    <textarea class="form-control pl-2 my-0" id="chat-message" rows="3">{{ message }}</textarea>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <button type="button" class="btn btn-primary" id="btn-send-message">{{ button_send }} <i class="fa fa-paper-plane"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            tinymce.init({
+                                                selector: '#chat-message',
+                                                menubar:false,
+                                                height: 250,
+                                                plugins: [
+                                                    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                                                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                                                    'save table directionality emoticons template paste'
+                                                ],
+                                                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+                                                language: '{{ code }}',
+                                                paste_data_images: true,
+                                            });
+                                        </script>
+                                    </div>
+
+                                </div>
+                                <!-- Grid column -->
+
+                            </div>
+                            <!-- Grid row -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    var isOddCurrent = {{ isOddCurrent }};
+    function getComment(isOdd, msg) {
+        let html = '';
+        let now = new Date();
+        if (isOdd != true) {
+            html += '<li class="d-flex justify-content-between mb-4">\n' +
+                '<div class="hidden-mobile"><div class="flex-v-start flex-start fw flex-wrap"><div class="flex-center fw"><img src="{{ avatar }}" alt="avatar" class="avatar rounded-circle z-depth-1"></div></div></div>\n' +
+                '<div class="chat-body white p-3 ml-2 z-depth-1 fw">\n' +
+                '<div class="header"><strong class="primary-font">{{ fullname }}</strong>\n' +
+                '<small class="pull-right text-muted"><i class="fa fa-clock-o"></i>'+ now +'</small>\n' +
+                '</div><hr class="w-100"><div class="mb-0">' + msg +'</div></div></li>';
+            isOddCurrent = true;
+        } else {
+            html += '<li class="d-flex justify-content-between mb-4">\n' +
+                '<div class="chat-body white p-3 z-depth-1 fw">\n' +
+                '<div class="header">\n' +
+                '<strong class="primary-font">{{ fullname }}</strong>\n' +
+                '<small class="pull-right text-muted"><i class="fa fa-clock-o"></i>'+ now +'</small>\n' +
+                '</div>\n' +
+                '<hr class="w-100">\n' +
+                '<div class="mb-0">' + msg + '</div>\n' +
+                '</div><div class="hidden-mobile"><div class="flex-v-start flex-start fw flex-wrap"><div class="flex-center fw"><img src="{{ avatar }}" alt="avatar" class="avatar rounded-circle z-depth-1"></div></div></div></li>';
+            isOddCurrent = false;
+        }
+        return html;
+    }
+
+    $('#btn-send-message').on('click', function (e) {
+        e.preventDefault();
+        let icon = $(this).find('i');
+        icon.removeClass('fa-paper-plane').addClass('fa-circle-notch fa-spin');
+        let message = tinyMCE.activeEditor.getContent();
+        if (parseInt(message.length) > 50) {
+            $.post('{{ href_ajax_add_comment }}',
+                {
+                    'text' : message,
+                    'ticket_id' : '{{ ticket_id }}',
+                    'uid' : '{{ uid }}',
+                },
+                function (data) {
+                    if (data.success) {
+                        let html = getComment(isOddCurrent, message);
+                        $('#chat-messages').append(html);
+                        let el = $('#chat-messages li').last();
+                        scrollTo(el, parseInt((screen.height / 2) - 100));
+                        tinyMCE.activeEditor.setContent('');
+                    } else {
+                        toastr.error('{{ error_request_error }}', '{{ error_heading }}');
+                    }
+                    icon.removeClass('fa-circle-notch fa-spin').addClass('fa-paper-plane');
+                }
+            );
+        } else {
+            toastr.error('{{ error_empty_message }}', '{{ error_heading }}');
+            icon.removeClass('fa-circle-notch fa-spin').addClass('fa-paper-plane');
+        }
+    });
+
+    function editComment(comment_id) {
+        showPreloader();
+        $.post('{{ href_ajax_edit_comment_modal }}',
+            {
+                'comment_id': comment_id,
+                'uid': {{ uid }}
+            },
+            function (data) {
+                console.log(data);
+                if (data.success) {
+                    $('body').append(data.modal);
+                    $('#editCommentModal').modal('show');
+                } else {
+                    toastr.error('{{ error_get_comment_modal }}', '{{ error_heading }}');
+                }
+                hidePreloader();
+            }
+        );
+    }
+
+    function deleteComment(comment_id) {
+        if (confirm('{{ text_delete_comment }}')) {
+            showPreloader();
+            $.post('{{ href_ajax_delete_comment }}',
+                {
+                    'comment_id': comment_id,
+                    'uid': {{ uid }}
+                },
+                function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        $('#comment-' + comment_id + '-item').remove();
+                        toastr.success('{{ success_delete }}', '{{ success_heading }}');
+                    } else {
+                        toastr.error('{{ error_delete }}', '{{ error_heading }}');
+                    }
+                    hidePreloader();
+                }
+            );
+        }
+    }
+
+    function setTicketStatus(status, message) {
+        $.post('{{ href_ajax_change_status }}',
+            {
+                'ticket_id': {{ ticket.getId() }},
+                'status': status,
+                'uid': {{ uid }}
+            },
+            function (data) {
+                console.log(data);
+                if (data.success) {
+                    showPreloader();
+                    toastr.success(message, '{{ success_heading }}');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000)
+                }
+            }
+        );
+    }
+
+    function fadeOutAndRemove(btn) {
+        let icon = btn.find('i');
+        let classes = btn.prop('class');
+        icon.removeClass(classes).addClass('fa fa-circle-notch fa-spin');
+        btn.addClass('fade-out').prop('disabled', true);
+        setTimeout(function () {
+            btn.remove();
+        }, 800)
+    }
+
+    $('#btn-start-task').on('click', function (e) {
+        e.preventDefault();
+        setTicketStatus(2, '{{ success_started }}');
+        fadeOutAndRemove($(this));
+    });
+
+    $('#btn-complete-task').on('click', function (e) {
+        e.preventDefault();
+        setTicketStatus(3, '{{ success_completed }}');
+        fadeOutAndRemove($(this));
+    });
+
+    $(document).ready(function () {
+        {% if error_warning %}toastr.error('{{ error_warning }}');{% endif %}
+        {% if success %}toastr.success('{{ success }}');{% endif %}
+    });
+</script>
+{{ footer }}

@@ -1,0 +1,12 @@
+<footer id="footer">{{ text_footer }}<br />{{ text_version }}</footer></div>
+{% if logged %}
+    {% if debugbar %}{{ debugbar.render() }}{% endif %}
+{% endif %}
+<script>
+	$(document).ready(function () {
+		tinymceOptions.language = '{{ code }}';
+		tinymceOptions.pthManager = '{{ tinymce_filemanager }}';
+		tinymce.init(tinymceOptions);
+	});
+</script>
+</body></html>

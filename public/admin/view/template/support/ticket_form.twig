@@ -1,0 +1,183 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="fw d-flex justify-content-between align-items-center">
+                <h1>{{ heading_title }}</h1>
+                <div class="pull-right">
+                    <button type="submit" form="form-project" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-floating circle btn-sm btn-primary">
+                        <i class="fa fa-save"></i>
+                    </button>
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-floating circle btn-sm btn-default">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="container-fluid mt-5">
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-pen"></i> {{ text_form }}</h5>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-project">
+                    <div class="form-group">
+                        <label for="input-title" class="control-label">{{ text_title }}</label>
+                        <input name="title" type="text" id="input-title" class="form-control validate" value="{{ title }}" required>
+                    </div>
+
+                    <label for="textarea-description" class="control-label">{{ text_description }}</label>
+                    <div class="form-group">
+                        <textarea name="description" id="textarea-description" class="form-control md-textarea validate fw" rows="2" required>{{ description }}</textarea>
+                        <script>
+                            tinymce.init({
+                                selector: '#textarea-description',
+                                height: 300,
+                                plugins: [
+                                    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                                    'save table directionality emoticons template paste'
+                                ],
+                                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+                                language: '{{ summernote }}'
+                            });
+                        </script>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_created }}</label>
+                            <select name="created_by_uid" class="selectpicker" required>
+                                {% for user in users %}
+                                    <option value="{{ user.getId() }}" {% if user.getId() == created_by_uid %} selected{% endif %}>{{ user.getFullName() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_delegated }}</label>
+                            <select name="delegated_to_uid" class="selectpicker" required>
+                                {% for user in users %}
+                                    <option value="{{ user.getId() }}" {% if user.getId() == delegated_to_uid %} selected{% endif %}>{{ user.getFullName() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_ticket_category }}</label>
+                            <select name="category_id" class="selectpicker" required>
+                                <option value="-1">{{ text_select }}</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.getId() }}" {% if category.getId() == category_id %} selected{% endif %}>{{ category.getTitle() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_parent_task }}</label>
+                            <select name="parent_task_id" class="selectpicker">
+                                <option value="" {% if parent_task_id > 0 %} selected{% endif %}>{{ text_no }}</option>
+                                {% for ticket in tickets %}
+                                    <option value="{{ ticket.getId() }}" {% if ticket.getId() == parent_task_id %} selected {% endif %}>{{ ticket.getTitle() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_status }}</label>
+                            <select name="status" class="selectpicker" required>
+                                {% for status_info in statuses %}
+                                    <option value="{{ status_info.getId() }}" {% if status_info.getId() == status %} selected{% endif %}>{{ status_info.getTitle() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label fw">{{ text_priority }}</label>
+                            <select name="priority" class="selectpicker" required>
+                                <option value="-1"> {{ text_select }}</option>
+                                {% for id, text in priorities %}
+                                <option value="{{ id }}" {% if priority == id %} selected{% endif %}> {{ text }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="date-start" class="control-label fw">{{ text_start }}</label>
+                                <input name="start" id="date-start" type="text" class="form-control datepicker validate"
+                                       value="{{ start }}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="date-finish" class="control-label fw">{{ text_finish }}</label>
+                                <input name="finish" id="date-finish" type="text" class="form-control datepicker validate"
+                                       value="{{ finish }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="date-deadline" class="control-label fw">{{ text_deadline_date }}</label>
+                                <input name="deadline" id="date-deadline" type="text" class="form-control datepicker validate"
+                                       value="{{ deadline }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="date-created" class="control-label fw">{{ text_created }}</label>
+                                <input name="created" id="date-created" type="text" class="form-control datepicker validate"
+                                       value="{{ created }}" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="fix-pickers"></div>
+
+    </div>
+
+</div>
+<script>
+    //language support for datepicker
+    //$.extend($.fn.pickadate.defaults, {
+    //    monthsFull: ['{{ text_january }}', '{{ text_february }}', '{{ text_march }}', '{{ text_april }}', '{{ text_may }}',
+    //        '{{ text_june }}', '{{ text_july }}', '{{ text_august }}', '{{ text_september }}', '{{ text_october }}', '{{ text_november }}', '{{ text_december }}'],
+    //    weekdaysShort: ['{{ text_sunday_short }}', '{{ text_monday_short }}', '{{ text_tuesday_short}}',
+    //        '{{ text_wednesday_short }}', '{{ text_thursday_short }}', '{{ text_friday_short }}', '{{ text_saturday_short }}'],
+    //    today: '{{ text_today }}',
+    //    clear: '{{ text_clear }}',
+    //    close: '{{ text_close }}',
+    //    formatSubmit: '{{ date_format_short }}'
+    //});
+
+    // Data Picker Mask
+    $('.datepicker').mask('{{ mask_timestamp }}', {placeholder: '{{ mask_placeholder_datetime }}'});
+
+    $(document).ready(function () {
+        {% if error_warning %}toastr.error('{{ error_warning }}'){% endif %}
+    });
+</script>
+{{ footer }}

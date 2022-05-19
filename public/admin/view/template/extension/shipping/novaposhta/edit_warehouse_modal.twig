@@ -1,0 +1,149 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" id="modal-edit">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">{{ text_edit }}</h5>
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="input-SiteKey" class="control-label label-small">{{ text_SiteKey }}</label>
+                    <input type="text" name="SiteKey" id="input-SiteKey" value="{{ warehouse_info['SiteKey'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Description" class="control-label label-small">{{ text_Description }}</label>
+                    <input type="text" name="Description" id="input-Description" value="{{ warehouse_info['Description'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-DescriptionRu" class="control-label label-small">{{ text_DescriptionRu }}</label>
+                    <input type="text" name="DescriptionRu" id="input-DescriptionRu" value="{{ warehouse_info['DescriptionRu'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-ShortAddress" class="control-label label-small">{{ text_ShortAddress }}</label>
+                    <input type="text" name="ShortAddress" id="input-ShortAddress" value="{{ warehouse_info['ShortAddress'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-ShortAddressRu" class="control-label label-small">{{ text_ShortAddressRu }}</label>
+                    <input type="text" name="ShortAddressRu" id="input-ShortAddressRu" value="{{ warehouse_info['ShortAddressRu'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Phone" class="control-label label-small">{{ text_Phone }}</label>
+                    <input type="text" name="Phone" id="input-Phone" value="{{ warehouse_info['Phone'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-TypeOfWarehouse" class="control-label label-small">{{ text_TypeOfWarehouse }}</label>
+                    <input type="text" name="TypeOfWarehouse" id="input-TypeOfWarehouse" value="{{ warehouse_info['TypeOfWarehouse'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Ref" class="control-label label-small">{{ text_Ref }}</label>
+                    <input type="text" name="Ref" id="input-Ref" value="{{ warehouse_info['Ref'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-O_Number" class="control-label label-small">{{ text_O_Number }}</label>
+                    <input type="text" name="O_Number" id="input-O_Number" value="{{ warehouse_info['O_Number'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-CityRef" class="control-label label-small">{{ text_CityRef }}</label>
+                    <input type="text" name="CityRef" id="input-CityRef" value="{{ warehouse_info['CityRef'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-CityDescription" class="control-label label-small">{{ text_CityDescription }}</label>
+                    <input type="text" name="CityDescription" id="input-CityDescription" value="{{ warehouse_info['CityDescription'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-CityDescriptionRu" class="control-label label-small">{{ text_CityDescriptionRu }}</label>
+                    <input type="text" name="CityDescriptionRu" id="input-CityDescriptionRu" value="{{ warehouse_info['CityDescriptionRu'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Longitude" class="control-label label-small">{{ text_Longitude }}</label>
+                    <input type="text" name="Longitude" id="input-Longitude" value="{{ warehouse_info['Longitude'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Latitude" class="control-label label-small">{{ text_Latitude }}</label>
+                    <input type="text" name="Latitude" id="input-Latitude" value="{{ warehouse_info['Latitude'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-PostFinance" class="control-label label-small">{{ text_PostFinance }}</label>
+                    <input type="text" name="PostFinance" id="input-PostFinance" value="{{ warehouse_info['PostFinance'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-BicycleParking" class="control-label label-small">{{ text_BicycleParking }}</label>
+                    <input type="text" name="BicycleParking" id="input-BicycleParking" value="{{ warehouse_info['BicycleParking'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-PaymentAccess" class="control-label label-small">{{ text_PaymentAccess }}</label>
+                    <input type="text" name="PaymentAccess" id="input-PaymentAccess" value="{{ warehouse_info['PaymentAccess'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-POSTerminal" class="control-label label-small">{{ text_POSTerminal }}</label>
+                    <input type="text" name="POSTerminal" id="input-POSTerminal" value="{{ warehouse_info['POSTerminal'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-InternationalShipping" class="control-label label-small">{{ text_InternationalShipping }}</label>
+                    <input type="text" name="InternationalShipping" id="input-InternationalShipping" value="{{ warehouse_info['InternationalShipping'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-TotalMaxWeightAllowed" class="control-label label-small">{{ text_TotalMaxWeightAllowed }}</label>
+                    <input type="text" name="TotalMaxWeightAllowed" id="input-TotalMaxWeightAllowed" value="{{ warehouse_info['TotalMaxWeightAllowed'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-PlaceMaxWeightAllowed" class="control-label label-small">{{ text_PlaceMaxWeightAllowed }}</label>
+                    <input type="text" name="PlaceMaxWeightAllowed" id="input-PlaceMaxWeightAllowed" value="{{ warehouse_info['PlaceMaxWeightAllowed'] }}" placeholder="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-Reception" class="control-label label-small">{{ text_Reception }}</label>
+                    <input type="text" name="Reception" id="input-Reception" value="{{ warehouse_info['Reception'] }}" placeholder="" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary">{{ button_apply }}</button> -->
+                <button type="button" class="btn btn-white btn-close"><i class="fa fa-times"></i> {{ button_close }}</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        if (typeof closeWarehouseEditModal === "undefined") {
+            var closeWarehouseEditModal = new Promise(function(resolve, reject) {
+                if ($('#modal-edit').modal('hide')) {
+                    resolve('Modal closed');
+                }
+                else {
+                    reject(Error('Cant close modal'));
+                }
+            });
+        }
+
+        $('#modal-edit .btn-close').on('click', function (e) {
+            e.preventDefault();
+            closeWarehouseEditModal.then(f => {
+                $('#modal-edit').remove();
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+            });
+        });
+    </script>
+</div>

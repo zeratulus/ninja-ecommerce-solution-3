@@ -1,0 +1,147 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      {% if informations %}
+      <div class="col-sm-3">
+        <h5>{{ text_information }}</h5>
+        <ul class="list-unstyled">
+         {% for information in informations %}
+          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="col-sm-3">
+        <h5>{{ text_service }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+          <li><a href="{{ return }}">{{ text_return }}</a></li>
+          <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_extra }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+          <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+{#          <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>#}
+          <li><a href="{{ special }}">{{ text_special }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_account }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ account }}">{{ text_account }}</a></li>
+          <li><a href="{{ order }}">{{ text_order }}</a></li>
+          <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+          <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <img src="catalog/view/theme/default/image/visa-mastercard-white.png" alt="Visa MasterCard Payments" style="height: 40px; width: auto;">
+    </div>
+    <hr>
+    <p>{{ powered }}</p>
+  </div>
+</footer>
+{% for style in styles %}
+<link href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script.href }}" {{ script.options }}></script>
+{% endfor %}
+<link href="catalog/view/theme/default/assets/bootstrapValidator/css/bootstrapValidator.min.css" rel="stylesheet">
+<script defer src="catalog/view/theme/default/assets/bootstrapValidator/js/bootstrapValidator.min.js"></script>
+<script defer src="catalog/view/theme/default/assets/bootstrapValidator/js/language/{{ i18n }}.js"></script>
+<link rel="stylesheet" href="catalog/view/theme/default/assets/toastr/toastr.min.css">
+<script defer src="catalog/view/theme/default/assets/toastr/toastr.min.js"></script>
+<script defer src="catalog/view/theme/default/assets/common.js"></script>
+<script defer src="catalog/view/theme/default/assets/bg-randomizer/bg-randomizer.js"></script>
+<div class="bg-l"></div>
+<div class="bg-r"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (screen.width > 768) {
+      function fitBgBlocks() {
+        let width = $('.container').css('margin-left');
+        $('.bg-l, .bg-r').width(width);
+      }
+
+      let bgElsCount = parseInt($('body').height() / 100) - 15;
+      if (bgElsCount < 10) bgElsCount = 10;
+      $(document).ready(function () {
+        fitBgBlocks();
+
+        $(document).ready(function () {
+          let bg = new BackgroundRandomizer({
+            bgItemsCount: bgElsCount,
+            bgElement: '.bg-l'
+          });
+
+          bg.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover4.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+          bg.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover5.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+          bg.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover6.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+
+          bg.render();
+        });
+
+        $(document).ready(function () {
+          let bgr = new BackgroundRandomizer({
+            bgItemsCount: bgElsCount,
+            bgElement: '.bg-r'
+          });
+
+          bgr.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover4.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+          bgr.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover5.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+          bgr.addBgItemToPut(new BgItem('<div><img src="image/design/bg/flover6.png" class="flower-sm"></div>', {
+            scaleFactor: 10, //percents 0 - 100
+            isScalable: true,
+            rotateFactor: 180, //percents 0 - 100
+            isRotatable: true
+          }));
+
+          bgr.render();
+        });
+      });
+      $(window).on('resize', function () {
+        fitBgBlocks();
+      });
+    }
+  });
+</script>
+{% for analytic in analytics %}
+  {{ analytic }}
+{% endfor %}
+</div>
+{% if debugbarRenderer %}
+  {{ debugbarRenderer.render() }}
+{% endif %}
+<div class="btn-to-top"><i class="fa fa-arrow-up"></i></div>
+<script async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60c39622b53cb649"></script>
+</body></html>

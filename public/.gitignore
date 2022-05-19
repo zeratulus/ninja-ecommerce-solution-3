@@ -1,0 +1,22 @@
+#exclude dev directories
+/.idea
+/dev
+/admin/controller/dev/
+/catalog/controller/dev/
+/system/storage/vendor/
+/composer.lock
+
+#exclude logs
+*.log
+
+#exclude cache files
+/image/cache/
+/system/storage/cache/
+
+#exclude upload\download and storage files
+/system/storage/upload/
+/system/storage/download/
+/system/storage/session/
+
+/config.php
+/admin/config.php

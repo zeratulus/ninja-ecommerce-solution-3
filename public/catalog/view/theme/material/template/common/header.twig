@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+{% if robots %}
+<meta name="robots" content="{{ robots }}" />
+{% endif %}
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ og_url }}" />
+{% if og_image %}
+<meta property="og:image" content="{{ og_image }}" />
+{% else %}
+<meta property="og:image" content="{{ logo }}" />
+{% endif %}
+<meta property="og:site_name" content="{{ name }}" />
+{{ hreflang }}
+<script src="catalog/view/javascript/jquery/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/mmdb/mmdb.min.css" rel="stylesheet" media="screen" />
+<script src="catalog/view/javascript/mmdb/mmdb.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/mmdb/validator-languages/{{ i18n }}.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+{% for style in styles %}
+  <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+  <script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script src="catalog/view/theme/default/javascript/common.js" type="text/javascript"></script>
+{% for link in links %}
+  <link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+{% for analytic in analytics %}
+  {{ analytic }}
+{% endfor %}
+{% if debugbar %}
+  {{ debugbar.renderHead() }}
+{% endif %}
+</head>
+<body class="{{ came_from_screen }}">
+{% if came_from_screen == 'screen-process' %}
+  <script>
+    $(document).ready(function () {
+      $.post('{{ came_from_screen_link }}', {'id': '{{ session_id }}', 'width': screen.width, 'height': screen.height});
+    });
+  </script>
+{% endif %}
+<nav class="monster-header fixed-top">
+  <div class="first-line-block">
+    <a href="{{ home }}">
+      {% if logo %}
+        <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="logo" />
+      {% else %}
+        {{ name }}
+      {% endif %}
+    </a>
+
+    <div class="information-block">
+      {% for information in informations %}
+      <a class="menu-item" href="{{ information.href }}">{{ information.name }}</a>
+      {% endfor %}
+      <a class="menu-item" href="{{ contact }}">{{ text_contact }}</a>
+      {{ blog_menu }}
+    </div>
+
+    <div class="user-options">
+      <div class="languages-block">{{ language }}</div>
+      {{ currency }}
+    </div>
+
+    <div class="login">
+      {% if logged %}
+        <a class="menu-item" href="{{ account }}">{{ text_account }}</a>
+        <a class="menu-item" href="{{ logout }}">{{ text_logout }}</a>
+      {% else %}
+        <a class="menu-item" href="{{ login }}"><i class="fa fa-user-o"></i> {{ text_login }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="second-line-block">
+    {{ menu }}
+    <div class="col-sm-12 col-md-3">{{ search }}</div>
+
+    {% if telephones %}
+    <div class="phone-contacts">
+      {% set phone = telephones[0] %}
+      <a href="tel:{{ phone.href }}">{{ phone.telephone }}</a>
+      <a href="#" class="phone-feedback" data-toggle="modal" data-target="#callbackRequestModal"><i class="fa fa-phone"></i> {{ text_phone_feedback }}</a>
+      {% if telephones|length > 1 %}
+        <div class="phone-dropdown"><i class="fa fa-chevron-down"></i></div>
+        <div class="phones-modal">
+          {% for telephone in telephones %}
+            <a href="tel:{{ telephone.href }}">{{ telephone.telephone }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <script>
+      $('.phone-dropdown').on('click', function () {
+        $('.phone-dropdown').toggleClass('active');
+        $('.phones-modal').toggleClass('active');
+      });
+    </script>
+    {% endif %}
+
+    <div class="user-panel">
+      <a href="{{ compare }}" id="header-compare" title="{{ text_compare }}"><i class="fa fa-exchange"></i></a>
+      <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i></a>
+      {{ cart }}
+    </div>
+  </div>
+</nav>
+<div class="header-wrapper"></div>
+{{ callback_request }}

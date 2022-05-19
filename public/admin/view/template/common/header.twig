@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<script src="view/javascript/jquery/jquery-3.4.1.min.js"></script>
+<link href="view/javascript/mmdb/mmdb.min.css" rel="stylesheet">
+<script src="view/javascript/mmdb/mmdb.min.js"></script>
+<script src="view/javascript/tinymce/tinymce.min.js"></script>
+<script src="view/javascript/tinymce/langs/{{ code }}.js"></script>
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<link href="view/stylesheet/gradients.css" rel="stylesheet" />
+{% for script in scripts %}
+<script src="{{ script.href }}" {{ script.options }}></script>
+{% endfor %}
+{% for style in styles %}
+<link href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+<script src="view/javascript/common.js"></script>
+{% if logged %}
+    {% if debugbar %}
+        {{ debugbar.renderHead() }}
+    {% endif %}
+{% endif %}
+</head>
+<body>
+<div id="container">
+
+<nav class="navbar navbar-expand-sm navbar-light sticky-top bg-light">
+  {% if logged %}
+  <a class="btn bmd-btn-fab bmd-btn-fab-sm" id="button-menu"><i class="fa fa-bars"></i></a>
+  {% endif  %}
+
+  <a class="navbar-brand" href="{{ home }}">
+    <img src="view/image/monsters-shop-logo-rect.png" alt="{{ heading_title }}" title="{{ heading_title }}" class="logo"/>
+  </a>
+
+  <ul class="navbar-nav user-menu">
+    {% if logged %}
+      <li class="nav-item">
+        <a href="{{ projects }}" class="nav-link"><i class="fa fa-tasks"></i> {{ text_projects }}</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbar-user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="avatar-circle" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-menu">
+            <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a>
+            {% for store in stores %}
+              <a href="{{ store.href }}" target="_blank" class="dropdown-item">{{ store.name }}</a>
+            {% endfor %}
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="{{ logout }}" class="nav-link"><i class="fa fa-power-off"></i></a>
+      </li>
+    {% endif %}
+  </ul>
+
+</nav>

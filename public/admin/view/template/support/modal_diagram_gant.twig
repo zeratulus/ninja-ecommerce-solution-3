@@ -1,0 +1,89 @@
+<div class="modal fade" id="gantModal" tabindex="-1" role="dialog" aria-labelledby="gantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-between align-items-center fw">
+                    <div class="modal-gant-inner">
+                        <h5 class="modal-title" id="gantModalLabel"><i class="fa fa-bar-chart"></i> {{ text_gant }}</h5>
+                        <div class="gant-buttons">
+                            <a onclick="gantt.change_view_mode('Quarter Day');" data-toggle="tooltip" title="{{ button_gant_qday }}" class="btn btn-floating circle btn-primary btn-sm">
+                                <i class="fa fa-calendar-o"></i>
+                            </a>
+                            <a onclick="gantt.change_view_mode('Week');" data-toggle="tooltip" title="{{ button_gant_day }}" class="btn btn-floating circle btn-primary btn-sm">
+                                <i class="fa fa-calendar-plus-o"></i>
+                            </a>
+                            <a onclick="gantt.change_view_mode('Day');" id="btn-gant-day" data-toggle="tooltip" title="{{ button_gant_week }}" class="btn btn-floating circle btn-primary btn-sm">
+                                <i class="fa fa-calendar-check-o"></i>
+                            </a>
+                            <a onclick="gantt.change_view_mode('Month');" data-toggle="tooltip" title="{{ button_gant_month }}" class="btn btn-floating circle btn-primary btn-sm">
+                                <i class="fa fa-calendar"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body p-0">
+                <svg id="gantt"></svg>
+            </div>
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-default"><i class="fa fa-times"></i> {{ button_cancel }}</button>
+            </div>-->
+        </div>
+    </div>
+    <script>
+        var tasks = [
+            {% for ticket in tickets %}
+            {
+                id: 'task-{{ ticket.getId() }}',
+                name: '#{{ ticket.getId() }} - {{ ticket.getTitle() }} {{ ticket.getStatusIcon() }}',
+                {% if ticket.getStatus == 1 %}
+                start: '{{ ticket.getCreatedDate() }}',
+                end: '{{ ticket.getFinishDate() }}',
+                {% else %}
+                start: '{{ ticket.getStartDate() }}',
+                end: '{{ ticket.getFinishDate() }}',
+                {% endif %}
+                progress: {{ ticket.getProgressPercents() }},
+                custom_class: '{{ ticket.getStatusCss() }}',
+                dependencies: '{{ ticket.getChildIdsForGant() }}'
+            },
+            {% endfor %}
+        ];
+        var gantt = new Gantt("#gantt", tasks, {
+            header_height: 50,
+            column_width: 30,
+            step: 1,
+            view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
+            bar_height: 40,
+            bar_corner_radius: 6,
+            arrow_curve: 5,
+            padding: 10,
+            view_mode: 'Week',
+            date_format: 'YYYY-MM-DD',
+            language: '{{ code }}',
+        });
+
+        setTimeout(function () {
+            $('#btn-gant-day').click();
+        }, 200);
+
+        function closeGantModal() {
+            $('#gantModal').modal('hide');
+        }
+
+        $('#gantModal .btn-default, #gantModal .close').on('click', function (e) {
+            e.preventDefault();
+            closeGantModal();
+        });
+
+        $('#gantModal').on('hidden.bs.modal', function (e) {
+            setTimeout(function () {
+                $('#gantModal').off('hidden.bs.modal');
+                $('#gantModal').remove();
+            }, 100);
+        });
+    </script>
+</div>

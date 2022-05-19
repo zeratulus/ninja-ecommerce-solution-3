@@ -1,0 +1,33 @@
+{% if status %}
+<style>
+    .hybridauth-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .hybridauth-block .item {
+        margin: 10px 10px 0 10px;
+    }
+    .hybridauth-block .item img {
+        width: 42px;
+        height: 42px;
+        opacity: 0.8;
+        transition: all 0.6s;
+    }
+    .hybridauth-block .item img:hover {
+        opacity: 1;
+        transition: all 0.6s;
+        transform: scale(1.1);
+    }
+</style>
+<div class="card card-body">
+    <h3 class="hybridauth-block">{{ heading_title }}</h3>
+    <div class="hybridauth-block">
+        {% for provider in providers %}
+            <a href="{{ provider.href }}" class="item" title="{{ login_with }}{{ provider.title }}"><img src="{{ provider.image }}" alt="{{ provider.title }}"></a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,152 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-free" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+    <div class="panel-body">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ calc }}">{{ module_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto navbar-right">
+            <li class="nav-item">
+              <a href="{{ calc }}" class="nav-link"><i class="fa fa-calculator"></i> {{ text_calculator }}</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ settings }}" class="nav-link"><i class="fa fa-cogs"></i> {{ text_settings }}</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="warehousesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-home"></i> {{ text_warehouses }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="warehousesDropdown">
+                <a href="{{ warehouses_href }}" class="dropdown-item"><i class="fa fa-list"></i> {{ text_warehouses_list }}</a>
+                <a href="{{ import }}" target="_blank" class="dropdown-item"><i class="fa fa-refresh"></i> {{ button_refresh }}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="card card-filter">
+        <div class="heading-tool-panel">
+          <a class="btn btn-floating circle btn-md btn-default" id="btn-filter-form-reset" title="{{ button_reset }}"><i class="fa fa-times"></i></a>
+          <a class="btn btn-floating circle btn-md btn-primary" onclick="$('#filter-form').submit();" title="{{ button_filter }}"><i class="fa fa-filter"></i></a>
+        </div>
+        <div class="card-header"><h4><i class="fa fa-filter"></i>{{ text_filter }}</h4></div>
+        <div class="card-body">
+          <form action="{{ warehouses_href }}" method="get" id="filter-form">
+            <div class="row">
+                <input type="hidden" name="route" value="{{ route }}">
+                <input type="hidden" name="user_token" value="{{ user_token }}">
+
+                <div class="col-sm-12 col-md-4">
+                  <div class="form-group">
+                    <label for="filter_city" class="control-label label-small">{{ text_city }}</label>
+                    <input type="text" name="filter_city" value="{{ filter_city }}" class="form-control" placeholder="{{ text_city }}" id="filter_city">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                  <div class="form-group">
+                    <label for="filter_name" class="control-label label-small">{{ text_name }}</label>
+                    <input type="text" name="filter_name" value="{{ filter_name }}" class="form-control" placeholder="{{ text_name }}" id="filter_name">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                  <div class="form-group">
+                    <label for="filter_address" class="control-label label-small">{{ text_address }}</label>
+                    <input type="text" name="filter_address" value="{{ filter_address }}" class="form-control" placeholder="{{ text_address }}" id="filter_address">
+                  </div>
+                </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-free" class="form-horizontal">
+
+        <table class="table table-hover table-striped table-bordered">
+          <thead>
+          <tr>
+            <td>{{ text_city }}</td>
+            <td>{{ text_name }}</td>
+            <td>{{ text_address }}</td>
+            <td>{{ text_actions }}</td>
+          </tr>
+          </thead>
+
+          <tbody>
+          {% for warehouse in warehouses %}
+            <tr>
+              <td>{{ warehouse['CityDescriptionRu'] }}</td>
+              <td>{{ warehouse['DescriptionRu'] }}</td>
+              <td>{{ warehouse['ShortAddress'] }}</td>
+              <td>
+                <a onclick="showEditModal('{{ warehouse['SiteKey'] }}');" class="btn btn-floating circle btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+      </form>
+
+      <div class="row">
+        <div class="col-sm-6">{{ results }}</div>
+        <div class="col-sm-6">
+          <div class="d-flex justify-content-end">
+              {{ pagination }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</div>
+<script>
+    $('#btn-filter-form-reset').on('click', function (e) {
+        e.preventDefault();
+        $('#filter-form').find('input[type="text"]').val('');
+    });
+
+    function showEditModal(siteKey) {
+        showPreloader();
+        $.post('{{ editWarehouseModal }}',
+            {'siteKey': siteKey},
+            function (data) {
+                $('body').append(data);
+                $('#modal-edit').modal();
+            }
+        );
+        hidePreloader();
+    }
+</script>
+{{ footer }}

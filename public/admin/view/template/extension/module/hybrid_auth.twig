@@ -1,0 +1,183 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}"
+                        class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}"
+                   class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        {% if error_warning %}
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if info_enable_ssl %}
+            <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ info_enable_ssl }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-cog"></i> {{ heading_title }}</h3>
+            </div>
+            <div class="panel-body">
+
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="debug" class="col-sm-2">{{ entry_debug }}</label>
+                            <div class="col-sm-10">
+                                <select name="hybrid_auth_debug" id="debug" class="form-control">
+                                    {% if hybrid_auth_debug %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ha_status" class="col-sm-2">{{ entry_status }}</label>
+                            <div class="col-sm-10">
+                                <select name="hybrid_auth_status" id="ha_status" class="form-control">
+                                    {% if hybrid_auth_status %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="module" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <td>{{ entry_provider }}</td>
+                                <td>{{ entry_status }}</td>
+                                <td>{{ entry_key }}</td>
+                                <td>{{ entry_secret }}</td>
+                                <!--<td>{{ entry_scope }}</td>-->
+                                <td style="width: 80px;">{{ entry_sort_order }}</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            {% set row = 0 %}
+                            {% for hybrid_auth in hybrid_auth_items %}
+                                <tbody id="row{{ row }}">
+                                <tr>
+                                    <td>
+                                        <select name="hybrid_auth[{{ row }}][provider]" class="form-control">
+                                            {% for provider in providers %}
+                                                {% if provider == hybrid_auth['provider'] %}
+                                                    <option value="{{ provider }}"
+                                                            selected="selected">{{ provider }}</option>
+                                                {% else %}
+                                                    <option value="{{ provider }}">{{ provider }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="hybrid_auth[{{ row }}][enabled]" class="form-control">
+                                            {% if hybrid_auth['enabled'] %}
+                                                <option value="1" selected="selected">{{ text_enabled }}</option>
+                                                <option value="0">{{ text_disabled }}</option>
+                                            {% else %}
+                                                <option value="1">{{ text_enabled }}</option>
+                                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                            {% endif %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="hybrid_auth[{{ row }}][key]"
+                                               value="{{ hybrid_auth['key'] }}" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="hybrid_auth[{{ row }}][secret]"
+                                               value="{{ hybrid_auth['secret'] }}" class="form-control">
+                                    </td>
+                                    <!--<td>
+                                        <input type="text" name="hybrid_auth[{{ row }}][scope]" value="{{ hybrid_auth['scope'] }}" class="form-control">
+                                    </td>-->
+                                    <td>
+                                        <input type="number" min="0" name="hybrid_auth[{{ row }}][sort_order]"
+                                               value="{{ hybrid_auth['sort_order'] }}" class="form-control">
+                                    </td>
+                                    <td>
+                                        <a onclick="$('#row{{ row }}').remove();" data-toggle="tooltip"
+                                           title="{{ button_remove }}"
+                                           class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% set row = row + 1 %}
+                            {% endfor %}
+                            <tfoot>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td class="text-right">
+                                    <a onclick="addRow();" data-toggle="tooltip" title="{{ button_add_row }}"
+                                       class="btn btn-success"><i class="fa fa-plus"></i></a>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </form>
+                <p class="text-center">{{ text_copyright }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	var row = {{ row }};
+
+	function addRow() {
+		html = '<tbody id="row' + row + '">';
+		html += '  <tr>';
+		html += '    <td>';
+		html += '      <select name="hybrid_auth[' + row + '][provider]" class="form-control">';
+        {% for provider in providers %}
+		html += '        <option value="{{ provider }}">{{ provider }}</option>';
+        {% endfor %}
+		html += '      </select>';
+		html += '    </td>';
+		html += '    <td>';
+		html += '      <select name="hybrid_auth[' + row + '][enabled]" class="form-control">';
+		html += '        <option value="1" selected="selected">{{ text_enabled }}</option>';
+		html += '        <option value="0">{{ text_disabled }}</option>';
+		html += '      </select>';
+		html += '    </td>';
+		html += '    <td><input type="text" name="hybrid_auth[' + row + '][key]" value="" class="form-control"></td>';
+		html += '    <td><input type="text" name="hybrid_auth[' + row + '][secret]" value="" class="form-control"></td>';
+		// html += '    <td><input type="text" name="hybrid_auth[' + row + '][scope]" value="" class="form-control"></td>';
+		html += '    <td><input type="number" min="0" name="hybrid_auth[' + row + '][sort_order]" value="' + row + '" class="form-control"></td>';
+		html += '    <td><a onclick="$(\'#row' + row + '\').remove();" title="{{ button_remove }}" data-togle="tooltip" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>';
+		html += '  </tr>';
+		html += '</tbody>';
+
+		$('#module tfoot').before(html);
+
+		row++;
+	}
+</script>
+{{ footer }}

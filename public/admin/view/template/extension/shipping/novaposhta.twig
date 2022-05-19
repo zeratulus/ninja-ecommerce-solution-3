@@ -1,0 +1,126 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-novaposhta" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+    <div class="panel-body">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ action }}">Новая Почта 2.0 API</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto navbar-right">
+            <li class="nav-item">
+              <a href="{{ action }}" class="nav-link active"><i class="fa fa-calculator"></i> Расчёт доставки</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ settings }}" class="nav-link"><i class="fa fa-cogs"></i> Настройки</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="warehousesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-home"></i> Отделения
+              </a>
+              <div class="dropdown-menu" aria-labelledby="warehousesDropdown">
+                <a href="{{ warehouses_href }}" class="dropdown-item"><i class="fa fa-list"></i> Список отделений</a>
+                <a href="{{ import }}" target="_blank" class="dropdown-item"><i class="fa fa-refresh"></i> Обновить</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-novaposhta" class="form-horizontal">
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_min_total_for_free_delivery_help }}">{{ entry_min_total_for_free_delivery }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_min_total_for_free_delivery" value="{{ shipping_novaposhta_min_total_for_free_delivery }}" placeholder="{{ shipping_novaposhta_min_total_for_free_delivery }}" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_delivery_order_help }}">{{ entry_delivery_order }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_delivery_order" value="{{ shipping_novaposhta_delivery_order }}" placeholder="{{ shipping_novaposhta_delivery_order }}" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_delivery_price_help }}">{{ entry_delivery_price }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_delivery_price" value="{{ shipping_novaposhta_delivery_price }}" placeholder="{{ shipping_novaposhta_delivery_price }}" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_delivery_insurance_help }}">{{ entry_delivery_insurance }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_delivery_insurance" value="{{ shipping_novaposhta_delivery_insurance }}" placeholder="{{ shipping_novaposhta_delivery_insurance }}" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_delivery_nal_help }}">{{ entry_delivery_nal }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_delivery_nal" value="{{ shipping_novaposhta_delivery_nal }}" placeholder="{{ shipping_novaposhta_delivery_nal }}" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+              <select name="shipping_novaposhta_geo_zone_id" id="input-geo-zone" class="selectpicker">
+                <option value="0">{{ text_all_zones }}</option>
+                {% for geo_zone in geo_zones %}
+                    {% if geo_zone['geo_zone_id'] == shipping_novaposhta_geo_zone_id %}
+                      <option value="{{ geo_zone['geo_zone_id'] }}" selected="selected">{{ geo_zone['name'] }}</option>
+                    {% else %}
+                      <option value="{{ geo_zone['geo_zone_id'] }}">{{ geo_zone['name'] }}</option>
+                    {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="shipping_novaposhta_status" id="input-status" class="selectpicker">
+                {% if shipping_novaposhta_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_novaposhta_sort_order" value="{{ shipping_novaposhta_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+  </div>
+</div>
+{{ footer }}

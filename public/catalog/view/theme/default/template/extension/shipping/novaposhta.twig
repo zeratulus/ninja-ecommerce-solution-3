@@ -1,0 +1,41 @@
+<div id="novaposhta-shipping-form">
+    {{ form }}
+    <link href="catalog/view/javascript/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="catalog/view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="catalog/view/javascript/bootstrap-select/js/i18n/defaults-{{ bootstrap_select_i18n }}.min.js"></script>
+    <script>
+        addressForm = $('#address');
+        let warehouseList = addressForm.find('#input-warehouse');
+        addressForm.find('#input-city').on('change', function (e) {
+            showPreloader();
+            $.post('{{ action }}', {
+                city: $(e.target).val()
+            }, function (data) {
+                if (data.success) {
+                    let isFirst = true;
+                    warehouseList.find('option').remove();
+                    for (const opt in data.warehouses) {
+                        warehouseList.append(new Option(opt, opt, isFirst));
+                        isFirst = false;
+                    }
+                    warehouseList.selectpicker('refresh');
+                    warehouseList.selectpicker('toggle');
+                    hidePreloader();
+                } else {
+                    console.log('Request/Response Error on warehouses')
+                }
+            });
+        });
+
+        addressForm.find('#input-city').parent().removeClass('col-sm-10');
+        addressForm.find('#input-warehouse').parent().removeClass('col-sm-10');
+        addressForm.find('label[for=input-city], label[for=input-warehouse]').removeClass('col-sm-2');
+
+        $('#address select').selectpicker({
+            liveSearch: true,
+            width: '100%',
+            styleBase: 'form-control',
+            size: 10
+        });
+    </script>
+</div>

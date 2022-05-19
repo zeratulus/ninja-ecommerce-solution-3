@@ -1,0 +1,81 @@
+{{ header }}
+<div id="account-account" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  {% if coupon_on_registration %}
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ coupon_on_registration }}</div>
+  {% endif %}
+  <div class="row">
+    {{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      <h2 class="heading">{{ text_my_account }}</h2>
+      <div class="col-sm-12 card-deck">
+        <a href="{{ edit }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\contact-info.png">
+          <p>{{ text_edit }}</p>
+        </a>
+        <a href="{{ password }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\key.png">
+          <p>{{ text_password }}</p>
+        </a>
+        <a href="{{ address }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\home.png">
+          <p>{{ text_address }}</p>
+        </a>
+        <a href="{{ wishlist }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\wish.png">
+          <p>{{ text_wishlist }}</p>
+        </a>
+        <a href="{{ newsletter }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\mails.png">
+          <p>{{ text_newsletter }}</p>
+        </a>
+      </div>
+      {% if credit_cards %}
+      <h2 class="heading">{{ text_credit_card }}</h2>
+      <div class="col-sm-12 card-deck">
+        {% for credit_card in credit_cards %}
+        <a href="{{ credit_card.href }}" class="card card-account">
+          <i class="fa fa-credit-card"></i>
+          <p>{{ credit_card.name }}</p>
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <h2 class="heading">{{ text_my_orders }}</h2>
+      <div class="col-sm-12 card-deck">
+        <a href="{{ order }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\history.png">
+          <p>{{ text_order }}</p>
+        </a>
+        {% if reward %}
+        <a href="{{ reward }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\bonus.png">
+          <p>{{ text_reward }}</p>
+        </a>
+        {% endif %}
+        <a href="{{ transaction }}" class="card card-account">
+          <img src="catalog\view\theme\default\image\icons\transaction.png">
+          <p>{{ text_transaction }}</p>
+        </a>
+      </div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

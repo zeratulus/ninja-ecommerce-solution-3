@@ -1,0 +1,17 @@
+{
+    "config": {
+        "platform": {
+            "php": "8.1"
+        },
+        "vendor-dir": "../storage/vendor/",
+        "optimize-autoloader": true
+    },
+    "require": {
+        "maximebf/debugbar": "^1.16",
+        "hybridauth/hybridauth" : "^3.0",
+        "twig/twig" : "^3.0",
+        "phpmailer/phpmailer": "^6.5",
+        "voku/html-compress-twig": "^4.0",
+        "sendpulse/rest-api": "^1.0"
+    }
+}

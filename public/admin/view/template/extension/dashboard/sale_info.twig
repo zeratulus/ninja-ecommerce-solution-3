@@ -1,0 +1,15 @@
+<div class="card tile">
+  <div class="card-icon-rect">
+    <i class="fa fa-credit-card-alt"></i>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ heading_title }}</h5>
+    <h2 class="text-right">{{ total }}</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: {{ percentage }}%" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-end">
+    <a href="{{ sale }}">{{ text_view }}</a>
+  </div>
+</div>

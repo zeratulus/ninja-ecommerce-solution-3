@@ -1,0 +1,72 @@
+<!-- Callback request modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="callbackRequestModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ text_callback_heading }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-submit">{{ button_submit }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ button_close }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let callbackModal = $('#callbackRequestModal');
+
+    //set sizes
+    callbackModal.find('.control-label').removeClass('col-sm-2').addClass('col-sm-12');
+    callbackModal.find('input[type="text"], input[type="tel"], select, textarea').parent().removeClass('col-sm-10').addClass('col-sm-12');
+    callbackModal.find('.time, .date, .datetime').removeClass('col-sm-12').parent().removeClass('col-sm-10').addClass('col-sm-12');
+
+    //add masks
+    callbackModal.find('input[name="telephone"]').mask('+38(999)999-99-99');
+    callbackModal.find('.time input').mask('99:99');
+
+    callbackModal.find('input').attr('required', true);
+
+    let callbackForm = callbackModal.find('form');
+    callbackForm.bootstrapValidator({
+	    feedbackIcons: {
+		    valid: 'fa fa-check',
+		    invalid: 'fa fa-times',
+		    validating: 'fa fa-refresh'
+	    },
+	    live: 'enabled'
+    });
+
+    let bvCallback = callbackForm.data('bootstrapValidator');
+
+    callbackModal.find('.btn-submit').on('click', function (e) {
+	    e.preventDefault();
+	    bvCallback.validate();
+	    if (bvCallback.isValid()) {
+	    	$.post('{{ action }}',
+                callbackForm.serialize(),
+                function (data) {
+	    		    console.log(data);
+                    if (data.success) {
+                    	toastr.success(data.success, '{{ success_heading }}');
+                        callbackForm.find('input, textarea').val('');
+	                    bvCallback.resetForm();
+	                    callbackModal.modal('hide');
+                    } else {
+	                    toastr.error(data.error, '{{ error_heading }}');
+                    }
+                }
+            );
+	    }
+    });
+
+    // Revalidate time when user change it
+    callbackForm.find('.time').on('dp.change dp.show', function (e) {
+	    bvCallback.revalidateField('time');
+    });
+</script>

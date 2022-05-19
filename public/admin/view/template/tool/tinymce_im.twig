@@ -1,0 +1,304 @@
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+    * {
+        font-family: 'Roboto', sans-serif;
+    }
+    /* Default Scrollbars*/
+    .sideNav::-webkit-scrollbar,
+    .bootstrap-select .dropdown-menu::-webkit-scrollbar,
+    .bootstrap-select .inner::-webkit-scrollbar,
+    .CodeMirror *::-webkit-scrollbar,
+    .form-group select.form-control::-webkit-scrollbar,
+    .form-group textarea.form-control::-webkit-scrollbar,
+    .mce-content-body::-webkit-scrollbar,
+    .picker__holder::-webkit-scrollbar,
+    .well::-webkit-scrollbar,
+    .select-dropdown::-webkit-scrollbar,
+    div.table-responsive::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    .sideNav::-webkit-scrollbar-track,
+    .bootstrap-select .dropdown-menu::-webkit-scrollbar-track,
+    .bootstrap-select .inner::-webkit-scrollbar-track,
+    .CodeMirror *::-webkit-scrollbar-track,
+    .form-group select.form-control::-webkit-scrollbar-track,
+    .form-group textarea.form-control::-webkit-scrollbar-track,
+    .mce-content-body::-webkit-scrollbar-track,
+    .picker__holder::-webkit-scrollbar-track,
+    .well::-webkit-scrollbar-track,
+    .select-dropdown::-webkit-scrollbar-track,
+    div.table-responsive::-webkit-scrollbar-track,
+    body::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+    .sideNav::-webkit-scrollbar-thumb,
+    .bootstrap-select .dropdown-menu::-webkit-scrollbar-thumb,
+    .bootstrap-select .inner::-webkit-scrollbar-thumb,
+    .CodeMirror *::-webkit-scrollbar-thumb,
+    .form-group select.form-control::-webkit-scrollbar-thumb,
+    .form-group textarea.form-control::-webkit-scrollbar-thumb,
+    .mce-content-body::-webkit-scrollbar-thumb,
+    .picker__holder::-webkit-scrollbar-thumb,
+    .well::-webkit-scrollbar-thumb,
+    .select-dropdown::-webkit-scrollbar-thumb,
+    div.table-responsive::-webkit-scrollbar-thumb,
+    body::-webkit-scrollbar-thumb {
+        background-color: #999;
+        outline: 1px solid slategrey;
+    }
+    .images {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        position: relative;
+        padding-top: 40px;
+    }
+    .images .current-path {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100% - 20px);
+        padding-left: 20px;
+    }
+    .file-wrapper, .dir-wrapper {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid #999;
+        margin: 5px;
+        transition: 0.6s all;
+    }
+    @media (max-width: 768px) {
+        .file-wrapper, .dir-wrapper {
+            width: 140px;
+            height: 140px;
+        }
+        .images {
+            justify-content: center;
+            align-items: flex-start;
+        }
+    }
+    .file-wrapper:hover, .dir-wrapper:hover {
+        border: 1px solid #000;
+        transition: 0.6s all;
+    }
+    .file-wrapper img {
+        width: 100%;
+        height: auto;
+        transition: 0.6s all;
+    }
+    .dir-wrapper .name,
+    .file-wrapper .name {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        background-color: rgba(255,255,255,0.6);
+        transition: 0.6s all;
+    }
+    .fa-folder.big {
+        font-size: 112px;
+        color: #999;
+        transition: 0.6s all;
+    }
+    .dir-wrapper:hover .fa-folder.big {
+        color: #000;
+        transition: 0.6s all;
+    }
+    .file-wrapper:hover img {
+        transform: scale(1.1);
+        transition: 0.6s all;
+    }
+    .dir-wrapper:hover .name,
+    .file-wrapper:hover .name {
+        transition: 0.6s all;
+        background-color: rgba(255,255,255,1);
+    }
+    
+    /* Preloader */
+    .preloader {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+    .preloader div {
+        animation: preloader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        transform-origin: 40px 40px;
+    }
+    .preloader div:after {
+        content: " ";
+        display: block;
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #fff;
+        margin: -4px 0 0 -4px;
+    }
+    .preloader div:nth-child(1) {
+        animation-delay: -0.036s;
+    }
+    .preloader div:nth-child(1):after {
+        top: 63px;
+        left: 63px;
+    }
+    .preloader div:nth-child(2) {
+        animation-delay: -0.072s;
+    }
+    .preloader div:nth-child(2):after {
+        top: 68px;
+        left: 56px;
+    }
+    .preloader div:nth-child(3) {
+        animation-delay: -0.108s;
+    }
+    .preloader div:nth-child(3):after {
+        top: 71px;
+        left: 48px;
+    }
+    .preloader div:nth-child(4) {
+        animation-delay: -0.144s;
+    }
+    .preloader div:nth-child(4):after {
+        top: 72px;
+        left: 40px;
+    }
+    .preloader div:nth-child(5) {
+        animation-delay: -0.18s;
+    }
+    .preloader div:nth-child(5):after {
+        top: 71px;
+        left: 32px;
+    }
+    .preloader div:nth-child(6) {
+        animation-delay: -0.216s;
+    }
+    .preloader div:nth-child(6):after {
+        top: 68px;
+        left: 24px;
+    }
+    .preloader div:nth-child(7) {
+        animation-delay: -0.252s;
+    }
+    .preloader div:nth-child(7):after {
+        top: 63px;
+        left: 17px;
+    }
+    .preloader div:nth-child(8) {
+        animation-delay: -0.288s;
+    }
+    .preloader div:nth-child(8):after {
+        top: 56px;
+        left: 12px;
+    }
+    @keyframes preloader {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .preloader-wrapper {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.6);
+    }
+</style>
+<div>
+    <div class="row">
+        <div id="images" class="images">
+            {{ files }}
+        </div>
+    </div>
+</div>
+<script>
+    function showPreloader() {
+        let html = '<div class="preloader-wrapper" id="preloader"><div class="preloader"><div></div><div></div><div></div><div></div><div></div></div>';
+        document.getElementById('images').insertAdjacentHTML('afterbegin', html);
+    }
+    function hidePreloader() {
+    	document.getElementById('preloader').remove();
+    }
+	function initImageManager() {
+		let files = document.querySelectorAll('.file-wrapper');
+		files.forEach(function (el) {
+			el.onclick = function () {
+				let url = this.dataset.url;
+
+				//detect if image dialog opened
+				let dialog = document.querySelector('.tox-control-wrap input[type="url"]');
+
+				if (typeof(dialog) !== "undefined") {
+					// image dialog present because insert/edit text found
+					window.parent.postMessage({
+						mceAction: 'customAction',
+						url: url
+					}, '*');
+				} else {
+					// insert image in Editor
+					if (typeof(parent.tinymce) !== "undefined") {
+						parent.tinymce.activeEditor.insertContent('<img src="'+ url +'">');
+						parent.tinymce.activeEditor.windowManager.close();
+					}
+				}
+			}
+		});
+
+		let dirs = document.querySelectorAll('.dir-wrapper');
+		dirs.forEach(function (el) {
+			el.onclick = function () {
+				let path = this.dataset.path;
+
+				//clean
+				let nodes = document.querySelectorAll('.dir-wrapper, .file-wrapper, .current-path');
+				nodes.forEach(function (el) {
+					el.remove();
+				});
+
+				//load new folder
+				showPreloader();
+
+				let request = new XMLHttpRequest();
+				request.open('GET', '{{ ajax_url }}&path=' + path, true);
+				request.onload = function() {
+					if (this.status >= 200 && this.status < 400) {
+						// Success!
+						document.getElementById('images').insertAdjacentHTML("afterbegin", this.response);
+						initImageManager();
+					} else {
+						// We reached our target server, but it returned an error
+						console.log('AJAX GET Request Error...');
+					}
+					setTimeout(function () {
+						hidePreloader();
+					}, 500);
+				};
+
+				request.onerror = function() {
+					console.log('AJAX GET Error...');
+				};
+
+				request.send();
+			}
+		});
+	}
+
+	initImageManager();
+</script>
+<link rel="stylesheet" href="{{ font_awesome }}">

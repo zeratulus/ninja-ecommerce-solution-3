@@ -1,0 +1,20 @@
+<li class="nav-item dropdown">
+	<a class="menu-item nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{{ text_blog }}
+	</a>
+	<div class="dropdown-menu" aria-labelledby="blogDropdown">
+        {% for category in categories %}
+			{% if category.children %}
+			<a class="dropdown-item" href="{{ category.href }}">{{ category.name }}</a>
+				{% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+					{% for child in children %}
+						<a class="dropdown-item" href="{{ child.href }}"><i class="fa fa-angle-right"></i> {{ child.name }}</a>
+					{% endfor %}
+				{% endfor %}
+			{% else %}
+				<a class="dropdown-item" href="{{ category.href }}">{{ category.name }}</a>
+			{% endif %}
+		{% endfor %}
+		<a class="dropdown-item" href="{{ blog }}" class="see-all">{{ text_all }} {{ text_blog }}</a>
+	</div>
+</li>

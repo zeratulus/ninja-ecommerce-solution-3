@@ -1,0 +1,87 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+
+        <div class="container-fluid">
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-file-excel-o"></i> XLSX Products & Categories Import</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="excel-form">
+                    <input name="file" type="file" class="hidden" id="excel-file">
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label class="control-label label-small" for="input-parent-category-id">{{ text_category }}</label>
+                                <select name="parent_category_id" id="input-parent-category-id" class="selectpicker" data-width="100%">
+                                    <option value="" selected>{{ text_select }}</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.category_id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label class="control-label label-small" for="input-manufacturer-id">{{ text_manufacturer }}</label>
+                                <select name="manufacturer_id" id="input-manufacturer-id" class="selectpicker" data-width="100%">
+                                    <option value="" selected>{{ text_select }}</option>
+                                    {% for manufacturer in manufacturers %}
+                                        <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="is_add_brand_name" id="input-add-brand-name">
+                                    <span class="checkbox-decorator"><span class="check"></span></span>
+                                    <span class="checkbox-decorator"><span class="check"></span></span>
+                                    Add brand name to product name
+                                </label>
+                            </div>
+                            <script>
+                                $('#input-add-brand-name').on('change', function () {
+                                    triggerCheckboxValue('#input-add-brand-name');
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="flex-center">
+                    <a id="btn-excel-import" href="#" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> Load XLSX</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //Excel Import
+        $('#btn-excel-import').on('click', function (e) {
+            e.preventDefault();
+            $('#excel-file').click();
+        });
+
+        $('#excel-file').on('change', function () {
+            $('#excel-form').submit();
+        });
+    </script>
+</div>
+{{ footer }}

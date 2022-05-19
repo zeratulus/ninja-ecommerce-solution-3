@@ -1,0 +1,28 @@
+<style>
+    tr {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<table style="border: 0; width: 100%;">
+    <thead>
+    <tr>
+        <td style="text-align: center;"><img src="{{ logo }}" alt="{{ title }}" width="200" height="auto"></td>
+    </tr>
+    <tr>
+        <td style="text-align: center"><h2>{{ heading_title }}</h2></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="2">
+            {{ message_body }}
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <td colspan="2" style="text-align: center;">
+        {{ message_foot }}
+    </td>
+    </tfoot>
+</table>

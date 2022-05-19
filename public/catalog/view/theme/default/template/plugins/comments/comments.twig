@@ -1,0 +1,14 @@
+<div class="card">
+    {% if success %}
+    <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <div class="card-body">
+        {{ form_start }}
+        <input type="hidden" name="route" value="{{ route }}">
+        {{ form_body }}
+        {{ form_end }}
+    </div>
+</div>

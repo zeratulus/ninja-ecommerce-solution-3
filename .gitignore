@@ -1,0 +1,13 @@
+#exclude dev directories
+.idea
+.git
+qodana
+
+#exclude upload\download and storage files
+storage/cache/
+storage/upload/
+storage/download/
+storage/session/
+storage/vendor/
+
+*.log

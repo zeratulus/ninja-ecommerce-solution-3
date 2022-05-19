@@ -1,0 +1,117 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="fw d-flex justify-content-between align-items-center">
+                <h1>{{ heading_title }}</h1>
+                <div class="pull-right">
+                    {% if user.isAdmin() %}
+                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-sm btn-primary">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <button type="button" form="form-category" formaction="{{ delete }}" data-toggle="tooltip"
+                            title="{{ button_delete }}" class="btn btn-floating circle btn-sm btn-default"
+                            id="btn-delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <form action="{{ delete }}" id="form-projects" method="post" class="container-fluid">
+        {% if projects is not empty %}
+            {% set counter = 0 %}
+            {% for project in projects %}
+                {% if counter == 0 %}<div class="card-deck">{% endif %}
+
+                    <div class="card classic-admin-card project-card {{ project.getColorCss() }} col-md-4 col-sm-12 p-0">
+                        <a href="{{ project.getLink() }}" class="fh">
+                            <div class="fh white-text flex-v-between">
+                                <div class="card-body">
+                                    <div class="white-text fw d-flex justify-content-start align-items-center">
+                                        <i class="white-text fa fa-2x {{ project.getIconCss() }} mr-2"></i>
+                                        <h4 class="white-text">{{ project.getTitle() }}</h4>
+                                    </div>
+                                    <div class="description">{{ project.getDescriptionHtml() }}</div>
+                                </div>
+
+                                <div class="fw">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+                                             style="width: {{ project.getCompletedTasksPercents() }}%"
+                                       aria-valuenow="{{ project.getCompletedTasksPercents() }}"
+                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="text-left white-text">{{ text_tasks_count }} {{ project.getTotalTickets() }}</p>
+                                            <p class="text-right white-text">{{ text_completed_tasks }} {{ project.getCompletedTasksPercents() }}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {% if not project.getIsPublic() %}
+                            <i class="fa fa-lock fa-2x white-text icon-private-repo"></i>
+                        {% endif %}
+                        {% if user.isAdmin() %}
+
+                            {% if project.getId() in selected %}
+                                <div class="project-check checkbox">
+                                    <label>
+                                        <input type="checkbox" name="selected[]" value="{{ project.getId() }}" checked="checked" id="checkbox{{ project.getId() }}">
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="project-check checkbox">
+                                    <label>
+                                        <input type="checkbox" name="selected[]" value="{{ project.getId() }}" id="checkbox{{ project.getId() }}">
+                                    </label>
+                                </div>
+                            {% endif %}
+
+                            <a href="{{ project.getEditLink() }}" class="btn btn-floating circle btn-sm btn-primary btn-edit"><i class="fa fa-pencil"></i></a>
+
+                        {% endif %}
+                    </div>
+                {% set counter = counter + 1 %}
+                {% if (counter >= 3) or (project.getId() == last_project_id) %}
+                    <!-- fill empty space for correct layout -->
+                    {% if project.getId() == last_project_id %}
+                        {% set fill_counter = 3 - counter %}
+                        {% if (fill_counter > 0) %}
+                            {% for fill_counter in fill_counter..1 %}
+                                <div class="col-md-4 col-sm-12 p-0"></div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                    <!-- Close .card-deck -->
+                    </div>
+                    {% set counter = 0 %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h3 class="text-center">{{ text_empty }}</h3>
+        {% endif %}
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        {% if success %}toastr.success('{{ success }}');{% endif %}
+        {% if error_warning %}toastr.error('{{ error_warning }}');{% endif %}
+    });
+    $('#btn-delete').on('click', function () {
+        if (confirm('{{ text_confirm }}')) {
+            $('#form-projects').submit();
+        }
+    });
+</script>
+{{ footer }}

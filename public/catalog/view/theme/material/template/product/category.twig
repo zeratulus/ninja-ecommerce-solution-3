@@ -1,0 +1,149 @@
+{{ header }}
+<div id="product-category" class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+    </ol>
+  </nav>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if thumb or description %}
+      <div class="row">
+        {% if thumb %}
+        <div class="col-sm-2">
+          <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-fluid img-thumbnail">
+        </div>
+        {% endif %}
+        {% if description %}
+        <div class="col-sm-10">{{ description }}</div>
+        {% endif %}</div>
+      <hr>
+      {% endif %}
+      {% if categories %}
+      <h3>{{ text_refine }}</h3>
+      {% if categories|length <= 5 %}
+      <div class="row">
+        <div class="col-sm-3">
+          <ul>
+            {% for category in categories %}
+            <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% else %}
+      <div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+        <div class="col-sm-3">
+          <ul>
+            {% for child in category %}
+            <li><a href="{{ child.href }}">{{ child.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}</div>
+      <br />
+      {% endif %}
+      {% endif %}
+      {% if products %}
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <label class="control-label label-small" for="input-sort">{{ text_sort }}</label>
+          <div class="form-group">
+            <select id="input-sort" class="selectpicker" data-width="100%" onchange="location = this.value;">
+              {% for sorts in sorts %}
+              {% if sorts.value == '%s-%s'|format(sort, order) %}
+              <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+              {% else %}
+              <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <label class="control-label label-small" for="input-limit">{{ text_limit }}</label>
+          <div class="form-group">
+            <select id="input-limit" class="selectpicker" data-width="100%" onchange="location = this.value;">
+              {% for limits in limits %}
+              {% if limits.value == limit %}
+              <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+              {% else %}
+              <option value="{{ limits.href }}">{{ limits.text }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 d-flex align-items-end">
+          <div class="form-group fw">
+            <a href="{{ compare }}" id="compare-total" class="btn btn-default fw"><i class="fa fa-exchange"></i> {{ text_compare }}</a>
+          </div>
+        </div>
+      </div>
+
+        <div class="card-columns products-columns">
+            {% for product in products %}
+
+            <div class="card card-product">
+              <div class="image">
+                <a href="{{ product.href }}">
+                  <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                <p class="text-justify">{{ product.description }}</p>
+                {% if product.price %}
+                <p class="price">
+                  {% if not product.special %}
+                    <span class="price-new">{{ product.price }}</span>
+                  {% else %}
+                    <span class="price-new">{{ product.special }}</span>
+                    <span class="price-old">{{ product.price }}</span>
+                  {% endif %}
+                  {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+                {% endif %}
+                {% if product.rating %}
+                <div class="rating"> {% for i in 1..5 %}
+                  {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
+                  {% endfor %} </div>
+                {% endif %}
+              </div>
+              <div class="button-group">
+                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+      </div>
+      {% endif %}
+      {% if not categories and not products %}
+      <p>{{ text_empty }}</p>
+      <div class="buttons">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }} 

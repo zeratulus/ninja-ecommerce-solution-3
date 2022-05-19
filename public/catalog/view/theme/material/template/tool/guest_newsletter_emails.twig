@@ -1,0 +1,27 @@
+<div id="guest-email-subscribe-block" class="d-flex justify-content-center align-items-center">
+    <div class="card card-body col-sm-8 col-md-5">
+        <h4 class="text-center">{{ text_guest_subscription }}</h4>
+        <div class="col-sm-12">
+            <input type="email" id="input-guest-email-subscribe" class="form-control" placeholder="{{ text_your_email }}" required>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a id="btn-guest-email-subscribe" class="btn btn-primary">{{ button_subscribe }}</a>
+        </div>
+    </div>
+    <div class="bg"></div>
+</div>
+<script>
+	$('#btn-guest-email-subscribe').on('click', function (e) {
+        e.preventDefault();
+        let input = $('#input-guest-email-subscribe');
+        $.post('{{ action }}', {'email': input.val()}, function (data) {
+            if (data.success) {
+            	toastr.success(data.success, '{{ success_heading }}');
+	            input.val('');
+            } else if (data.error) {
+	            toastr.error(data.error, '{{ error_heading }}');
+	            input.focus();
+            }
+        });
+	});
+</script>

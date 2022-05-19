@@ -1,0 +1,81 @@
+<div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCommentModalLabel">{{ text_edit_comment }}</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <textarea class="form-control pl-2 my-0" id="comment-message-edit" rows="3">{{ comment.getHtml() }}</textarea>
+            </div>
+            <div class="modal-footer pr-2">
+                <button type="button" class="btn btn-default mr-2"><i class="fa fa-reply"></i> {{ button_cancel }}</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        //    let h = screen.height - 400;
+        tinymce.init({
+            selector: '#comment-message-edit',
+            menubar: false,
+            height: 350,
+            plugins: [
+                'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                'save table directionality emoticons template paste'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+            language: '{{ code }}'
+        });
+
+        function closeEditModal() {
+            $('#editCommentModal').modal('hide');
+        }
+
+        $('#editCommentModal .btn-default, #editCommentModal .close').on('click', function (e) {
+            e.preventDefault();
+            closeEditModal();
+        });
+
+        $('#editCommentModal .btn-primary').on('click', function (e) {
+            e.preventDefault();
+            let icon = $(this).find('i');
+            icon.removeClass('fa-save').addClass('fa-circle-notch fa-spin');
+            let message = tinyMCE.get('comment-message-edit').getContent();
+            if (parseInt(message.length) > 50) {
+                $.post('{{ href_ajax_edit_comment }}',
+                    {
+                        'text' : message,
+                        'comment_id' : '{{ comment.getId() }}',
+                        'uid' : '{{ uid }}',
+                    },
+                    function (data) {
+                        console.log(data);
+                        if (data.success) {
+                            $('#comment-text-{{ comment.getId() }}').html(message);
+                            closeEditModal();
+                            toastr.success('{{ success_edit_comment }}', '{{ success_heading }}');
+                        } else {
+                            toastr.error('{{ error_get_comment_modal }}', '{{ error_heading }}');
+                        }
+                        icon.removeClass('fa-circle-notch fa-spin').addClass('fa-save');
+                    }
+                );
+            } else {
+                toastr.error('{{ error_empty_message }}', '{{ error_heading }}');
+                icon.removeClass('fa-circle-notch fa-spin').addClass('fa-save');
+            }
+        });
+
+        $('#editCommentModal').on('hidden.bs.modal', function (e) {
+            tinymce.get('comment-message-edit').remove();
+            setTimeout(function () {
+                $('#editCommentModal').off('hidden.bs.modal');
+                $('#editCommentModal').remove();
+            }, 100);
+        });
+    </script>
+</div>

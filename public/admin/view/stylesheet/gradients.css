@@ -1,0 +1,136 @@
+.juicy-peach-gradient {
+    background-image: -webkit-gradient(linear, left top, right top, from(#ffecd2), to(#fcb69f));
+    background-image: -webkit-linear-gradient(left, #ffecd2 0%, #fcb69f 100%);
+    background-image: -o-linear-gradient(left, #ffecd2 0%, #fcb69f 100%);
+    background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+}
+
+.young-passion-gradient {
+    background-image: -webkit-gradient(linear, left top, right top, from(#ff8177), color-stop(0%, #ff867a), color-stop(21%, #ff8c7f), color-stop(52%, #f99185), color-stop(78%, #cf556c), to(#b12a5b));
+    background-image: -webkit-linear-gradient(left, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
+    background-image: -o-linear-gradient(left, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
+    background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
+}
+
+.lady-lips-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#ff9a9e), color-stop(99%, #fecfef), to(#fecfef));
+    background-image: -webkit-linear-gradient(bottom, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    background-image: -o-linear-gradient(bottom, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+}
+
+.sunny-morning-gradient {
+    background-image: -webkit-linear-gradient(330deg, #f6d365 0%, #fda085 100%);
+    background-image: -o-linear-gradient(330deg, #f6d365 0%, #fda085 100%);
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+.rainy-ashville-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a6c1ee));
+    background-image: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a6c1ee 100%);
+    background-image: -o-linear-gradient(bottom, #fbc2eb 0%, #a6c1ee 100%);
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+.frozen-dreams-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#fdcbf1), color-stop(1%, #fdcbf1), to(#e6dee9));
+    background-image: -webkit-linear-gradient(bottom, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+    background-image: -o-linear-gradient(bottom, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+    background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+}
+
+.warm-flame-gradient {
+    background-image: -webkit-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-image: -o-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+
+.night-fade-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#a18cd1), to(#fbc2eb));
+    background-image: -webkit-linear-gradient(bottom, #a18cd1 0%, #fbc2eb 100%);
+    background-image: -o-linear-gradient(bottom, #a18cd1 0%, #fbc2eb 100%);
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+
+.spring-warmth-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#fad0c4), to(#ffd1ff));
+    background-image: -webkit-linear-gradient(bottom, #fad0c4 0%, #ffd1ff 100%);
+    background-image: -o-linear-gradient(bottom, #fad0c4 0%, #ffd1ff 100%);
+    background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+}
+
+.winter-neva-gradient {
+    background-image: -webkit-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+    background-image: -o-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+
+.dusty-grass-gradient {
+    background-image: -webkit-linear-gradient(330deg, #d4fc79 0%, #96e6a1 100%);
+    background-image: -o-linear-gradient(330deg, #d4fc79 0%, #96e6a1 100%);
+    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+}
+
+.tempting-azure-gradient {
+    background-image: -webkit-linear-gradient(330deg, #84fab0 0%, #8fd3f4 100%);
+    background-image: -o-linear-gradient(330deg, #84fab0 0%, #8fd3f4 100%);
+    background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+.heavy-rain-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#cfd9df), to(#e2ebf0));
+    background-image: -webkit-linear-gradient(bottom, #cfd9df 0%, #e2ebf0 100%);
+    background-image: -o-linear-gradient(bottom, #cfd9df 0%, #e2ebf0 100%);
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+.amy-crisp-gradient {
+    background-image: -webkit-linear-gradient(330deg, #a6c0fe 0%, #f68084 100%);
+    background-image: -o-linear-gradient(330deg, #a6c0fe 0%, #f68084 100%);
+    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+}
+
+.mean-fruit-gradient {
+    background-image: -webkit-linear-gradient(330deg, #fccb90 0%, #d57eeb 100%);
+    background-image: -o-linear-gradient(330deg, #fccb90 0%, #d57eeb 100%);
+    background-image: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+}
+
+.deep-blue-gradient {
+    background-image: -webkit-linear-gradient(330deg, #e0c3fc 0%, #8ec5fc 100%);
+    background-image: -o-linear-gradient(330deg, #e0c3fc 0%, #8ec5fc 100%);
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+.ripe-malinka-gradient {
+    background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+    background-image: -o-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+    background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+}
+
+.cloudy-knoxville-gradient {
+    background-image: -webkit-linear-gradient(330deg, #fdfbfb 0%, #ebedee 100%);
+    background-image: -o-linear-gradient(330deg, #fdfbfb 0%, #ebedee 100%);
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.morpheus-den-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#30cfd0), to(#330867));
+    background-image: -webkit-linear-gradient(bottom, #30cfd0 0%, #330867 100%);
+    background-image: -o-linear-gradient(bottom, #30cfd0 0%, #330867 100%);
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+}
+
+.rare-wind-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#a8edea), to(#fed6e3));
+    background-image: -webkit-linear-gradient(bottom, #a8edea 0%, #fed6e3 100%);
+    background-image: -o-linear-gradient(bottom, #a8edea 0%, #fed6e3 100%);
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+}
+
+.near-moon-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#5ee7df), to(#b490ca));
+    background-image: -webkit-linear-gradient(bottom, #5ee7df 0%, #b490ca 100%);
+    background-image: -o-linear-gradient(bottom, #5ee7df 0%, #b490ca 100%);
+    background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
+}

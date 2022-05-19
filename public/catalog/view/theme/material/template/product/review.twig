@@ -1,0 +1,31 @@
+{% if reviews %}
+<div class="card-columns pt-2">
+    {% for review in reviews %}
+    <div class="card card-review">
+        <div class="d-flex justify-content-center pt-3">
+            <img class="img-round img-thumbnail avatar-lg" src="{{ review.avatar }}" alt="{{ review.author }}">
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-center rating">
+                {% for i in 1..5 %}
+                    {% if review.rating < i %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                    {% else %}
+                        <span class="fa fa-stack">
+                            <i class="fa fa-star fa-stack-2x"></i>
+                            <i class="fa fa-star-o fa-stack-2x"></i>
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <h6 class="card-title text-center">{{ review.author }}</h6>
+            <div class="text-center"><small>{{ review.date_added }}</small></div>
+            <blockquote class="card-text text-justify">{{ review.text }}</blockquote>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="d-flex justify-content-end align-items-start rating-pagination">{{ pagination }}</div>
+{% else %}
+    <p class="text-center">{{ text_no_reviews }}</p>
+{% endif %}

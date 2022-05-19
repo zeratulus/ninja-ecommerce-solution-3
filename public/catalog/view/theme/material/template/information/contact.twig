@@ -1,0 +1,174 @@
+{{ header }}
+<div id="information-contact" class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+    </ol>
+  </nav>
+  <div class="row">
+    {{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+
+      <div class="card card-body" style="margin-bottom: 10px;">
+        <div class="row">
+
+          <div class="col-sm-12 col-md-4">
+            {% if image %}
+            <div class="d-flex justify-content-center align-items-center">
+              <img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-fluid" />
+            </div>
+            {% endif %}
+
+            <h4>{{ text_location }}</h4>
+
+            <strong>{{ store }}</strong><br />
+            <address>
+              {{ address }}
+            </address>
+
+            {% if open %}
+            <strong>{{ text_open }}</strong><br />
+            {{ open }}<br />
+            <br />
+            {% endif %}
+
+            <strong>{{ text_telephone }}</strong><br>
+            {% for telephone in telephones %}
+              <a href="tel:{{ telephone.href }}">{{ telephone.telephone }}</a><br />
+            {% endfor %}
+            <br />
+            {% if fax %}
+              <strong>{{ text_fax }}</strong><br>
+              {{ fax }}
+            {% endif %}
+          </div>
+
+          <div class="col-sm-12 col-md-8" id="map">
+            {% if geocode %}{{ geocode }}{% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      {% if locations %}
+      <h3>{{ text_store }}</h3>
+      <div class="panel-group" id="accordion">
+        {% for location in locations %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
+            <div class="panel-body">
+              <div class="row">
+                {% if location.image %}
+                <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" /></div>
+                {% endif %}
+                <div class="col-sm-3"><strong>{{ location.name }}</strong><br />
+                  <address>
+                  {{ location.address }}
+                  </address>
+                  {% if location.geocode %}
+                  <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+                  {% endif %}
+                </div>
+                <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br>
+                  {{ location.telephone }}<br />
+                  <br />
+                  {% if location.fax %}
+                  <strong>{{ text_fax }}</strong><br>
+                  {{ location.fax }}
+                  {% endif %}
+                </div>
+                <div class="col-sm-3">
+                  {% if location.open %}
+                  <strong>{{ text_open }}</strong><br />
+                  {{ location.open }}<br />
+                  <br />
+                  {% endif %}
+                  {% if location.comment %}
+                  <strong>{{ text_comment }}</strong><br />
+                  {{ location.comment }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="card card-body">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-12 col-md-4">
+              <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-contact">
+                <fieldset>
+                  <legend>{{ text_contact }}</legend>
+                  <div class="form-group required">
+                    <label class="col-sm-12 control-label label-small" for="input-name">{{ entry_name }}</label>
+                    <div class="col-sm-12">
+                      <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" required />
+                      {% if error_name %}
+                        <div class="text-danger">{{ error_name }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-12 control-label label-small" for="input-email">{{ entry_email }}</label>
+                    <div class="col-sm-12">
+                      <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" required />
+                      {% if error_email %}
+                        <div class="text-danger">{{ error_email }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-12 control-label label-small" for="input-enquiry">{{ entry_enquiry }}</label>
+                    <div class="col-sm-12">
+                      <textarea name="enquiry" rows="5" id="input-enquiry" class="form-control" required>{{ enquiry }}</textarea>
+                      {% if error_enquiry %}
+                        <div class="text-danger">{{ error_enquiry }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    {{ captcha }}
+                  </div>
+                </fieldset>
+                <div class="d-flex justify-content-center">
+                  <input class="btn btn-primary" type="submit" value="{{ button_submit }}" />
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-12 col-md-8">
+              {% if comment %}{{ comment }}{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+<script>
+  $('#form-contact').bootstrapValidator({
+    feedbackIcons: {
+      valid: 'fa fa-check',
+      invalid: 'fa fa-times',
+      validating: 'fa fa-refresh'
+    },
+    live: 'enabled'
+  });
+</script>
+{{ footer }}

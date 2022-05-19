@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <base href="{{ base }}"/>
+    {% if description %}
+        <meta name="description" content="{{ description }}"/>
+    {% endif %}
+    {% if keywords %}
+        <meta name="keywords" content="{{ keywords }}"/>
+    {% endif %}
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ og_url }}" />
+    {% if og_image %}
+        <meta property="og:image" content="{{ og_image }}" />
+    {% else %}
+        <meta property="og:image" content="{{ logo }}" />
+    {% endif %}
+    <meta property="og:site_name" content="{{ name }}" />
+    {{ hreflang }}
+    <script defer src="catalog/view/javascript/jquery/jquery-3.4.1.min.js"></script>
+    <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <script defer src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+    <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    {% for style in styles %}
+        <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+    {% endfor %}
+    {% for script in scripts %}
+        <script src="{{ script.href }}" {{ script.options }}></script>
+    {% endfor %}
+    {% for link in links %}
+        <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+    {% endfor %}
+    <link href="catalog/view/theme/default/assets/stylesheet/stylesheet.css" rel="stylesheet">
+    {% if debugbar %}
+        {{ debugbar.renderHead(true) }}
+    {% endif %}
+</head>
+<body>
+{% if route == 'product/product' %}
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<header>
+    <div class="container">
+        {{ currency }}
+        {{ language }}
+        <div class="flex-center">
+            <div id="logo">
+                {% if logo %}
+                    <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></a>
+                {% else %}
+                    <h1><a href="{{ home }}">{{ name }}</a></h1>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row" id="branding-top">
+            <div class="col-sm-4 flex-start-center">
+                <a href="https://www.facebook.com/profile.php?id=100068814015879" class="btn-social flex-center" target="_blank">
+                    <i class="fa fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/pollyart_store/" class="btn-social flex-center" target="_blank">
+                    <i class="fa fa-instagram"></i>
+                </a>
+            </div>
+            <div class="col-sm-4">{{ search }}</div>
+            <div class="col-sm-4">{{ cart }}</div>
+        </div>
+    </div>
+</header>
+{{ menu }}
+<a class="btn-main-menu"><i class="fa fa-navicon"></i></a>
+<nav class="main-menu">
+    <a href="{{ home }}">{{ text_home }}</a>
+    <a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}">{{ text_shopping_cart }}</a>
+    <a href="{{ checkout }}" title="{{ text_checkout }}">{{ text_checkout }}</a>
+    <a href="{{ contact }}">{{ text_contact }}</a>
+    {{ blog_menu }}
+    {% if logged %}
+        <a href="{{ account }}">{{ text_account }}</a>
+        <a href="{{ logout }}">{{ text_logout }}</a>
+    {% else %}
+        <a href="{{ register }}">{{ text_register }}</a>
+        <a href="{{ login }}">{{ text_login }}</a>
+    {% endif %}
+    <img src="image/design/bg/flover1.png" alt="PollyArt Flower" class="flower">
+</nav>
+<div class="main-container">

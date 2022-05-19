@@ -1,0 +1,599 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="fw d-flex justify-content-between align-items-center">
+                <h1>{{ heading_title }}</h1>
+                <div class="pull-right">
+                    {% if user.permissions.isCreate() %}
+                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-sm btn-primary">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.permissions.isWrite() %}
+                    <a href="{{ project.getEditLink() }}" data-toggle="tooltip" title="{{ text_edit_project }}" class="btn btn-floating circle btn-sm btn-primary">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.isAdmin() %}
+                    <a href="{{ setting }}" data-toggle="tooltip" title="{{ button_settings }}" class="btn btn-floating circle btn-sm btn-warning">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                    {% endif %}
+                    {% if user.permissions.isDelete() %}
+                    <button type="button" form="form-tickets" formaction="{{ delete }}" data-toggle="tooltip"
+                            title="{{ button_delete }}" class="btn btn-floating circle btn-sm btn-default"
+                            onclick="confirm('{{ text_confirm }}') ? $('#form-tickets').submit() : false;">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="container-fluid mt-5">
+
+        <!-- First row -->
+        <div class="card">
+            <div class="card-header text-white {{ project.getColorCss() }}">
+                <div class="tickets-card-header">
+                    <h3 class="font-weight-500 my-1 white-text"><i class="fa {{ project.getIconCss() }}"></i> {{ project.getTitle() }}</h3>
+                    <div id="counter-{{ project.getId() }}"></div>
+                    <script type="text/javascript">
+                        $("#counter-{{ project.getId() }}").countdown("{{ project.getCreatedCounter() }}", {
+                            elapse: true,
+                        }).on('update.countdown', function(event) {
+                            $("#counter-{{ project.getId() }}").html('<h2><span class="badge badge-pill {{ project.getColorCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</span></h2>');
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-7">
+                        <h5>{{ text_created }}: {{ project.getCreatedString() }}</h5>
+                        <h5 class="flex-start flex-v-center"><span class="badge ticket-info primary-color">{{ project.getTotalTickets() }}</span> - {{ text_tickets_total }}</h5>
+                        <h5 class="flex-start flex-v-center"><span class="badge ticket-info primary-color">{{ project.getCompletedTasksPercents() }}%</span> - {{ text_tickets_completed }}</h5>
+                        <div class="fw">{{ project.getDescriptionHtml() }}</div>
+                    </div>
+                    <div class="col-sm-12 col-md-5">
+                        <div class="container pt-2">
+
+                            <ul class="nav nav-tabs nav-tabs-justified" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab-categories-stats" data-toggle="tab" href="#categories-stats" role="tab">{{ text_categories }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-statuses-chart" data-toggle="tab" href="#statuses-chart" role="tab">{{ text_statuses }}</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content card pt-5">
+
+                                <div class="tab-pane fade" id="statuses-chart" role="tabpanel">
+                                    <h5 class="text-center">{{ text_status_statistics }}</h5>
+                                    <div class="pb-4" style="min-height: 250px;">
+                                        <div id="chart-statuses" style="height: 100%;"></div>
+                                    </div>
+                                    <script>
+                                        var chartStatuses = new frappe.Chart("#chart-statuses", {
+                                            data: {
+                                                labels: [
+                                                    "{{ text_tickets_new }}: {{ project.getNewTasks }}",
+                                                    "{{ text_tickets_progress }}: {{ project.getProgressTasks() }}",
+                                                    "{{ text_tickets_completed }}: {{ project.getCompletedTasks() }}",
+                                                    "{{ text_tickets_canceled }}: {{ project.getCancelledTasks() }}"
+                                                ],
+                                                datasets: [
+                                                    {
+                                                        name: '{{ text_status_statistics }}',
+                                                        values: [
+                                                            {{ project.getNewTasksPercents() }},
+                                                            {{ project.getProgressTasksPercents() }},
+                                                            {{ project.getCompletedTasksPercents() }},
+                                                            {{ project.getCancelledTasksPercents() }}
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            title: '',
+                                            type: 'pie',
+                                            colors: ['#f44336','#e91e63','#9c27b0', '#666'],
+                                            height: 300
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="tab-pane fade show active" id="categories-stats" role="tabpanel">
+                                    <h4 class="text-center">{{ text_tickets_categories }}</h4>
+                                    <ul class="striped list-unstyled">
+                                        {% for category in categories %}
+                                            <li class="fw pl-4 pr-4">
+                                                <a href="{{ category.getFilterHref() }}">
+                                                    <div class="fw d-flex justify-content-between align-items-center">
+                                                        {{ category.getTitle() }}
+                                                        <span class="badge round-sm bg-primary">{{ category.getTicketsTotal() }}</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                {% if heatmap is not empty %}
+                <div class="col-sm-12">
+                    <div class="heat-map" id="heatmap">{{ chk }}</div>
+                    <script>
+                        let heatmap = new frappe.Chart("#heatmap", {
+                            type: 'heatmap',
+                            title: "",
+                            data: {
+                                dataPoints: {
+                                    {% for time, num in heatmap %}
+                                    {{ time }}: {{ num }},
+                                    {% endfor %}
+                                },
+                                //TODO: object with timestamp-value pairs on DB data select
+                                start: new Date({{ year }}, 1, 1),
+                                end: new Date({{ year }}, 12, 31)     // Date objects
+                            },
+                            countLabel: 'Level'
+                        });
+                    </script>
+                </div>
+                {% endif %}
+
+                <div class="col-sm-12 mt-3">
+                    <div class="row">
+                        <hr class="fw">
+                        <div class="col-sm-12">
+                            <form action="{{ filter_action }}" method="get" class="row" id="form-filter">
+                                <input type="hidden" name="route" value="{{ route }}">
+                                <input type="hidden" name="project_id" value="{{ project_id }}">
+                                <input type="hidden" name="user_token" value="{{ user_token }}">
+
+                                <!-- Filter By Category -->
+                                <div class="col-sm-12 col-md-3">
+                                    <label class="control-label">{{ text_filter_category }}</label>
+                                    <select name="filter_category" class="selectpicker" data-width="100%">
+                                        <option value="" {% if filter_category == -1 %} selected{% endif %}>{{ text_filter_category_all }}</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.getId() }}" {% if filter_category == category.getId() %} selected{% endif %}>{{ category.getTitle() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Filter By Status -->
+                                <div class="col-sm-12 col-md-3">
+                                    <label class="control-label">{{ text_filter_status }}</label>
+                                    <select name="filter_status" class="selectpicker" data-width="100%">
+                                        <option value="" {% if filter_status == 0 %} selected{% endif %}>{{ text_filter_status_all }}</option>
+                                        {% for status in statuses %}
+                                            <option value="{{ status.getId() }}" {% if filter_status == status.getId() %} selected{% endif %}>{{ status.getTitle() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Filter By User Created -->
+                                <div class="col-sm-12 col-md-3">
+                                    <label class="control-label">{{ text_filter_user_created_by }}</label>
+                                    <select name="filter_user_created" class="selectpicker" data-width="100%">
+                                        <option value="" {% if filter_user_created == -1 %} selected{% endif %}>{{ text_filter_all_users }}</option>
+                                        <option value="{{ user.getId() }}" {% if filter_user_created == user.getId() %} selected{% endif %}>{{ text_filter_created_by_me }}</option>
+                                        {% for usr in users %}
+                                            <option value="{{ usr.getId() }}" {% if filter_user_created == usr.getId() %} selected{% endif %}>{{ usr.getFullName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- Filter By User Delegated -->
+                                <div class="col-sm-12 col-md-3">
+                                    <label class="control-label">{{ text_filter_user_delegated }}</label>
+                                    <select name="filter_user_delegated" class="selectpicker" data-width="100%">
+                                        <option value="" {% if filter_user_delegated == -1 %} selected{% endif %}>{{ text_filter_all_users }}</option>
+                                        <option value="{{ user.getId() }}" {% if filter_user_delegated == user.getId() %} selected{% endif %}>{{ text_filter_my_tasks }}</option>
+                                        {% for usr in users %}
+                                            <option value="{{ usr.getId() }}" {% if filter_user_delegated == usr.getId() %} selected{% endif %}>{{ usr.getFullName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-start fw flex-wrap">
+                                    <!-- Filter By Title -->
+                                    <div class="col-sm-12 col-md-3">
+                                        <div class="form-group">
+                                            <!--<label class="bmd-label-floating" for="filter_name"><i class="fa fa-search"></i> {{ text_search_by_title }}</label>-->
+                                            <input type="text" name="filter_name" class="form-control" value="{{ filter_name }}" id="filter_name" placeholder="{{ text_search_by_title }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-3 fw d-flex justify-content-center align-items-center">
+                                        <!-- Filter As One Page -->
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="form-check-input" name="filter_as_one_page" id="filter_as_one_page" value="{{ filter_as_one_page }}" {% if filter_as_one_page %} checked {% endif %}>
+                                                {{ text_filter_as_one_page }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-6 tickets-filter-buttons">
+                                        <button type="reset" class="btn btn-pill btn-default"><i class="fa fa-times"></i> {{ button_clear }}</button>
+                                        <button type="button" class="btn btn-pill btn-success" id="btn-gant"><i class="fa fa-tasks"></i> {{ button_gant_diagram }}</button>
+                                        <button type="submit" class="btn btn-pill btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 pb-3">
+                        <form action="{{ delete }}" method="post" class="row" id="form-tickets">
+                        <div class="table-responsive">
+                            <table class="table table-tickets table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <td style="width: 1px;">
+                                        <div class="form-check m-0 p-0">
+                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" class="form-check-input" id="check-all">
+                                            <label class="form-check-label m-0 p-2" for="check-all"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if sort == 'id' %}
+                                            <a href="{{ sort_id }}{{ sort_dir_next }}"># {{ sort_icon }}</a>
+                                        {% else %}
+                                            <a href="{{ sort_id }}">#</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if sort == 'title' %}
+                                            <a href="{{ sort_title }}{{ sort_dir_next }}">{{ text_title }} {{ sort_icon }}</a>
+                                        {% else %}
+                                            <a href="{{ sort_title }}">{{ text_title }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if sort == 'category_id' %}
+                                            <a href="{{ sort_category_id }}{{ sort_dir_next }}">{{ text_category }} {{ sort_icon }}</a>
+                                        {% else %}
+                                            <a href="{{ sort_category_id }}">{{ text_category }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if sort == 'status' %}
+                                            <a href="{{ sort_status }}{{ sort_dir_next }}">{{ text_status }} {{ sort_icon }}</a>
+                                        {% else %}
+                                            <a href="{{ sort_status }}">{{ text_status }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ text_delegated }}</td>
+                                    <td>{{ text_created }}</td>
+                                    <td class="text-right">{{ text_action }}</td>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% if tickets is not empty %}
+                                    {% for ticket in tickets %}
+                                        <tr class="{% if ticket.getStatus() == 2 %}table-warning{% endif %}{% if ticket.getStatus() == 3 %}table-success{% endif %}">
+                                            <td scope="row">
+                                                {% if ticket.getId() in selected %}
+                                                    <div class="form-check m-0 p-0">
+                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" checked="checked" class="form-check-input" id="checkbox{{ ticket.getId() }}">
+                                                        <label class="form-check-label m-0 p-2" for="checkbox{{ ticket.getId() }}"></label>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="form-check m-0 p-0">
+                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" class="form-check-input" id="checkbox{{ ticket.getId() }}">
+                                                        <label class="form-check-label m-0 p-2" for="checkbox{{ ticket.getId() }}"></label>
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                            <td><h5><span class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
+                                            <td>
+                                                <a href="{{ ticket.getTicketHref() }}">
+                                                    {{ ticket.getStatusIcon() }}
+                                                    <b> {{ ticket.getTitle() }} </b>
+                                                </a>
+                                                {% if ticket.getStatus() == 2 %}
+                                                <div id="counter-{{ ticket.getId() }}"></div>
+                                                <script type="text/javascript">
+                                                    $("#counter-{{ ticket.getId() }}").countdown("{{ ticket.getCounterTime() }}", {
+                                                        elapse: true,
+                                                    }).on('update.countdown', function(event) {
+                                                        $("#counter-{{ ticket.getId() }}").html('<div class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</div>');
+                                                    });
+                                                </script>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ ticket.getCategoryTitle() }}</td>
+                                            <td class="text-center">
+                                                <h5><span class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">{{ ticket.getStatusTitle() }}</span></h5>
+                                            </td>
+                                            <td>
+                                            {% if ticket.userDelegated is not null %}
+                                                <div class="avatar-block">
+                                                    <img src="{{ ticket.userDelegated.getAvatar() }}" alt="{{ ticket.userDelegated.getFullName() }}" class="img-round avatar-sm">
+                                                    <small>{{ ticket.userDelegated.getFullName() }}</small>
+                                                </div>
+                                            {% else %}
+                                                {{ text_not_assigned }}
+                                            {% endif %}
+                                            </td>
+                                            <td>
+                                                <div class="avatar-block">
+                                                    <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="img-round avatar-sm">
+                                                    <small>{{ ticket.userCreator.getFullName() }}</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex-center flex-v-center fw">
+                                                    {{ ticket.getViewAction() }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% if childs[ticket.getId()] is not empty %}
+                                        {% for child in childs[ticket.getId()] %}
+                                            <tr class="{% if child.getStatus() == 2 %}table-warning{% endif %}{% if child.getStatus() == 3 %}table-success{% endif %}">
+                                                <td scope="row">
+                                                    {% if child.getId() in selected %}
+                                                        <div class="form-check m-0 p-0">
+                                                            <input type="checkbox" name="selected[]" value="{{ child.getId() }}" checked="checked" class="form-check-input" id="checkbox{{ child.getId() }}">
+                                                            <label class="form-check-label m-0 p-2" for="checkbox{{ child.getId() }}"></label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="form-check m-0 p-0">
+                                                            <input type="checkbox" name="selected[]" value="{{ child.getId() }}" class="form-check-input" id="checkbox{{ child.getId() }}">
+                                                            <label class="form-check-label m-0 p-2" for="checkbox{{ child.getId() }}"></label>
+                                                        </div>
+                                                    {% endif %}
+                                                </td>
+                                                <td><h5><span class="badge badge-sm badge-pill {{ child.getStatusCss() }}">#{{ child.getId() }}</span></h5></td>
+                                                <td class="pl-3">
+                                                    <a href="{{ child.getTicketHref() }}">
+                                                        <i class="far fa-arrow-alt-circle-down"></i>
+                                                        {% if child.getStatus() == 3 %}
+                                                            <span><i class="fa fa-flag-checkered"></i></span>
+                                                        {% endif %}
+                                                        {% if child.getStatus() == 2 %}
+                                                            <span><i class="fa fa-play"></i></span>
+                                                        {% endif %}
+                                                        <b> {{ child.getTitle() }} </b>
+
+                                                        {% if child.getStatus() == 2 %}
+                                                        <div id="counter-{{ child.getId() }}"></div>
+                                                        <script type="text/javascript">
+                                                            $("#counter-{{ child.getId() }}").countdown("{{ child.getCounterTime() }}", {
+                                                                elapse: true,
+                                                            }).on('update.countdown', function(event) {
+                                                                $("#counter-{{ child.getId() }}").html('<div class="badge badge-sm badge-pill {{ child.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</div>');
+                                                            });
+                                                        </script>
+                                                        {% endif %}
+                                                </td>
+                                                <td>{{ child.getCategoryTitle() }}</td>
+                                                <td class="text-center">
+                                                    <h5><span class="badge badge-sm badge-pill {{ child.getStatusCss() }}">{{ child.getStatusTitle() }}</span></h5>
+                                                </td>
+
+
+                                                <td>
+                                                    {% if child.userDelegated is not null %}
+                                                        <div class="flex-center">
+                                                            <img src="{{ child.userDelegated.getAvatar() }}" alt="{{ child.userDelegated.getFullName() }}" class="avatar-sm img-round">
+                                                            <small>{{ child.userDelegated.getFullName() }}</small>
+                                                        </div>
+                                                    {% else %}
+                                                        {{ text_not_assigned }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <div class="flex-center">
+                                                        <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="avatar-sm img-round">
+                                                        <small>{{ ticket.userCreator.getFullName() }}</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="flex-center flex-v-center fw">
+                                                        {{ child.getViewAction() }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="8" class="text-center">{{ text_empty }}</td></tr>
+                                {% endif %}
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td style="width: 1px;">
+                                        </td>
+                                        <td>#</td>
+                                        <td>{{ text_title }}</td>
+                                        <td>{{ text_category }}</td>
+                                        <td>{{ text_status }}</td>
+                                        <td>{{ text_delegated }}</td>
+                                        <td>{{ text_created }}</td>
+                                        <td class="text-right">{{ text_action }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-left">
+                                            <p class="pb-0 mb-0">{{ text_query_stats }}:</p>
+                                            <h5><span class="badge badge-sm badge-pill warning-color">{{ text_tickets_progress }}: {{ in_progress_total_time }}</span></h5>
+                                            <h5><span class="badge badge-sm badge-pill success-color">{{ text_tickets_completed }}: {{ competed_total_time }}</span></h5>
+                                        </td>
+                                        <td colspan="5" class="text-right">
+                                            {{ pagination }}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- Second column -->
+
+        </div>
+        <!-- First row -->
+
+    </div>
+</div>
+<script>
+    $('#filter_as_one_page').on('change', function (e) {
+        switchButtonChange(e);
+    });
+
+    function heatmapTranslate() {
+        //Heatmap localisation
+        let days = {{ heatmap_days }};
+
+        $('.heatmap-chart text.subdomain-name').each(function () {
+            let key = $(this).text();
+            $(this).text(days[key]);
+        });
+
+        let months = {{ heatmap_months }};
+        $('.heatmap-chart text.domain-name').each(function () {
+            let key = $(this).text();
+            $(this).text(months[key].toUpperCase());
+        });
+        let chk = $('#heatmap .chart-legend text');
+        if (chk.length > 0) {
+            $('#heatmap .chart-legend text:first-child').attr('x', '-20').text('{{ text_less }}');
+            $('#heatmap .chart-legend text:last-child').text('{{ text_more }}');
+        }
+
+        $('#heatmap rect.day').on('click', function (e) {
+            getTimeLineModal(e);
+        });
+    }
+
+    $(window).on('resize', function () {
+        heatmapTranslate();
+    });
+
+    $('#filter-form button[type="reset"]').on('click', function (e) {
+        e.preventDefault();
+        let form = $('#filter-form');
+        form.find('select').val('');
+        form.find('input[type="text"]').val('');
+        toastr.success('{{ alert_reset_form_success }}', '{{ success_heading }}');
+    });
+
+    $('#btn-gant').on('click', function (e) {
+        e.preventDefault();
+        showPreloader();
+        $.post('{{ href_ajax_gant_diagram }}',
+            $('#filter-form').serialize(),
+            function (data) {
+                console.log(data);
+                if (data.success) {
+                    $('body').append(data.modal);
+                    $('#gantModal').modal('show');
+                    hidePreloader();
+                } else {
+                    toastr.error(data.errors);
+                    hidePreloader();
+                }
+            }
+
+        );
+        $('#btn-gant-day').click();
+    });
+
+    //Mobile filters buttons fix
+    function fixFilterButtons() {
+        if (screen.width <= 720) {
+            $('.tickets-filter-buttons button[type="reset"]').removeClass('btn-pill').addClass('btn-floating circle btn-sm');
+            $('.tickets-filter-buttons button[type="button"]').removeClass('btn-pill').addClass('btn-floating circle btn-sm');
+            $('.tickets-filter-buttons button[type="submit"]').removeClass('btn-pill').addClass('btn-floating circle btn-sm');
+        } else {
+            $('.tickets-filter-buttons button[type="reset"]').addClass('btn-pill').removeClass('btn-floating circle btn-sm');
+            $('.tickets-filter-buttons button[type="button"]').addClass('btn-pill').removeClass('btn-floating circle btn-sm');
+            $('.tickets-filter-buttons button[type="submit"]').addClass('btn-pill').removeClass('btn-floating circle btn-sm');
+        }
+    }
+
+    //Day TimeLine By HeatMap
+    function getTimeLineModal(e) {
+        e.preventDefault();
+        let el = $(e.target);
+        if (el.data('value') > 0) {
+            showPreloader();
+            $.post('{{ href_ajax_timeline }}',
+                {
+                    'timestamp': el.data('date')
+                },
+                function (data) {
+                    if (data.success) {
+                        $('body').append(data.modal);
+                        $('#dayTimeLineModal').modal('show');
+                        hidePreloader();
+                    } else {
+                        toastr.error(data.errors);
+                        hidePreloader();
+                    }
+                }
+            );
+        }
+    }
+
+    $(window).on('resize', function () {
+        fixFilterButtons();
+    });
+
+    $(document).ready(function () {
+        fixFilterButtons();
+
+        {% if success %}toastr.success('{{ success }}');{% endif %}
+        {% if error_warning %}toastr.error('{{ error_warning }}');{% endif %}
+
+        //first translate without resize... TODO: make better solution
+        setTimeout(function () {
+            heatmapTranslate();
+        }, 700);
+    });
+
+    $('#tab-statuses-chart').on('click', function () {
+        //fix of chart drawing
+        setTimeout(function () {
+            chartStatuses.draw(!0);
+        }, 700);
+    });
+</script>
+<style>
+    #statuses-chart .frappe-chart .legend-dataset-text {
+        display: block;
+    }
+</style>
+{{ footer }}

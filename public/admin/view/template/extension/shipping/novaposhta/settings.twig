@@ -1,0 +1,78 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-free" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+      {% if error_warning %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+    <div class="panel-body">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ calc }}">Новая Почта 2.0 API</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto navbar-right">
+            <li class="nav-item">
+              <a href="{{ calc }}" class="nav-link"><i class="fa fa-calculator"></i> Расчёт доставки</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ action }}" class="nav-link active"><i class="fa fa-cogs"></i> Настройки</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="warehousesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-home"></i> Отделения
+              </a>
+              <div class="dropdown-menu" aria-labelledby="warehousesDropdown">
+                <a href="{{ warehouses_href }}" class="dropdown-item"><i class="fa fa-list"></i> Список отделений</a>
+                <a href="{{ import }}" target="_blank" class="dropdown-item"><i class="fa fa-refresh"></i> Обновить</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-free" class="form-horizontal">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="API 2.0 Key">API 2.0 Key</span></label>
+          <div class="col-sm-10">
+            <input type="text" name="shipping_novaposhta_settings_api_key" value="{{ shipping_novaposhta_settings_api_key }}" placeholder="API 2.0 Key" class="form-control" />
+          </div>
+        </div>
+
+        <a id="clear" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Очистить список отделений</a>
+
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+<script>
+  $('#clear').on('click', function () {
+      if (confirm('Вы действительно хотите удалить всё отделения?!')) {
+          window.location.href = '{{ clear_warehouses }}';
+      }
+  });
+</script>
+{{ footer }}
