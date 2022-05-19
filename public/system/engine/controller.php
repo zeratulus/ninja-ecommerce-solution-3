@@ -13,8 +13,6 @@
 abstract class Controller {
 	protected \Registry $registry;
 
-    public \Config $config;
-
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
