@@ -6,7 +6,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xl-5 col-md-8">
-            <form class="bg-white-transparent rounded shadow-5-strong p-5">
+            <form class="bg-white-transparent rounded shadow-5-strong p-5" action="{{ action }}" method="post" enctype="multipart/form-data">
               <h2>{{ text_login }}</h2>
 
               {% if error_warning %}
@@ -17,13 +17,13 @@
 
               <!-- Email input -->
               <div class="form-outline mb-4">
-                <input type="text" id="input-login" class="form-control" />
+                <input name="username" type="text" id="input-login" class="form-control" />
                 <label class="form-label" for="input-login">{{ entry_username }}</label>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" id="input-password" class="form-control" />
+                <input name="password" type="password" id="input-password" class="form-control" />
                 <label class="form-label" for="input-password">{{ entry_password }}</label>
               </div>
 
