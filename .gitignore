@@ -11,3 +11,5 @@ storage/session/
 storage/vendor/
 
 *.log
+
+dev.txt

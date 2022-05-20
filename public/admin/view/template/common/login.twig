@@ -10,9 +10,7 @@
               <h2>{{ text_login }}</h2>
 
               {% if error_warning %}
-                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
+                <p class="note note-danger note-sm">{{ error_warning }}</p>
               {% endif %}
 
               <!-- Email input -->
