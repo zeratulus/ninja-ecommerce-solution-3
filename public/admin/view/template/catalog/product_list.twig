@@ -19,74 +19,80 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
-    {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
-    <div class="row">
-      <div id="filter-product" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label class="control-label" for="input-name">{{ entry_name }}</label>
-			  <div class="input-group">
-                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-                <div class="input-group-btn">
-                      <button type="button" id="button-clear-input-name" class="btn btn-default"><i class="fa fa-times"></i></button>
-                </div>
-			  </div>
-			</div>
-            <div class="form-group">
-              <label class="control-label" for="input-model">{{ entry_model }}</label>
-			  <div class="input-group">
-                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-                <div class="input-group-btn">
-                  <button type="button" id="button-clear-input-model" class="btn btn-default"><i class="fa fa-times"></i></button>
-                </div>
-              </div>
-            </div>
+  <div class="container-fluid">
 
-			<div class="form-group">
-                <label class="control-label" for="input-category-name">{{ entry_category }}</label>
-				<div class="input-group">
-                  <input type="text" name="filter_category_name" value="{{ filter_category_name }}" placeholder="{{ entry_category }}" id="input-category-name" class="form-control" />
-                  <div class="input-group-btn">
-                    <button type="button" id="button-clear-input-category-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+    {% if error_warning %}
+      <p class="note note-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</p>
+    {% endif %}
+
+    {% if success %}
+      <p class="note note-success"><i class="fa fa-check-circle"></i> {{ success }}</p>
+    {% endif %}
+
+    <div class="row">
+      <div id="filter-product" class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="input-name">{{ entry_name }}</label>
+                  <div class="input-group">
+                    <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+                    <div class="input-group-btn">
+                      <button type="button" id="button-clear-input-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </div>
                   </div>
                 </div>
-                <input type="hidden" name="filter_category" value="{{ filter_category }}" id="input-category" class="form-control" />
-            </div>
 
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="filter_sub_category" id="input-sub-category" class="form-control"{{ filter_sub_category}} {% if filter_sub_category %} checked="checked" {% endif %} />
-                  <span class="checkbox-decorator"><span class="check"></span></span>
-                    {{ entry_sub_category }}
-                </label>
+                <div class="form-group">
+                  <label class="control-label" for="input-model">{{ entry_model }}</label>
+                  <div class="input-group">
+                    <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+                    <div class="input-group-btn">
+                      <button type="button" id="button-clear-input-model" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label" for="input-category-name">{{ entry_category }}</label>
+                  <div class="input-group">
+                    <input type="text" name="filter_category_name" value="{{ filter_category_name }}" placeholder="{{ entry_category }}" id="input-category-name" class="form-control" />
+                    <div class="input-group-btn">
+                      <button type="button" id="button-clear-input-category-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <input type="hidden" name="filter_category" value="{{ filter_category }}" id="input-category" class="form-control" />
+                </div>
               </div>
 
-			<div class="form-group">
-              <label class="control-label" for="input-manufacturer-name">{{ entry_manufacturer }}</label>
-			  <div class="input-group">
-				<input type="text" name="filter_manufacturer_name" value="{{ filter_manufacturer_name }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control" />
-				
-				<div class="input-group-btn">
-                    <button type="button" id="button-clear-input-manufacturer" class="btn btn-default"><i class="fa fa-times"></i></button>
-				</div>
-				  <input type="hidden" name="filter_manufacturer_id" value="{{ filter_manufacturer_id }}" id="input-manufacturer-id" class="form-control" />
-				</div>
-			</div>
-				
-			<!--
+              <div class="col-sm-12 col-md-4">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="filter_sub_category" id="input-sub-category" class="form-control"{{ filter_sub_category}} {% if filter_sub_category %} checked="checked" {% endif %} />
+                    <span class="checkbox-decorator"><span class="check"></span></span>
+                    {{ entry_sub_category }}
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label" for="input-manufacturer-name">{{ entry_manufacturer }}</label>
+                  <div class="input-group">
+                    <input type="text" name="filter_manufacturer_name" value="{{ filter_manufacturer_name }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control" />
+
+                    <div class="input-group-btn">
+                      <button type="button" id="button-clear-input-manufacturer" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </div>
+                    <input type="hidden" name="filter_manufacturer_id" value="{{ filter_manufacturer_id }}" id="input-manufacturer-id" class="form-control" />
+                  </div>
+                </div>
+
+                <!--
 			<div class="form-group">
                 <label class="control-label" for="input-manufacturer-name">{{ entry_manufacturer }}</label>
                 <div class="input-group">
@@ -98,94 +104,101 @@
                 <input type="hidden" name="filter_manufacturer" value="{{ filter_manufacturer_name }}" id="input-manufacturer" class="form-control" />
               </div>
 			  -->
+              </div>
 
-			<div class="form-group">
-                <label class="control-label" for="input-price">{{ entry_price }}</label>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                      <input type="text" name="filter_price_min" value="{{ filter_price_min }}" placeholder="{{ entry_min }}" id="input-price-min" class="form-control" />
-                      <div class="input-group-btn">
-                        <button type="button" id="button-clear-input-price-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="input-price">{{ entry_price }}</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <input type="text" name="filter_price_min" value="{{ filter_price_min }}" placeholder="{{ entry_min }}" id="input-price-min" class="form-control" />
+                        <div class="input-group-btn">
+                          <button type="button" id="button-clear-input-price-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-6 pull-right">
-                    <div class="input-group">
-                      <input type="text" name="filter_price_max" value="{{ filter_price_max }}" placeholder="{{ entry_max }}" id="input-price-max" class="form-control" />
-                      <div class="input-group-btn">
-                        <button type="button" id="button-clear-input-price-max" class="btn btn-default"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-			</div>
-			<div class="form-group">
-                <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                      <input type="text" name="filter_quantity_min" value="{{ filter_quantity_min }}" placeholder="{{ entry_min }}" id="input-quantity-min" class="form-control" />
-                      <div class="input-group-btn">
-                        <button type="button" id="button-clear-input-quantity-min" class="btn btn-default"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6 pull-right">
-                    <div class="input-group">
-                      <input type="text" name="filter_quantity_max" value="{{ filter_quantity_max }}" placeholder="{{ entry_max }}" id="input-quantity-max" class="form-control" />
-                      <div class="input-group-btn">
-                        <button type="button" id="button-clear-input-quantity-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    <div class="col-sm-6 pull-right">
+                      <div class="input-group">
+                        <input type="text" name="filter_price_max" value="{{ filter_price_max }}" placeholder="{{ entry_max }}" id="input-price-max" class="form-control" />
+                        <div class="input-group-btn">
+                          <button type="button" id="button-clear-input-price-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-			</div>
-            <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-control">
-                <option value=""></option>
-                  {% if filter_status == '1' %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
-                  {% if filter_status == '0' %}
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                  {% else %}
-                <option value="0">{{ text_disabled }}</option>
-                  {% endif %}
-              </select>
+                <div class="form-group">
+                  <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <input type="text" name="filter_quantity_min" value="{{ filter_quantity_min }}" placeholder="{{ entry_min }}" id="input-quantity-min" class="form-control" />
+                        <div class="input-group-btn">
+                          <button type="button" id="button-clear-input-quantity-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 pull-right">
+                      <div class="input-group">
+                        <input type="text" name="filter_quantity_max" value="{{ filter_quantity_max }}" placeholder="{{ entry_max }}" id="input-quantity-max" class="form-control" />
+                        <div class="input-group-btn">
+                          <button type="button" id="button-clear-input-quantity-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="input-status">{{ entry_status }}</label>
+                  <select name="filter_status" id="input-status" class="form-control">
+                    <option value=""></option>
+                    {% if filter_status == '1' %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                    {% endif %}
+                    {% if filter_status == '0' %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="0">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="input-noindex">{{ entry_noindex }}</label>
+                  <select name="filter_noindex" id="input-noindex" class="form-control">
+                    <option value=""></option>
+                    {% if filter_noindex == '1' %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                    {% endif %}
+                    {% if filter_noindex == '0' %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="0">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+
             </div>
-			<div class="form-group">
-              <label class="control-label" for="input-noindex">{{ entry_noindex }}</label>
-              <select name="filter_noindex" id="input-noindex" class="form-control">
-                <option value=""></option>
-                  {% if filter_noindex == '1' %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
-                  {% if filter_noindex == '0' %}
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                  {% else %}
-                <option value="0">{{ text_disabled }}</option>
-                  {% endif %}
-              </select>
-			</div>
-            <div class="form-group text-right">
+
+            <div class="d-flex justify-content-end">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
 			  <button type="button" id="button-clear-filter" class="btn btn-default"><i class="fa fa-times"></i><span class="hidden-sm"> {{ button_clear }}</span></button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-product">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
