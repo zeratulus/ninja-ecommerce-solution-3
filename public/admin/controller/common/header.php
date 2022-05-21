@@ -50,6 +50,15 @@ class ControllerCommonHeader extends \Ninja\AdminController
             $data['text_settings'] = $this->getLanguage()->get('text_setting');
             $data['href_settings'] = $this->getUrl()->link('setting/store', 'user_token=' . $this->getUserToken());
 
+            $data['text_language'] = $this->getLanguage()->get('text_language');
+            $data['href_language'] = $this->getUrl()->link('localisation/language', 'user_token=' . $this->getUserToken());
+
+            $data['text_currency'] = $this->getLanguage()->get('text_currency');
+            $data['href_currency'] = $this->getUrl()->link('localisation/currency', 'user_token=' . $this->getUserToken());
+
+            $data['text_customer'] = $this->getLanguage()->get('text_customer');
+            $data['href_customer'] = $this->getUrl()->link('customer/customer', 'user_token=' . $this->getUserToken());
+
             $this->load->model('user/user');
 	
 			$this->load->model('tool/image');

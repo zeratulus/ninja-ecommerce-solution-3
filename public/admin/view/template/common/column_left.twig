@@ -25,7 +25,7 @@
                             {% if children_1.children %}
                                 {% for children_2 in children_1.children %}
                                     {% if children_2.href %}
-                                        <a class="list-group-item list-group-item-action py-2 ripple" href="{{ children_2.href }}">{{ children_2.name }}</a>
+                                        <a class="list-group-item list-group-item-action py-2 ripple" href="{{ children_2.href }}"> - {{ children_2.name }}</a>
                                     {% else %}
                                         <a class="list-group-item list-group-item-action py-2 ripple" disabled="true"> - {{ children_2.name }}</a>
                                     {% endif %}
