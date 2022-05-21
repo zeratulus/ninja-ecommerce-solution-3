@@ -129,3 +129,46 @@ body::-webkit-scrollbar-thumb {
 #btn-main-menu {
     cursor: pointer;
 }
+.card-deck {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.classic-admin-card.project-card > * {
+    color: rgba(0,0,0,0.8);
+}
+.classic-admin-card.project-card > *:hover {
+    color: rgba(0,0,0,1);
+
+}
+.classic-admin-card.project-card:hover {
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.4);
+}
+.classic-admin-card.project-card {
+    position: relative;
+    padding: 5px;
+}
+.classic-admin-card.project-card .btn-edit .fa {
+    font-size: 18px;
+    color: #fff;
+}
+.classic-admin-card.project-card .btn-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.avatar.avatar-sm {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+}
+.btn.btn-floating.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

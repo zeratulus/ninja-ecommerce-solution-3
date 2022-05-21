@@ -47,6 +47,9 @@ class ControllerCommonHeader extends \Ninja\AdminController
 			$data['projects'] = $this->getUrl()->link('support/projects', 'user_token=' . $this->session->data['user_token']);
             $data['text_projects'] = $this->getLanguage()->get('text_projects');
 
+            $data['text_settings'] = $this->getLanguage()->get('text_setting');
+            $data['href_settings'] = $this->getUrl()->link('setting/store', 'user_token=' . $this->getUserToken());
+
             $this->load->model('user/user');
 	
 			$this->load->model('tool/image');

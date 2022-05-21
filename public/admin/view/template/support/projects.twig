@@ -18,11 +18,11 @@
                 </div>
             </div>
 
-            <ul class="breadcrumb">
+            <ol class="breadcrumb">
                 {% for breadcrumb in breadcrumbs %}
-                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
                 {% endfor %}
-            </ul>
+            </ol>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
             {% for project in projects %}
                 {% if counter == 0 %}<div class="card-deck">{% endif %}
 
-                    <div class="card classic-admin-card project-card {{ project.getColorCss() }} col-md-4 col-sm-12 p-0">
+                    <div class="card classic-admin-card project-card {{ project.getColorCss() }} col-md-4 col-sm-12">
                         <a href="{{ project.getLink() }}" class="fh">
                             <div class="fh white-text flex-v-between">
                                 <div class="card-body">

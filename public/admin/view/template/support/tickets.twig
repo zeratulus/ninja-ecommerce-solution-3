@@ -30,11 +30,11 @@
                 </div>
             </div>
 
-            <ul class="breadcrumb">
+            <ol class="breadcrumb">
                 {% for breadcrumb in breadcrumbs %}
-                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
                 {% endfor %}
-            </ul>
+            </ol>
 
         </div>
     </div>
@@ -139,7 +139,9 @@
 
                 {% if heatmap is not empty %}
                 <div class="col-sm-12">
-                    <div class="heat-map" id="heatmap">{{ chk }}</div>
+                    <div class="d-flex justify-content-center">
+                        <div class="heat-map" id="heatmap">{{ chk }}</div>
+                    </div>
                     <script>
                         let heatmap = new frappe.Chart("#heatmap", {
                             type: 'heatmap',
@@ -333,8 +335,8 @@
                                             </td>
                                             <td>
                                             {% if ticket.userDelegated is not null %}
-                                                <div class="avatar-block">
-                                                    <img src="{{ ticket.userDelegated.getAvatar() }}" alt="{{ ticket.userDelegated.getFullName() }}" class="img-round avatar-sm">
+                                                <div>
+                                                    <img src="{{ ticket.userDelegated.getAvatar() }}" alt="{{ ticket.userDelegated.getFullName() }}" class="avatar avatar-sm">
                                                     <small>{{ ticket.userDelegated.getFullName() }}</small>
                                                 </div>
                                             {% else %}
@@ -342,8 +344,8 @@
                                             {% endif %}
                                             </td>
                                             <td>
-                                                <div class="avatar-block">
-                                                    <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="img-round avatar-sm">
+                                                <div>
+                                                    <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="avatar avatar-sm">
                                                     <small>{{ ticket.userCreator.getFullName() }}</small>
                                                 </div>
                                             </td>
