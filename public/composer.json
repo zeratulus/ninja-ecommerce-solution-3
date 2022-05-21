@@ -12,6 +12,7 @@
         "twig/twig" : "^3.0",
         "phpmailer/phpmailer": "^6.5",
         "voku/html-compress-twig": "^4.0",
-        "sendpulse/rest-api": "^1.0"
+        "sendpulse/rest-api": "^1.0",
+        "doctrine/orm": "^2.12"
     }
 }
