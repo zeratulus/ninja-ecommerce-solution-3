@@ -1,55 +1,71 @@
-<nav id="column-left">
-  <ul id="menu">
-    {% set i = 0 %}
-    {% for menu in menus %}
-    <li id="{{ menu.id }}">{% if menu.href %}<a href="{{ menu.href }}"><i class="fa  {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% endif %}
-      {% if menu.children %}
-      <ul id="collapse{{ i }}" class="collapse">
-        {% for children_1 in menu.children %}
-        <li>{% if children_1.href %}<a href="{{ children_1.href }}">{{ children_1.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>{% endif %}
-          {% if children_1.children %}
-          <ul id="collapse{{ i }}" class="collapse">
-            {% for children_2 in children_1.children %}
-            <li>{% if children_2.href %}<a href="{{ children_2.href }}">{{ children_2.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed">{{ children_2.name }}</a>{% endif %}
-              {% if children_2.children %}
-              <ul id="collapse{{ i }}" class="collapse">
-                {% for children_3 in children_2.children %}
-                <li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
+<aside id="column-left">
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="sidebar bg-white">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+                {% set i = 0 %}
+                {% for menu in menus %}
+                    {% if menu.href %}
+                        <a href="{{ menu.href }}" class="list-group-item list-group-item-action py-2 ripple">
+                            <i class="fa  {{ menu.icon }} fw"></i> {{ menu.name }}
+                        </a>
+                    {% else %}
+                        <a class="list-group-item list-group-item-action py-2 ripple" disabled="true">
+                            <i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}
+                        </a>
+                    {% endif %}
+
+                    {% if menu.children %}
+                        {% for children_1 in menu.children %}
+                            {% if children_1.href %}
+                                <a class="list-group-item list-group-item-action py-2 ripple" href="{{ children_1.href }}"> - {{ children_1.name }}</a>
+                            {% else %}
+                                <a class="list-group-item list-group-item-action py-2 ripple" > - {{ children_1.name }}</a>
+                            {% endif %}
+                            {% if children_1.children %}
+                                {% for children_2 in children_1.children %}
+                                    {% if children_2.href %}
+                                        <a class="list-group-item list-group-item-action py-2 ripple" href="{{ children_2.href }}">{{ children_2.name }}</a>
+                                    {% else %}
+                                        <a class="list-group-item list-group-item-action py-2 ripple" disabled="true"> - {{ children_2.name }}</a>
+                                    {% endif %}
+                                    {% if children_2.children %}
+                                        {% for children_3 in children_2.children %}
+                                            <a class="list-group-item list-group-item-action py-2 ripple" href="{{ children_3.href }}"> - {{ children_3.name }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% set i = i + 1 %}
+                                {% endfor %}
+                            {% endif %}
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    {% endif %}
+                    {% set i = i + 1 %}
                 {% endfor %}
-              </ul>
-              {% endif %} </li>
-            {% set i = i + 1 %}
-            
-            {% endfor %}
-          </ul>
-          {% endif %}</li>
-        {% set i = i + 1 %}
-        {% endfor %}
-      </ul>
-      {% endif %}</li>
-    {% set i = i + 1 %}
-    {% endfor %}
-  </ul>
-  <div id="stats">
-    <ul>
-      <li>
+            </div>
+        </div>
+    </nav>
+
+    <div id="stats">
         <div>{{ text_complete_status }} <span class="pull-right">{{ complete_status }}%</span></div>
         <div class="progress">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ complete_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete_status }}%"> <span class="sr-only">{{ complete_status }}%</span></div>
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ complete_status }}"
+                 aria-valuemin="0" aria-valuemax="100" style="width: {{ complete_status }}%"><span
+                        class="sr-only">{{ complete_status }}%</span></div>
         </div>
-      </li>
-      <li>
+
         <div>{{ text_processing_status }} <span class="pull-right">{{ processing_status }}%</span></div>
         <div class="progress">
-          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{ processing_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ processing_status }}%"> <span class="sr-only">{{ processing_status }}%</span></div>
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{ processing_status }}"
+                 aria-valuemin="0" aria-valuemax="100" style="width: {{ processing_status }}%"><span
+                        class="sr-only">{{ processing_status }}%</span></div>
         </div>
-      </li>
-      <li>
+
         <div>{{ text_other_status }} <span class="pull-right">{{ other_status }}%</span></div>
         <div class="progress">
-          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ other_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ other_status }}%"> <span class="sr-only">{{ other_status }}%</span></div>
+            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ other_status }}"
+                 aria-valuemin="0" aria-valuemax="100" style="width: {{ other_status }}%"><span
+                        class="sr-only">{{ other_status }}%</span></div>
         </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+    </div>
+</aside>

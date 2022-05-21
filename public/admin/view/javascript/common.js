@@ -154,17 +154,22 @@ var tinymceOptions = {
 };
 
 $(document).ready(function() {
-    $('.selectpicker').selectpicker({
-        liveSearch: true
-    });
+    // $('.selectpicker').selectpicker({
+    //     liveSearch: true
+    // });
+	//
+	// $('select.form-control').selectpicker();
+	//
+    // toolsPanelScroll();
+	//
+    // $(window).on('resize', function () {
+    //     $('.selectpicker').selectpicker('refresh');
+    // });
 
-	$('select.form-control').selectpicker();
-
-    toolsPanelScroll();
-
-    $(window).on('resize', function () {
-        $('.selectpicker').selectpicker('refresh');
-    });
+	$('#btn-main-menu').on('click', function (e) {
+		e.preventDefault();
+		$('#column-left').toggleClass('active');
+	});
 
     //Stick tools panel
     $(window).on('scroll', function () {
