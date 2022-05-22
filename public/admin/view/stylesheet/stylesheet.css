@@ -96,7 +96,7 @@ body::-webkit-scrollbar-thumb {
     top: 0;
     width: 300px;
     height: 100vh;
-    box-shadow: 0 0 6px 0px rgba(0,0,0,0.4)
+    box-shadow: 0 0 6px 0px rgba(0,0,0,0.4);
     transition: 0.4s all;
 }
 #column-left.active {
@@ -173,4 +173,17 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.tool-panel {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.tool-panel .btn {
+    margin: 5px;
+}
+#content {
+    padding-top: 80px;
 }

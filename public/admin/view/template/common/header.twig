@@ -93,18 +93,18 @@
                 </a>
 
                 <!-- Search form -->
-                <form class="input-group w-auto my-auto d-none d-sm-flex">
-                    <input
-                            autocomplete="off"
-                            type="search"
-                            class="form-control rounded"
-                            placeholder="Search"
-                            style="min-width: 125px;"
-                    />
-                    <span class="input-group-text border-0 d-none d-lg-flex"
-                    ><i class="fa fa-search"></i
-                        ></span>
-                </form>
+{#                <form class="input-group w-auto my-auto d-none d-sm-flex">#}
+{#                    <input#}
+{#                            autocomplete="off"#}
+{#                            type="search"#}
+{#                            class="form-control rounded"#}
+{#                            placeholder="Search"#}
+{#                            style="min-width: 125px;"#}
+{#                    />#}
+{#                    <span class="input-group-text border-0 d-none d-lg-flex"#}
+{#                    ><i class="fa fa-search"></i#}
+{#                        ></span>#}
+{#                </form>#}
             </div>
             <!-- Left elements -->
 
@@ -146,9 +146,24 @@
             <!-- Right elements -->
             <ul class="navbar-nav flex-row">
 
-                <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link" href="#">
-                        <span><i class="fa fa-plus-circle fa-lg"></i></span>
+{#                <div class="dropdown">#}
+{#                    <li class="nav-item me-3 me-lg-1">#}
+{#                        <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuAdd" data-mdb-toggle="dropdown" aria-expanded="false">#}
+{#                            <span><i class="fa fa-plus-circle fa-lg"></i></span>#}
+{#                        </a>#}
+{#                    </li>#}
+
+{#                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuAdd">#}
+{#                        <li><a class="dropdown-item" href="#">Action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Another action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+{#                    </ul>#}
+
+{#                </div>#}
+
+                <li class="nav-item me-lg-1">
+                    <a class="nav-link" href="{{ href_product }}" role="button">
+                        <i class="fa fa-shopping-bag fa-lg"></i>
                     </a>
                 </li>
 
