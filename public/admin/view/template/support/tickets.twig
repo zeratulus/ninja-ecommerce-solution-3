@@ -312,7 +312,7 @@
                                                     </div>
                                                 {% endif %}
                                             </td>
-                                            <td><h5><span class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
+                                            <td><h5><span class="badge badge-{{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
                                             <td>
                                                 <a href="{{ ticket.getTicketHref() }}">
                                                     {{ ticket.getStatusIcon() }}
@@ -331,7 +331,7 @@
                                             </td>
                                             <td>{{ ticket.getCategoryTitle() }}</td>
                                             <td class="text-center">
-                                                <h5><span class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">{{ ticket.getStatusTitle() }}</span></h5>
+                                                <h5><span class="badge badge-primary {{ ticket.getStatusCss() }}">{{ ticket.getStatusTitle() }}</span></h5>
                                             </td>
                                             <td>
                                             {% if ticket.userDelegated is not null %}
@@ -447,8 +447,8 @@
                                         <td></td>
                                         <td class="text-left">
                                             <p class="pb-0 mb-0">{{ text_query_stats }}:</p>
-                                            <h5><span class="badge badge-sm badge-pill warning-color">{{ text_tickets_progress }}: {{ in_progress_total_time }}</span></h5>
-                                            <h5><span class="badge badge-sm badge-pill success-color">{{ text_tickets_completed }}: {{ competed_total_time }}</span></h5>
+                                            <h5><span class="badge bg-warning">{{ text_tickets_progress }}: {{ in_progress_total_time }}</span></h5>
+                                            <h5><span class="badge bg-success">{{ text_tickets_completed }}: {{ competed_total_time }}</span></h5>
                                         </td>
                                         <td colspan="5" class="text-right">
                                             {{ pagination }}

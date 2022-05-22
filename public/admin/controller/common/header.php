@@ -121,7 +121,6 @@ class ControllerCommonHeader extends \Ninja\AdminController
             $renderer->setBaseUrl(HTTP_CATALOG.'/catalog/view/javascript/debugbar/');
             $renderer->setEnableJqueryNoConflict(false);
             $renderer->disableVendor('jquery');
-            $renderer->disableVendor('fontawesome');
 
             $data['debugbar'] = $renderer;
 		}

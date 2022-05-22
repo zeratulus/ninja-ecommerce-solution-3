@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="fw d-flex justify-content-between align-items-center">
                 <h1>{{ heading_title }}</h1>
-                <div class="pull-right">
+                <div class="tool-panel">
                     <button type="submit" form="form-project" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-floating circle btn-sm btn-primary">
                         <i class="fa fa-save"></i>
                     </button>
@@ -17,11 +17,11 @@
     </div>
 
     <div class="container-fluid">
-        <ul class="breadcrumb">
+        <ol class="breadcrumb">
             {% for breadcrumb in breadcrumbs %}
-                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
             {% endfor %}
-        </ul>
+        </ol>
     </div>
 
     <div class="container-fluid mt-5">
@@ -33,6 +33,7 @@
             <div class="card-body">
 
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-project">
+
                     <div class="form-group">
                         <label for="input-title" class="control-label">{{ text_title }}</label>
                         <input name="title" type="text" id="input-title" class="form-control validate" value="{{ title }}" required>

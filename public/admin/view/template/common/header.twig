@@ -61,7 +61,7 @@
         <a href="{{ projects }}" class="nav-link"><i class="fa fa-tasks"></i> {{ text_projects }}</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbar-user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="{{ profile }}" id="navbar-user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="avatar-circle" />
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-menu">
@@ -214,9 +214,9 @@
                 </li>
 
                 <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                    <a class="nav-link d-sm-flex align-items-sm-center" href="{{ profile }}">
                         <img src="{{ image }}" class="rounded-circle" height="22" alt="{{ firstname }} {{ lastname }}"/>
-                        <strong class="d-none d-sm-block ms-1">{{ firstname }} {{ lastname }}</strong>
+                        <small> {{ firstname }} {{ lastname }}</small>
                     </a>
                 </li>
 
