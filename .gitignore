@@ -13,3 +13,4 @@ storage/vendor/
 *.log
 
 dev.txt
+node_modules
