@@ -187,3 +187,8 @@ body::-webkit-scrollbar-thumb {
 #content {
     padding-top: 60px;
 }
+.card .project-check {
+    position: absolute;
+    right: 10px;
+    top: 80px;
+}

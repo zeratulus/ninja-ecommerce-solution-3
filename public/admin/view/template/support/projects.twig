@@ -4,13 +4,13 @@
         <div class="container-fluid">
             <div class="fw d-flex justify-content-between align-items-center">
                 <h1>{{ heading_title }}</h1>
-                <div class="pull-right">
+                <div class="tool-panel">
                     {% if user.isAdmin() %}
-                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-sm btn-primary">
+                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-primary">
                         <i class="fa fa-plus"></i>
                     </a>
                     <button type="button" form="form-category" formaction="{{ delete }}" data-toggle="tooltip"
-                            title="{{ button_delete }}" class="btn btn-floating circle btn-sm btn-default"
+                            title="{{ button_delete }}" class="btn btn-floating circle btn-default"
                             id="btn-delete">
                         <i class="fa fa-trash"></i>
                     </button>
@@ -71,14 +71,13 @@
                                     </label>
                                 </div>
                             {% else %}
-                                <div class="project-check checkbox">
-                                    <label>
-                                        <input type="checkbox" name="selected[]" value="{{ project.getId() }}" id="checkbox{{ project.getId() }}">
-                                    </label>
+                                <div class="form-check project-check">
+                                    <input class="form-check-input" id="project-{{ project.getId() }}" type="checkbox" name="selected[]" value="{{ project.getId() }}" id="checkbox{{ project.getId() }}">
+                                    <label class="form-check-label" for="project-{{ project.getId() }}"></label>
                                 </div>
                             {% endif %}
 
-                            <a href="{{ project.getEditLink() }}" class="btn btn-floating circle btn-sm btn-primary btn-edit"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ project.getEditLink() }}" class="btn btn-floating circle btn-primary btn-edit"><i class="fa fa-pencil"></i></a>
 
                         {% endif %}
                     </div>

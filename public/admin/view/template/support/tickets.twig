@@ -52,7 +52,7 @@
                         $("#counter-{{ project.getId() }}").countdown("{{ project.getCreatedCounter() }}", {
                             elapse: true,
                         }).on('update.countdown', function(event) {
-                            $("#counter-{{ project.getId() }}").html('<h2><span class="badge badge-pill {{ project.getColorCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</span></h2>');
+                            $("#counter-{{ project.getId() }}").html('<h2><span class="badge badge-primary badge-pill {{ project.getColorCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</span></h2>');
                         });
                     </script>
                 </div>
@@ -62,8 +62,8 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-7">
                         <h5>{{ text_created }}: {{ project.getCreatedString() }}</h5>
-                        <h5 class="flex-start flex-v-center"><span class="badge ticket-info primary-color">{{ project.getTotalTickets() }}</span> - {{ text_tickets_total }}</h5>
-                        <h5 class="flex-start flex-v-center"><span class="badge ticket-info primary-color">{{ project.getCompletedTasksPercents() }}%</span> - {{ text_tickets_completed }}</h5>
+                        <h5 class="flex-start flex-v-center"><span class="badge  badge-primary">{{ project.getTotalTickets() }}</span> - {{ text_tickets_total }}</h5>
+                        <h5 class="flex-start flex-v-center"><span class="badge  badge-primary">{{ project.getCompletedTasksPercents() }}%</span> - {{ text_tickets_completed }}</h5>
                         <div class="fw">{{ project.getDescriptionHtml() }}</div>
                     </div>
                     <div class="col-sm-12 col-md-5">
@@ -122,7 +122,7 @@
                                                 <a href="{{ category.getFilterHref() }}">
                                                     <div class="fw d-flex justify-content-between align-items-center">
                                                         {{ category.getTitle() }}
-                                                        <span class="badge round-sm bg-primary">{{ category.getTicketsTotal() }}</span>
+                                                        <span class="badge  badge-primary">{{ category.getTicketsTotal() }}</span>
                                                     </div>
                                                 </a>
                                             </li>
@@ -312,7 +312,7 @@
                                                     </div>
                                                 {% endif %}
                                             </td>
-                                            <td><h5><span class="badge badge-{{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
+                                            <td><h5><span class="badge  badge-primary badge-{{ ticket.getStatusCss() }}">#{{ ticket.getId() }}</span></h5></td>
                                             <td>
                                                 <a href="{{ ticket.getTicketHref() }}">
                                                     {{ ticket.getStatusIcon() }}
@@ -324,7 +324,7 @@
                                                     $("#counter-{{ ticket.getId() }}").countdown("{{ ticket.getCounterTime() }}", {
                                                         elapse: true,
                                                     }).on('update.countdown', function(event) {
-                                                        $("#counter-{{ ticket.getId() }}").html('<div class="badge badge-sm badge-pill {{ ticket.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</div>');
+                                                        $("#counter-{{ ticket.getId() }}").html('<div class="badge  badge-primary badge-pill {{ ticket.getStatusCss() }}">' + event.strftime('%D {{ text_days }} %H:%M:%S') + '</div>');
                                                     });
                                                 </script>
                                                 {% endif %}

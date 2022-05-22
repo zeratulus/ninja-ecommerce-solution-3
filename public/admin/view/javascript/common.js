@@ -158,7 +158,7 @@ $(document).ready(function() {
         liveSearch: true
     });
 
-	// $('select.form-control').selectpicker();
+	$('select.form-control').selectpicker();
 
     toolsPanelScroll();
 
