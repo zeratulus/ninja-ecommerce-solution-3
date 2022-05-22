@@ -429,7 +429,7 @@ class ControllerSupportTickets extends \Ninja\AdminController
 
     public function delete()
     {
-        if (($this->validator->isRequestMethodPost())
+        if (($this->getRequest()->isRequestMethodPost())
             && (!empty($selected = (array)$this->getRequest()->issetPost('selected')))
             && ($this->validateDelete())) {
 

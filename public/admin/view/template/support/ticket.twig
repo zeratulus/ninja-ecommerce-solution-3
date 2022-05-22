@@ -6,7 +6,7 @@
                 <h1>{{ text_task }} #{{ ticket.getId() }} - {{ ticket.getTitle() }}</h1>
                 <div class="pull-right">
                     {% if user.permissions.isWrite() %} {{ ticket.getEditAction() }} {% endif %}
-                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-floating circle btn-sm btn-default">
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-floating circle btn-default">
                         <i class="fa fa-reply"></i>
                     </a>
                 </div>

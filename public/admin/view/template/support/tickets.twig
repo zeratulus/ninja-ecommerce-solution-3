@@ -4,25 +4,25 @@
         <div class="container-fluid">
             <div class="fw d-flex justify-content-between align-items-center">
                 <h1>{{ heading_title }}</h1>
-                <div class="pull-right">
+                <div class="tool-panel">
                     {% if user.permissions.isCreate() %}
-                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-sm btn-primary">
+                    <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-floating circle btn-primary">
                         <i class="fa fa-plus"></i>
                     </a>
                     {% endif %}
                     {% if user.permissions.isWrite() %}
-                    <a href="{{ project.getEditLink() }}" data-toggle="tooltip" title="{{ text_edit_project }}" class="btn btn-floating circle btn-sm btn-primary">
+                    <a href="{{ project.getEditLink() }}" data-toggle="tooltip" title="{{ text_edit_project }}" class="btn btn-floating circle btn-primary">
                         <i class="fa fa-pencil"></i>
                     </a>
                     {% endif %}
                     {% if user.isAdmin() %}
-                    <a href="{{ setting }}" data-toggle="tooltip" title="{{ button_settings }}" class="btn btn-floating circle btn-sm btn-warning">
+                    <a href="{{ setting }}" data-toggle="tooltip" title="{{ button_settings }}" class="btn btn-floating circle btn-warning">
                         <i class="fa fa-cog"></i>
                     </a>
                     {% endif %}
                     {% if user.permissions.isDelete() %}
                     <button type="button" form="form-tickets" formaction="{{ delete }}" data-toggle="tooltip"
-                            title="{{ button_delete }}" class="btn btn-floating circle btn-sm btn-default"
+                            title="{{ button_delete }}" class="btn btn-floating circle btn-default"
                             onclick="confirm('{{ text_confirm }}') ? $('#form-tickets').submit() : false;">
                         <i class="fa fa-trash"></i>
                     </button>
