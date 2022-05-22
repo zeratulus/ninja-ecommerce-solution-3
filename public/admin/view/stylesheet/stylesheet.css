@@ -114,10 +114,10 @@ body::-webkit-scrollbar-thumb {
 }
 .card.tile .card-icon-rect {
     position: absolute;
-    left: -25px;
-    top: -25px;
-    width: 50px;
-    height: 50px;
+    left: -20px;
+    top: -20px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
