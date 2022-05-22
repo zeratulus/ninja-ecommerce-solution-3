@@ -403,7 +403,7 @@
                                                 <td>
                                                     {% if child.userDelegated is not null %}
                                                         <div class="flex-center">
-                                                            <img src="{{ child.userDelegated.getAvatar() }}" alt="{{ child.userDelegated.getFullName() }}" class="avatar-sm img-round">
+                                                            <img src="{{ child.userDelegated.getAvatar() }}" alt="{{ child.userDelegated.getFullName() }}" class="avatar avatar-sm">
                                                             <small>{{ child.userDelegated.getFullName() }}</small>
                                                         </div>
                                                     {% else %}
@@ -412,7 +412,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="flex-center">
-                                                        <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="avatar-sm img-round">
+                                                        <img src="{{ ticket.userCreator.getAvatar() }}" alt="{{ ticket.userCreator.getFullName() }}" class="avatar avatar-sm">
                                                         <small>{{ ticket.userCreator.getFullName() }}</small>
                                                     </div>
                                                 </td>

@@ -97,10 +97,12 @@ body::-webkit-scrollbar-thumb {
     width: 300px;
     height: 100vh;
     box-shadow: 0 0 6px 0px rgba(0,0,0,0.4)
+    transition: 0.4s all;
 }
 #column-left.active {
     left: 0;
     background: #fff;
+    transition: 0.4s all;
 }
 
 .card {

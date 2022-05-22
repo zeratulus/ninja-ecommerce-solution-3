@@ -59,6 +59,9 @@ class ControllerCommonHeader extends \Ninja\AdminController
             $data['text_customer'] = $this->getLanguage()->get('text_customer');
             $data['href_customer'] = $this->getUrl()->link('customer/customer', 'user_token=' . $this->getUserToken());
 
+            $data['text_order'] = $this->getLanguage()->get('text_order');
+            $data['href_order'] = $this->getUrl()->link('sale/order', 'user_token=' . $this->session->data['user_token']);
+
             $this->load->model('user/user');
 	
 			$this->load->model('tool/image');
