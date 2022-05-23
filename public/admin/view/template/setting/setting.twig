@@ -2,44 +2,44 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="tool-card">
         <button type="submit" id="button-save" form="form-setting" data-toggle="tooltip" title="{{ button_save }}" disabled="disabled" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+    <p class="note note-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</p>
     {% endif %}
+
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+    <p class="note note-success"><i class="fa fa-check-circle"></i> {{ success }}</p>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+
+    <div class="card">
+      <div class="card-heading">
+        <h3 class="card-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
-          <ul class="nav nav-tabs bg-dark">
-            <li class="nav-item"><a class="nav-link active" href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-store" data-toggle="tab">{{ tab_store }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-local" data-toggle="tab">{{ tab_local }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-mail" data-toggle="tab">{{ tab_mail }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-server" data-toggle="tab">{{ tab_server }}</a></li>
-			<li class="nav-item"><a class="nav-link" href="#tab-seopro" data-toggle="tab">{{ tab_seopro }}</a></li>
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-store" data-toggle="tab">{{ tab_store }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-local" data-toggle="tab">{{ tab_local }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-mail" data-toggle="tab">{{ tab_mail }}</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="#tab-server" data-toggle="tab">{{ tab_server }}</a></li>
+			<li class="nav-item" role="presentation"><a class="nav-link" href="#tab-seopro" data-toggle="tab">{{ tab_seopro }}</a></li>
           </ul>
+
           <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-general">
                 {{ general_tabs }}
