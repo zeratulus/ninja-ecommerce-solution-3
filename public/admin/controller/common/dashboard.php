@@ -83,12 +83,14 @@ class ControllerCommonDashboard extends \Ninja\AdminController {
 		}
 
 		//My Tickets
-        $data['mytickets'] = $this->load->controller('common/mytickets');
+        $data['mytickets'] = $this->getLoader()->controller('common/mytickets');
         $data['isAdmin'] = $this->getUser()->getGroupId() == \Support\User::ADMIN_GROUP_ID;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->getLoader()->controller('common/header');
+		$data['column_left'] = $this->getLoader()->controller('common/column_left');
+		$data['footer'] = $this->getLoader()->controller('common/footer');
+
+		$data['mytickets'] = $this->getLoader()->controller('common/mytickets');
 
 		// Run currency update
 		if ($this->config->get('config_currency_auto')) {

@@ -25,6 +25,11 @@
               <button type="button" class="close pull-right" data-dismiss="alert">&times;</button>
               <i class="fa fa-exclamation-circle"></i> {{ error_install }}</div>
             {% endif %}
+
+              <div class="row">
+                  {{ mytickets }}
+              </div>
+
             {% for row in rows %}
             <div class="card-group">
               {% for dashboard_1 in row %}
@@ -39,7 +44,7 @@
             </div>
             {% endfor %}</div>
             {{ security }}
-          <script type="text/javascript"><!--
+<script type="text/javascript"><!--
         $('#button-setting').on('click', function() {
             $.ajax({
                 url: 'index.php?route=common/developer&user_token={{ user_token }}',
@@ -62,7 +67,7 @@
                 }
             });
         });
-        //--></script>
+//--></script>
         </div>
 
     </div>

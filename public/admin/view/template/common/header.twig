@@ -71,10 +71,7 @@
           <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="avatar-circle" />
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-menu">
-            <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a>
-            {% for store in stores %}
-              <a href="{{ store.href }}" target="_blank" class="dropdown-item">{{ store.name }}</a>
-            {% endfor %}
+
         </div>
       </li>
       <li class="nav-item">
@@ -116,13 +113,13 @@
 
             <!-- Center elements -->
             <ul class="navbar-nav flex-row d-none d-md-flex">
-                <li class="nav-item me-3 me-lg-1 active" id="btn-main-menu">
+                <li class="nav-item me-3 me-lg-1" id="btn-main-menu">
                     <a class="nav-link">
                         <span><i class="fa fa-bars fa-lg"></i></span>
                     </a>
                 </li>
 
-                <li class="nav-item me-3 me-lg-1 active">
+                <li class="nav-item me-3 me-lg-1">
                     <a class="nav-link" href="{{ home }}">
                         <span><i class="fa fa-home fa-lg"></i></span>
                     </a>
@@ -186,31 +183,22 @@
                 </li>
 
                 <li class="nav-item dropdown me-3 me-lg-1">
-                    <a
-                            class="nav-link dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                    >
+                    <!-- Basic dropdown -->
+                    <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell fa-lg"></i>
                         <span class="badge rounded-pill badge-notification bg-danger">12</span>
                     </a>
-                    <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                    >
-                        <li>
-                            <a class="dropdown-item" href="#">Some news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Another news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </li>
-                    </ul>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                    <!-- Basic dropdown -->
+
                 </li>
 
                 <li class="nav-item me-3 me-lg-1">
@@ -219,39 +207,20 @@
                     </a>
                 </li>
 
-                <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link d-sm-flex align-items-sm-center" href="{{ profile }}">
+                <li class="nav-item dropdown me-3 me-lg-1">
+                    <!-- Basic dropdown -->
+                    <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         <img src="{{ image }}" class="rounded-circle" height="22" alt="{{ firstname }} {{ lastname }}"/>
                         <small> {{ firstname }} {{ lastname }}</small>
                     </a>
-                </li>
 
-                <li class="nav-item dropdown me-3 me-lg-1">
-                    <a
-                            class="nav-link dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                    >
-                        <i class="fa fa-chevron-circle-down fa-lg"></i>
-                    </a>
-                    <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                    >
-                        <li>
-                            <a class="dropdown-item" href="#">Some news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Another news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </li>
-                    </ul>
-                </li>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a>
+                        {% for store in stores %}
+                            <a href="{{ store.href }}" target="_blank" class="dropdown-item">{{ store.name }}</a>
+                        {% endfor %}
+                    </div>
             </ul>
             <!-- Right elements -->
         </div>

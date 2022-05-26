@@ -1,25 +1,20 @@
 <div class="card">
-  <div class="card-header">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="card-title"><i class="fa fa-bar-chart-o"></i> {{ heading_title }}</h5>
     <div class="pull-right">
-      <div class="dropdown">
-        <button
-                class="btn btn-primary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-mdb-toggle="dropdown"
-                aria-expanded="false"
-        >
-          <i class="fa fa-calendar"></i> <i class="caret"></i>
-        </button>
-        <ul id="range" class="dropdown-menu">
-          <li><a href="day" class="dropdown-item">{{ text_day }}</a></li>
-          <li><a href="week" class="dropdown-item">{{ text_week }}</a></li>
-          <li><a href="month" class="dropdown-item active">{{ text_month }}</a></li>
-          <li><a href="year" class="dropdown-item">{{ text_year }}</a></li>
-        </ul>
+      <!-- Basic dropdown -->
+      <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="fa fa-calendar"></i></button>
+
+      <div class="dropdown-menu" id="range">
+        <a href="day" class="dropdown-item">{{ text_day }}</a>
+        <a href="week" class="dropdown-item">{{ text_week }}</a>
+        <a href="month" class="dropdown-item active">{{ text_month }}</a>
+        <a href="year" class="dropdown-item">{{ text_year }}</a>
+      </div>
+      <!-- Basic dropdown -->
       </div>
     </div>
-    <h5 class="card-title"><i class="fa fa-bar-chart-o"></i> {{ heading_title }}</h5>
   </div>
   <div class="card-body">
     <div id="chart-sale" style="width: 100%; height: 260px;"></div>

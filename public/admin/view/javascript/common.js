@@ -168,6 +168,7 @@ $(document).ready(function() {
 
 	$('#btn-main-menu').on('click', function (e) {
 		e.preventDefault();
+		$('#btn-main-menu').toggleClass('active');
 		$('#column-left').toggleClass('active');
 	});
 

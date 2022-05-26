@@ -75,6 +75,6 @@ class ControllerCommonMyTickets extends \Ninja\AdminController {
             }
         }
 
-        return $this->load->view('common/mytickets', $data);
+        return $this->getLoader()->view('common/mytickets', $data);
     }
 }
