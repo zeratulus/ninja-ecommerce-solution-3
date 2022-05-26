@@ -11,9 +11,13 @@
 <meta name="keywords" content="{{ keywords }}" />
 {% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-<script src="view/javascript/jquery/jquery-3.4.1.min.js"></script>
-<link href="view/javascript/mdb/css/mdb.min.css" rel="stylesheet">
-<script src="view/javascript/mdb/js/mdb.min.js"></script>
+<script type="text/javascript" src="view/javascript/mdb/js/jquery.min.js"></script>
+<script type="text/javascript" src="view/javascript/mdb/js/popper.min.js"></script>
+<script type="text/javascript" src="view/javascript/mdb/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="view/javascript/mdb/js/mdb.min.js"></script>
+<link rel="stylesheet" href="view/javascript/mdb/css/bootstrap.min.css">
+<link rel="stylesheet" href="view/javascript/mdb/css/mdb.min.css">
+<link rel="stylesheet" href="view/javascript/mdb/css/style.css">
 <link href="view/javascript/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
 <script src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script src="view/javascript/tinymce/tinymce.min.js"></script>
@@ -37,7 +41,7 @@
     {% endif %}
 {% endif %}
 </head>
-<body>
+<body data-mdb-no-jquery="true">
 <div id="container">
 {% if not logged %}
 <nav class="navbar navbar-expand-sm navbar-light sticky-top bg-light">
