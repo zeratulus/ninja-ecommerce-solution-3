@@ -149,20 +149,20 @@
             <!-- Right elements -->
             <ul class="navbar-nav flex-row">
 
-{#                <div class="dropdown">#}
-{#                    <li class="nav-item me-3 me-lg-1">#}
-{#                        <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuAdd" data-mdb-toggle="dropdown" aria-expanded="false">#}
-{#                            <span><i class="fa fa-plus-circle fa-lg"></i></span>#}
-{#                        </a>#}
-{#                    </li>#}
+                <li class="nav-item me-lg-1">
+                    <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-plus-circle fa-lg"></i>
+                    </a>
 
-{#                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuAdd">#}
-{#                        <li><a class="dropdown-item" href="#">Action</a></li>#}
-{#                        <li><a class="dropdown-item" href="#">Another action</a></li>#}
-{#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-{#                    </ul>#}
-
-{#                </div>#}
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ new_product }}">{{ text_new }} {{ text_new_product }}</a>
+                        <a class="dropdown-item" href="{{ new_category }}">{{ text_new }} {{ text_new_category }}</a>
+                        <a class="dropdown-item" href="{{ new_customer }}">{{ text_new }} {{ text_new_customer }}</a>
+                        <a class="dropdown-item" href="{{ new_download }}">{{ text_new }} {{ text_new_download }}</a>
+                        <a class="dropdown-item" href="{{ new_manufacturer }}">{{ text_new }} {{ text_new_manufacturer }}</a>
+                    </div>
+                </li>
 
                 <li class="nav-item me-lg-1">
                     <a class="nav-link" href="{{ href_product }}" role="button">
