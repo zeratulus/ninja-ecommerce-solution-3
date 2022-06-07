@@ -481,13 +481,13 @@ class Ticket extends CustomItem {
     public function getViewAction(): string
     {
         $href = $this->generateLink('support/ticket', "&project_id={$this->getProjectId()}&ticket_id={$this->getId()}");
-        return "<a class='btn btn-floating circle btn-sm btn-primary' href='{$href}'><i class='fa fa-eye'></i></a>";
+        return "<a class='btn btn-floating circle btn-primary' href='{$href}'><i class='fa fa-eye'></i></a>";
     }
 
     public function getEditAction(): string
     {
         $href = $this->generateLink('support/tickets/edit', "&project_id={$this->getProjectId()}&ticket_id={$this->getId()}");
-        return "<a class='btn btn-floating circle btn-sm btn-primary' href='{$href}'><i class='fa fa-pencil'></i></a>";
+        return "<a class='btn btn-floating circle btn-primary' href='{$href}'><i class='fa fa-pencil'></i></a>";
     }
 
 }
