@@ -1,53 +1,53 @@
 <ul>
-  <li class="result-header">{{ text_products }}</li>
+  <div  class="dropdown-item result-header">{{ text_products }}</div>
   {% if products is not empty %}
   {% for product in products %}
-  <li>
+  <div  class="dropdown-item">
     <a href="{{ product.url }}" style="display: block; overflow: auto;">
       <img src="{{ product.image }}"/>
       <span>{{ product.name }}</span>
     </a>
-  </li>
+  </div>
   {% endfor %}
   {% else %}
-  <li>
+  <div class="dropdown-item">
     <a href="javascript::void(0)" style="display: block; overflow: auto;">
       <span>{{ text_no_result }}</span>
     </a>
-  </li>
+  </div>
   {% endif %}
-  <li class="result-header">{{ text_categories }}</li>
+  <div  class="dropdown-item result-header">{{ text_categories }}</div>
   {% if categories is not empty %}
   {% for category in categories %}
-  <li>
+  <div class="dropdown-item">
     <a href="{{ category.url }}" style="display: block; overflow: auto;">
       <img src="{{ category.image }}"/>
       <span>{{ category.name }}</span>
     </a>
-  </li>
+  </div>
   {% endfor %}
   {% else %}
-  <li>
+  <div class="dropdown-item">
     <a href="javascript::void(0)" style="display: block; overflow: auto;">
       <span>{{ text_no_result }}</span>
     </a>
-  </li>
+  </div>
   {% endif %}
-  <li class="result-header">{{ text_manufacturers }}</li>
+  <div  class="dropdown-item result-header">{{ text_manufacturers }}</div>
   {% if manufacturers is not empty %}
   {% for manufacturer in manufacturers %}
-  <li>
+  <div class="dropdown-item">
     <a href="{{ manufacturer.url }}" style="display: block; overflow: auto;">
       <img src="{{ manufacturer.image }}"/>
       <span>{{ manufacturer.name }}</span>
     </a>
-  </li>
+  </div>
   {% endfor %}
   {% else %}
-  <li>
+  <div class="dropdown-item">
     <a href="javascript::void(0)" style="display: block; overflow: auto;">
       <span>{{ text_no_result }}</span>
     </a>
-  </li>
+  </div>
   {% endif %}
 </ul>

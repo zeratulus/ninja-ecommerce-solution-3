@@ -1,59 +1,62 @@
 <form id="oc-search" class="input-group w-auto my-auto d-none d-sm-flex" role="search">
-  <div class="input-group">
+    <div class="input-group">
 
-    <div class="d-flex justify-content-between align-items-center">
-      <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}" name="query" autocomplete="off" />
-      <a class="ml-2" data-toggle="dropdown" href="#">
-        <i class="fa fa-search"></i>
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-        <li class="dropdown-header">{{ text_search_options }}</li>
-        <li><a onclick="setOption('catalog', '{{ text_catalog_placeholder }}'); return false;"><i class="fa fa-book"></i><span>{{ text_catalog }}</span></a></li>
-        <li><a onclick="setOption('customers', '{{ text_customers_placeholder }}'); return false;"><i class="fa fa-group"></i><span>{{ text_customers }}</span></a></li>
-        <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i class="fa fa-credit-card"></i><span>{{ text_orders }}</span></a></li>
-      </ul>
+        <div class="d-flex justify-content-between align-items-center">
+            <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}"
+                   name="query" autocomplete="off"/>
+            <a class="ml-2" data-toggle="dropdown" href="#">
+                <i class="fa fa-search"></i>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                <li class="dropdown-header">{{ text_search_options }}</li>
+                <li><a onclick="setOption('catalog', '{{ text_catalog_placeholder }}'); return false;"><i
+                                class="fa fa-book"></i><span>{{ text_catalog }}</span></a></li>
+                <li><a onclick="setOption('customers', '{{ text_customers_placeholder }}'); return false;"><i
+                                class="fa fa-group"></i><span>{{ text_customers }}</span></a></li>
+                <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i
+                                class="fa fa-credit-card"></i><span>{{ text_orders }}</span></a></li>
+            </ul>
+        </div>
+
+        <input id="oc-search-option" type="hidden" name="search-option" value="catalog"/>
     </div>
-
-    <input id="oc-search-option" type="hidden" name="search-option" value="catalog" />
-    <div id="loader-search"><img src="view/image/loader-search.gif" alt="" /></div>
-  </div>
 </form>
-<div id="oc-search-result"></div>
+<div class="dropdown-menu autocomplete-dropdown" id="oc-search-result">
+    <div class="dropdown-item"><i class="fa fa-spin fa-circle-o-notch"></i></div>
+</div>
 <script type="text/javascript">
     function setOption(option, text) {
         jQuery('#oc-search-option').val(option);
         jQuery('#oc-search-input').attr('placeholder', text);
     }
 
-    jQuery('#oc-search-input').keyup(function(){
+    jQuery('#oc-search-input').keyup(function () {
         var option = jQuery('#oc-search-option').val();
         var length = 3;
 
-        if(option == 'orders') {
+        if (option == 'orders') {
             length = 1;
         }
 
-        if(this.value.length < length) {
+        if (this.value.length < length) {
+            jQuery('#oc-search-result').hide().html('<div class="dropdown-item"><i class="fa fa-spin fa-circle-o-notch"></i></div>');
             return false;
         }
 
-        if(jQuery.support.leadingWhitespace == false) {
-              return false;
+        if (jQuery.support.leadingWhitespace == false) {
+            return false;
         }
-
-        jQuery('#loader-search').css('display', 'block');
 
         jQuery.ajax({
             type: 'get',
-            url: 'index.php?route=search/search/search' + '&user_token={{ user_token }}',		
-			data: jQuery('#oc-search').serialize(),
+            url: 'index.php?route=search/search/search' + '&user_token={{ user_token }}',
+            data: jQuery('#oc-search').serialize(),
             dataType: 'json',
-            success:function(json){
+            success: function (json) {
                 jQuery('#oc-search-result').css('display', 'block');
-                jQuery('#loader-search').css('display', 'none');
 
-                if(json['error']) {
+                if (json['error']) {
                     jQuery('#oc-search-result').html(json['error'])
                     return;
                 }
@@ -71,7 +74,7 @@
         }
     });
 
-    jQuery('#oc-search').submit(function(e) {
+    jQuery('#oc-search').submit(function (e) {
         e.preventDefault();
     });
 </script>
