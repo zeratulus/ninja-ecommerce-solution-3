@@ -11,14 +11,15 @@ class ModelSupportSupport extends Model {
     //Project
     public function addProject(\Support\Project $project)
     {
-        $sql = "INSERT INTO `projects`(`title`, `description`, `created`, `status`, `public`, `color`, `icon`, `timezone`) VALUES ('{$project->getTitle()}', '{$project->getDescription()}', '{$project->getCreated()}', '{$project->getStatus()}', '{$project->getIsPublic()}', '{$project->getColor()}', '{$project->getIcon()}', '{$project->getTimezone()}');";
+        $sql = "INSERT INTO `projects`(`title`, `description`, `created`, `status`, `public`, `color`, `icon`, `timezone`) VALUES 
+            (\"{$this->getDb()->escape($project->getTitle())}\", \"{$this->getDb()->escape($project->getDescription())}\", '{$project->getCreated()}', '{$project->getStatus()}', '{$project->getIsPublic()}', '{$project->getColor()}', '{$project->getIcon()}', '{$project->getTimezone()}');";
         $this->getDb()->query($sql);
         return $this->getDb()->getLastId();
     }
 
     public function editProject(\Support\Project $project)
     {
-        $sql = "UPDATE `projects` SET `title`='{$project->getTitle()}',`description`='{$project->getDescription()}',`created`='{$project->getCreated()}',`status`='{$project->getStatus()}',`public`='{$project->getIsPublic()}',`color`='{$project->getColor()}',`icon`='{$project->getIcon()}',`timezone`='{$project->getTimezone()}' WHERE `id`='{$project->getId()}'";
+        $sql = "UPDATE `projects` SET `title`=\"{$this->getDb()->escape($project->getTitle())}\",`description`=\"{$this->getDb()->escape($project->getDescription())}\",`created`='{$project->getCreated()}',`status`='{$project->getStatus()}',`public`='{$project->getIsPublic()}',`color`='{$project->getColor()}',`icon`='{$project->getIcon()}',`timezone`='{$project->getTimezone()}' WHERE `id`='{$project->getId()}'";
         $this->getDb()->query($sql);
         return $this->getDb()->countAffected();
     }
@@ -215,7 +216,8 @@ class ModelSupportSupport extends Model {
     //Tickets
     public function addTicket(Support\Ticket $ticket)
     {
-        $sql = "INSERT INTO `tickets`(`title`, `description`, `start`, `finish`, `status`, `created_by_uid`, `delegated_to_uid`, `parent_task_id`, `project_id`, `category_id`, `priority`, `deadline`, `created`) VALUES ('{$ticket->getTitle()}', '{$ticket->getDescription()}', '{$ticket->getStart()}', '{$ticket->getFinish()}', '{$ticket->getStatus()}', '{$ticket->getCreatedByUid()}', '{$ticket->getDelegatedToUid()}', '{$ticket->getParentTaskId()}', '{$ticket->getProjectId()}', '{$ticket->getCategoryId()}', '{$ticket->getPriority()}', '{$ticket->getDeadline()}', '{$ticket->getCreated()}');";
+        $sql = "INSERT INTO `tickets`(`title`, `description`, `start`, `finish`, `status`, `created_by_uid`, `delegated_to_uid`, `parent_task_id`, `project_id`, `category_id`, `priority`, `deadline`, `created`) VALUES 
+            ('{$this->getDb()->escape($ticket->getTitle())}', '{$this->getDb()->escape($ticket->getDescription())}', '{$ticket->getStart()}', '{$ticket->getFinish()}', '{$ticket->getStatus()}', '{$ticket->getCreatedByUid()}', '{$ticket->getDelegatedToUid()}', '{$ticket->getParentTaskId()}', '{$ticket->getProjectId()}', '{$ticket->getCategoryId()}', '{$ticket->getPriority()}', '{$ticket->getDeadline()}', '{$ticket->getCreated()}');";
         $this->getDb()->query($sql);
         return $this->getDb()->getLastId();
     }
@@ -228,7 +230,7 @@ class ModelSupportSupport extends Model {
             $ticket->setFinish(nowMySQLTimestamp());
         }
 
-        $sql = "UPDATE `tickets` SET `title`='{$ticket->getTitle()}',`description`='{$ticket->getDescription()}',`start`='{$ticket->getStart()}',`finish`='{$ticket->getFinish()}',`status`='{$ticket->getStatus()}',`created_by_uid`='{$ticket->getCreatedByUid()}',`delegated_to_uid`='{$ticket->getDelegatedToUid()}',`parent_task_id`='{$ticket->getParentTaskId()}',`project_id`='{$ticket->getProjectId()}',`category_id`='{$ticket->getCategoryId()}',`priority`='{$ticket->getPriority()}',`deadline`='{$ticket->getDeadline()}',`created`='{$ticket->getCreated()}' WHERE `id`='{$ticket->getId()}';";
+        $sql = "UPDATE `tickets` SET `title`='{$this->getDb()->escape($ticket->getTitle())}',`description`='{$this->getDb()->escape($ticket->getDescription())}',`start`='{$ticket->getStart()}',`finish`='{$ticket->getFinish()}',`status`='{$ticket->getStatus()}',`created_by_uid`='{$ticket->getCreatedByUid()}',`delegated_to_uid`='{$ticket->getDelegatedToUid()}',`parent_task_id`='{$ticket->getParentTaskId()}',`project_id`='{$ticket->getProjectId()}',`category_id`='{$ticket->getCategoryId()}',`priority`='{$ticket->getPriority()}',`deadline`='{$ticket->getDeadline()}',`created`='{$ticket->getCreated()}' WHERE `id`='{$ticket->getId()}';";
         $this->getDb()->query($sql);
         return $this->getDb()->countAffected();
     }
