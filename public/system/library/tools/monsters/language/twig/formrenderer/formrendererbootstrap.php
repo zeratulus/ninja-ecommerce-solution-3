@@ -19,7 +19,7 @@ class FormRendererBootstrap extends FormRenderer
     public function generateLanguagesTabs($tab_id)
     {
         $languages = $this->languages;
-        $html = '<ul class="nav nav-tabs bg-primary" id="language'.$tab_id.'">';
+        $html = '<ul class="nav nav-tabs" id="language'.$tab_id.'">';
         foreach ($languages as $language) {
             $html .= '<li class="nav-item"><a href="#language'.$tab_id.$language['language_id'].'" data-toggle="tab"  class="nav-link"><img src="language/'.$language['code'].'/'.$language['code'].'.png" title="'.$language['name'].'"> '.$language['name'].'</a></li>';
         }
