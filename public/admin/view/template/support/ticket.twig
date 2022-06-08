@@ -32,11 +32,11 @@
             <div class="card-body pos-relative">
                 {% if (ticket.getStatus() == 1) and (ticket.getDelegatedToUid() == uid) %}
                     <!-- btn start task (set in progress status) -->
-                    <button type="button" class="btn btn-floating circle btn-md btn-warning" id="btn-start-task"><i class="fa fa-play"></i></button>
+                    <button type="button" class="btn btn-floating circle btn-warning" id="btn-start-task"><i class="fa fa-play"></i></button>
                 {% endif %}
                 {% if (ticket.getStatus() == 2) and (ticket.getDelegatedToUid() == uid) %}
                     <!-- btn complete task (set completed status) -->
-                    <button type="button" class="btn btn-floating circle btn-md btn-success" id="btn-complete-task"><i class="fa fa-flag-checkered"></i></button>
+                    <button type="button" class="btn btn-floating circle btn-success" id="btn-complete-task"><i class="fa fa-flag-checkered"></i></button>
                 {% endif %}
                 <div class="row">
                     <div class="col-sm-12">

@@ -2,10 +2,8 @@
     <div class="modal-dialog modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="flex-between flex-v-center fw">
-                    <h5 class="modal-title" id="dayTimeLineModalLabel"><i class="fa fa-user-clock"></i> {{ text_timeline }}</h5>
-                    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
+                <h5 class="modal-title" id="dayTimeLineModalLabel"><i class="fa fa-user-clock"></i> {{ text_timeline }}</h5>
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body p-0">
                 <div class="date-heading"><h3><span class="badge badge-pill primary-color">{{ date }}</span></h3></div>
@@ -18,8 +16,8 @@
                             <div class="time">
                                 <p>{{ time }}</p>
                                 <div class="flex-start flex-v-center flex-wrap">
+                                    <img src="{{ event.getUserDelegated().getAvatar() }}" alt="{{ event.getUserDelegated().getFullName() }}" class="avatar avatar-sm" />
                                     <small>{{ event.getUserDelegated().getFullName() }}</small>
-                                    <img src="{{ event.getUserDelegated().getAvatar() }}" alt="{{ event.getUserDelegated().getFullName() }}" class="avatar-small" />
                                 </div>
                             </div>
                             <div class="desc">
@@ -36,8 +34,8 @@
                             <div class="time">
                                 {{ time }}
                                 <div class="flex-start flex-v-center flex-wrap">
+                                    <img src="{{ comment.getUser().getAvatar() }}" alt="{{ comment.getUser().getFullName() }}" class="avatar avatar-sm" />
                                     <small>{{ comment.getUser().getFullName() }}</small>
-                                    <img src="{{ comment.getUser().getAvatar() }}" alt="{{ comment.getUser().getFullName() }}" class="avatar-small" />
                                 </div>
                             </div>
                             <div class="desc">

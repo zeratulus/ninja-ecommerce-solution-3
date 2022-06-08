@@ -13,7 +13,6 @@ class ControllerSupportTicket extends \Ninja\AdminController {
     public function index()
     {
         $this->getLoader()->language('support/ticket');
-        $this->getDocument()->setTitle($this->getLanguage()->get('heading_title'));
         $this->getLoader()->model('support/support');
 
         $data['user_token'] = $this->getUserToken();
@@ -60,6 +59,7 @@ class ControllerSupportTicket extends \Ninja\AdminController {
             $result = $this->model_support_support->getTicketById($ticket_id);
             $ticket = new \Support\Ticket($this->registry);
             $ticket->mapData($result);
+            $this->getDocument()->setTitle($ticket->getTitle());
             $data['ticket'] = $ticket;
 
             $data['breadcrumbs'][] = array(
