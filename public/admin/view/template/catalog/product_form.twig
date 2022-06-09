@@ -1694,21 +1694,33 @@ function addRecurring() {
 	recurring_row++;
 }
 
-$('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+$('.date input').each(function () {
+  let id = $(this).prop('id');
+  console.log(id);
+  const picker = MCDatepicker.create({
+    el: '#'+id
+  });
 });
 
-$('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
-});
 
-$('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
+{#$('.date').datetimepicker({#}
+{#	language: '{{ datepicker }}',#}
+{#	pickTime: false#}
+{#});#}
+
+// $('.time').datetimepicker({
+{#	language: '{{ datepicker }}',#}
+// 	pickDate: false
+// });
+
+// MCDatepicker.create({
+//   el: '.datetime'
+// });
+{#$('.datetime').datetimepicker({#}
+{#	language: '{{ datepicker }}',#}
+{#	pickDate: true,#}
+{#	pickTime: true#}
+{#});#}
 
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');

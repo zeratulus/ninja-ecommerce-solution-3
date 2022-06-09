@@ -153,7 +153,24 @@ var tinymceOptions = {
 	}
 };
 
+function datepicker(inputSelector) {
+	$(inputSelector).each(function () {
+		let el = $(this);
+		let id = el.prop('id');
+		let picker = MCDatepicker.create({
+			el: '#'+id,
+			dateFormat: 'YYYY-MM-DD'
+		});
+		let btn = el.parent().find('.btn');
+		btn.on('click', () => picker.open());
+	});
+}
+
 $(document).ready(function() {
+	datepicker('.date input');
+	datepicker('.time input');
+	datepicker('.datetime input');
+
     $('.selectpicker').selectpicker({
         liveSearch: true
     });
