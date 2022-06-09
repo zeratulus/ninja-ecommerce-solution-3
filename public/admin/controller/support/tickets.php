@@ -1170,7 +1170,7 @@ class ControllerSupportTickets extends \Ninja\AdminController
 
             $obj = new \Support\Comment($this->registry);
             $data['date'] = date('Y-m-d', strtotime($timestamp));
-            $date['date_locale'] = $obj->formatDatetimeAsLongString($timestamp);
+            $data['date_locale'] = $obj->formatDateAsLongString($timestamp);
             $json['modal'] = $this->getLoader()->view('support/modal_day_timeline', $data);
             $json['success'] = true;
         } else {
