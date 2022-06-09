@@ -45,7 +45,9 @@ body::-webkit-scrollbar-thumb {
     background-color: #888;
     outline: 1px solid slategrey;
 }
-
+body {
+    animation: 1 0.8s fadeIn;
+}
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -483,6 +485,58 @@ body::-webkit-scrollbar-thumb {
     backface-visibility: hidden;
     -webkit-transform-origin: 100% 100%;
     transform-origin: 100% 100%;
+}
+
+.radio-inline,
+.radio {
+    cursor: pointer;
+    margin-right: 6px;
+}
+.radio-inline input[type="radio"],
+.radio input[type="radio"] {
+    position: relative;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+}
+.radio-inline input[type="radio"]:before,
+.radio input[type="radio"]:before {
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    -moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0.125rem;
+    z-index: 1;
+    width: 14px;
+    height: 14px;
+    background: #16a085;
+    border-radius: 50%;
+}
+.radio-inline input[type="radio"]:checked:before,
+.radio input[type="radio"]:checked:before {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+}
+.radio-inline input[type="radio"]:after,
+.radio input[type="radio"]:after {
+    content: "";
+    position: absolute;
+    top: -0.25rem;
+    left: -0.125rem;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border: 2px solid #c9c9c9;
+    border-radius: 50%;
 }
 @media (max-width: 768px) {
     #btn_tools_panel {
