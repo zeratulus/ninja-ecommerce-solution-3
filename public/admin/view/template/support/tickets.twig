@@ -228,10 +228,8 @@
                                     <div class="col-sm-12 col-md-3 fw d-flex justify-content-center align-items-center">
                                         <!-- Filter As One Page -->
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="form-check-input" name="filter_as_one_page" id="filter_as_one_page" value="{{ filter_as_one_page }}" {% if filter_as_one_page %} checked {% endif %}>
-                                                {{ text_filter_as_one_page }}
-                                            </label>
+                                            <input type="checkbox" class="form-check-input" name="filter_as_one_page" id="filter_as_one_page" value="{{ filter_as_one_page }}" {% if filter_as_one_page %} checked {% endif %}>
+                                            <label for="filter_as_one_page">{{ text_filter_as_one_page }}</label>
                                         </div>
                                     </div>
 
@@ -256,9 +254,9 @@
                                 <thead>
                                 <tr>
                                     <td style="width: 1px;">
-                                        <div class="form-check m-0 p-0">
-                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" class="form-check-input" id="check-all">
-                                            <label class="form-check-label m-0 p-2" for="check-all"></label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="check-all">
+                                            <label for="check-all"></label>
                                         </div>
                                     </td>
                                     <td>
@@ -301,14 +299,14 @@
                                         <tr class="{% if ticket.getStatus() == 2 %}table-warning{% endif %}{% if ticket.getStatus() == 3 %}table-success{% endif %}">
                                             <td scope="row">
                                                 {% if ticket.getId() in selected %}
-                                                    <div class="form-check m-0 p-0">
-                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" checked="checked" class="form-check-input" id="checkbox{{ ticket.getId() }}">
-                                                        <label class="form-check-label m-0 p-2" for="checkbox{{ ticket.getId() }}"></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" checked="checked" id="checkbox{{ ticket.getId() }}">
+                                                        <label for="checkbox{{ ticket.getId() }}"></label>
                                                     </div>
                                                 {% else %}
-                                                    <div class="form-check m-0 p-0">
-                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" class="form-check-input" id="checkbox{{ ticket.getId() }}">
-                                                        <label class="form-check-label m-0 p-2" for="checkbox{{ ticket.getId() }}"></label>
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="selected[]" value="{{ ticket.getId() }}" id="checkbox{{ ticket.getId() }}">
+                                                        <label for="checkbox{{ ticket.getId() }}"></label>
                                                     </div>
                                                 {% endif %}
                                             </td>

@@ -66,14 +66,13 @@
 
                             {% if project.getId() in selected %}
                                 <div class="project-check checkbox">
-                                    <label>
-                                        <input type="checkbox" name="selected[]" value="{{ project.getId() }}" checked="checked" id="checkbox{{ project.getId() }}">
-                                    </label>
+                                    <input type="checkbox" name="selected[]" value="{{ project.getId() }}" checked="checked" id="checkbox{{ project.getId() }}">
+                                    <label for="checkbox{{ project.getId() }}"></label>
                                 </div>
                             {% else %}
-                                <div class="form-check project-check">
-                                    <input class="form-check-input" id="project-{{ project.getId() }}" type="checkbox" name="selected[]" value="{{ project.getId() }}" id="checkbox{{ project.getId() }}">
-                                    <label class="form-check-label" for="project-{{ project.getId() }}"></label>
+                                <div class="project-check checkbox">
+                                    <input id="project-{{ project.getId() }}" type="checkbox" name="selected[]" value="{{ project.getId() }}" id="checkbox{{ project.getId() }}">
+                                    <label for="project-{{ project.getId() }}"></label>
                                 </div>
                             {% endif %}
 

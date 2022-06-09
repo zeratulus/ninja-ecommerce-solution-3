@@ -66,28 +66,30 @@
 
                                 <div class="col-sm-12 col-md-6">
                                     <div class="flex-end flex-v-center fw m-2">
-                                        <button type="button" id="btn-delete-categories" class="btn btn-floating circle btn-default btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button type="button" id="btn-delete-categories" class="btn btn-floating circle btn-default"><i class="fa fa-trash"></i></button>
                                     </div>
-                                    <div class="well z-depth-1" id="categories">
-                                        {% if categories is not empty %}
-                                            {% for category in categories %}
-                                                {% if category.getId() in selectedCategories %}
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" checked="checked" class="form-check-input" id="category-{{ category.getId() }}">
-                                                        <label class="form-check-label" for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
-                                                    </div>
-                                                {% else %}
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" class="form-check-input" id="category-{{ category.getId() }}">
-                                                        <label class="form-check-label" for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% else %}
-                                            <div class="flex-center flex-v-center fw">
-                                                <p class="text-center">{{ text_empty }}</p>
-                                            </div>
-                                        {% endif %}
+                                    <div class="card z-depth-1" id="categories">
+                                        <div class="card-body">
+                                            {% if categories is not empty %}
+                                                {% for category in categories %}
+                                                    {% if category.getId() in selectedCategories %}
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" checked="checked" id="category-{{ category.getId() }}">
+                                                            <label for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" name="selected[categories][]" value="{{ category.getId() }}" id="category-{{ category.getId() }}">
+                                                            <label for="category-{{ category.getId() }}" tooltip="{{ category.getDescription() }}">{{ category.getTitle() }}</label>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="flex-center flex-v-center fw">
+                                                    <p class="text-center">{{ text_empty }}</p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -134,34 +136,36 @@
                                     <!--<div class="flex-end flex-v-center fw">
                                         <button type="button" id="btn-delete-statuses" class="btn-floating btn-default btn-sm"><i class="fa fa-trash"></i></button>
                                     </div>-->
-                                    <div class="well z-depth-1" id="statuses">
-                                        {% if statuses is not empty %}
-                                            {% for status in statuses %}
-                                                {% if status.getId() in selectedStatuses %}
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" checked="checked" class="form-check-input" id="status-{{ status.getId() }}">
-                                                        <label class="form-check-label" for="status-{{ status.getId() }}">
-                                                            <div class="flex-between flex-v-center fw">
-                                                                <span class="ticket-category-color {{ status.getColorCss() }}"></span> {{ status.getTitle() }}
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                {% else %}
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" class="form-check-input" id="status-{{ status.getId() }}">
-                                                        <label class="form-check-label" for="status-{{ status.getId() }}">
-                                                            <div class="flex-between flex-v-center fw">
-                                                                <div class="ticket-category-color {{ status.getColorCss() }} z-depth-1"></div> {{ status.getTitle() }}
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% else %}
-                                            <div class="flex-center flex-v-center fw">
-                                                <p class="text-center">{{ text_empty }}</p>
-                                            </div>
-                                        {% endif %}
+                                    <div class="card z-depth-1" id="statuses">
+                                        <div class="card-body">
+                                            {% if statuses is not empty %}
+                                                {% for status in statuses %}
+                                                    {% if status.getId() in selectedStatuses %}
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" checked="checked" id="status-{{ status.getId() }}">
+                                                            <label for="status-{{ status.getId() }}">
+                                                                <div class="flex-between flex-v-center fw">
+                                                                    <span class="ticket-category-color {{ status.getColorCss() }}"></span> {{ status.getTitle() }}
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" name="selected[statuses][]" value="{{ status.getId() }}" id="status-{{ status.getId() }}">
+                                                            <label for="status-{{ status.getId() }}">
+                                                                <div class="flex-between flex-v-center fw">
+                                                                    <div class="ticket-category-color {{ status.getColorCss() }} z-depth-1"></div> {{ status.getTitle() }}
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="flex-center flex-v-center fw">
+                                                    <p class="text-center">{{ text_empty }}</p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -172,13 +176,15 @@
 
                             <div class="form-group">
                                 <label for="user-autocomplete">{{ text_user_autocomplete }}</label>
-                                <input type="text" id="user-autocomplete" class="form-control mdb-autocomplete">
-                                <button class="mdb-autocomplete-clear">
-                                    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="https://www.w3.org/2000/svg">
-                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                    </svg>
-                                </button>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <input type="text" id="user-autocomplete" class="form-control mdb-autocomplete">
+                                    <button class="btn btn-default">
+                                        <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="https://www.w3.org/2000/svg">
+                                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                            <path d="M0 0h24v24H0z" fill="none" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
 
                             <table class="table table-striped table-hover">
@@ -197,9 +203,9 @@
                                     {% for user in users %}
                                         <tr id="user-row-{{ user.getId() }}">
                                             <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="user-{{ user.getId() }}" {% if user.permissions.hasPermission() %} checked {% endif %} disabled>
-                                                    <label class="form-check-label" for="user-{{ user.getId() }}">{{ user.getFullName() }}</label>
+                                                <div class="checkbox">
+                                                    <input type="checkbox" id="user-{{ user.getId() }}" {% if user.permissions.hasPermission() %} checked {% endif %} disabled>
+                                                    <label for="user-{{ user.getId() }}">{{ user.getFullName() }}</label>
                                                 </div>
                                             </td>
                                             <td>
@@ -322,10 +328,10 @@
 
                         let id = data.id;
 
-                        let html = '<div class="form-check">' +
-                            '<input type="checkbox" name="selected[categories][]" value="'+id+'" class="form-check-input" id="category-'+id+'">' +
-                            '<label class="form-check-label" for="category-'+id+'" tooltip="'+desc+'">'+title+'</label></div>';
-                        tab.find('.well').append(html);
+                        let html = '<div class="checkbox">' +
+                            '<input type="checkbox" name="selected[categories][]" value="'+id+'" id="category-'+id+'">' +
+                            '<label for="category-'+id+'" tooltip="'+desc+'">'+title+'</label></div>';
+                        tab.find('.card-body').append(html);
 
                         inputTitle.parent().removeClass('was-validated');
 
@@ -394,11 +400,11 @@
                         let id = data.id;
                         let colorCss = tab.find('select[name="color"] option:selected').text();
 
-                        let html = '<div class="form-check">' +
-                            '<input type="checkbox" name="selected[statuses][]" value="'+id+'" class="form-check-input" id="status-'+id+'">' +
-                            '<label class="form-check-label" for="status-'+id+'">' +
+                        let html = '<div class="checkbox">' +
+                            '<input type="checkbox" name="selected[statuses][]" value="'+id+'" id="status-'+id+'">' +
+                            '<label for="status-'+id+'">' +
                             '<div class="flex-between "><span class="ticket-category-color '+colorCss+'"></span> '+title+'</div></label></div>';
-                        tab.find('.well').append(html);
+                        tab.find('.card-body').append(html);
 
                         toastr.success('{{ added_status }}');
                     } else {
@@ -461,9 +467,9 @@
                                     let row_id = '#user-row-' + user.uid;
                                     let html = '<tr id="user-row-'+user.uid+'">\n' +
                                         '<td>\n' +
-                                        '<div class="form-check">\n' +
-                                        '    <input type="checkbox" class="form-check-input" id="user-'+user.uid+'" checked disabled>\n' +
-                                        '    <label class="form-check-label" for="user-'+user.uid+'">'+user.fullname+'</label>\n' +
+                                        '<div class="checkbox">\n' +
+                                        '    <input type="checkbox" id="user-'+user.uid+'" checked disabled>\n' +
+                                        '    <label for="user-'+user.uid+'">'+user.fullname+'</label>\n' +
                                         '</div>\n' +
                                         '</td>\n' +
                                         '<td>\n' +

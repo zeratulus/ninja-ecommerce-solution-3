@@ -218,10 +218,16 @@ body {
     padding-top: 60px;
 }
 
+.support-color-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+
 .card .project-check {
     position: absolute;
-    right: 10px;
-    top: 80px;
+    left: 10px;
+    top: 10px;
 }
 
 .timeline .html-container,
