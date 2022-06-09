@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "mdb-ui-kit": "^4.0.0"
+    "mdb-ui-kit": "^4.0.0",
+    "toastr": "^2.1.4"
   }
 }
