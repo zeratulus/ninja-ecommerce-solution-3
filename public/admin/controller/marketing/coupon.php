@@ -6,6 +6,7 @@ use Ninja\FormBuilder\Form;
 class ControllerMarketingCoupon extends AdminController
 {
     protected string $route = 'marketing/coupon';
+    const ROUTE = 'marketing/coupon';
 
     private $error = array();
 
@@ -588,7 +589,7 @@ class ControllerMarketingCoupon extends AdminController
         $this->processSuccessMessage($data);
         $this->processWarningMessage($data);
 
-        $data['breadcrumbs'] = $this->makeDefaultBreadcrumbs();
+        $data['breadcrumbs'] = $this->makeDefaultBreadcrumbs($this->route);
         $data['breadcrumbs'][] = $this->makeBreadcrumb(
             $this->getLanguage()->get('text_settings'),
             $this->getUrl()->link($this->route . '/settings', "user_token={$this->getUserToken()}")
