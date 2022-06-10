@@ -197,7 +197,7 @@ class Form {
 		switch ($input->getType()) {
 			case $input::TYPE_DATE:
 				$this->__isAddDateTimeScripts = true;
-				$html = '<div class="col-sm-10">
+				$html = '<div class="col-sm-12">
 				  <div class="input-group date">
                     <input type="text" name="'.$input->getName().'" value="'.$value.'" placeholder="'.$input->getLabel().'" data-date-format="YYYY-MM-DD" id="'.$input->getId().'" class="'.$input->getClass().'" />
                     <span class="input-group-btn">
@@ -207,7 +207,7 @@ class Form {
 				break;
 			case $input::TYPE_TIME:
 				$this->__isAddDateTimeScripts = true;
-				$html = '<div class="col-sm-10">
+				$html = '<div class="col-sm-12">
 				  <div class="input-group time">
                     <input type="text" name="'.$input->getName().'" value="'.$value.'" placeholder="'.$input->getLabel().'" data-date-format="HH:mm" id="'.$input->getId().'" class="'.$input->getClass().'" />
                     <span class="input-group-btn">
@@ -217,7 +217,7 @@ class Form {
 				break;
 			case $input::TYPE_DATETIME:
 				$this->__isAddDateTimeScripts = true;
-				$html = '<div class="col-sm-10">
+				$html = '<div class="col-sm-12">
 				  <div class="input-group datetime">
                     <input type="text" name="'.$input->getName().'" value="'.$value.'" placeholder="'.$input->getLabel().'" data-date-format="YYYY-MM-DD HH:mm" id="'.$input->getId().'" class="'.$input->getClass().'" />
                     <span class="input-group-btn">
@@ -226,7 +226,7 @@ class Form {
                   </div></div>';
 				break;
 			default:
-				$html = '<div class="col-sm-10">
+				$html = '<div class="col-sm-12">
                   <input type="'.$input->getType().'" name="'.$input->getName().'" value="'.$value.'" placeholder="'.$input->getLabel().'" id="'.$input->getId().'" class="'.$input->getClass().'">
                 </div>';
 				break;
@@ -253,7 +253,7 @@ class Form {
 
 			if ($this->getControlClass($control) == self::CONTROL_INPUT) {
 				$html .= '<div class="form-group">
-                    <label class="col-sm-2 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>';
+                    <label class="col-sm-12 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>';
 				$html .= $this->renderInput($control, $value);
 				if ($control->isError()) {
 					$html .= '<div class="text-danger">'.$control->getErrorText().'</div>';
@@ -261,15 +261,15 @@ class Form {
 				$html .= '</div>';
 			} elseif ($this->getControlClass($control) == self::CONTROL_TEXTAREA) {
 				$html .= '<div class="form-group">
-                    <label class="col-sm-2 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-12 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>
+                    <div class="col-sm-12">
                       <textarea name="'.$control->getName().'" rows="5" placeholder="'.$control->getLabel().'" id="'.$control->getId().'" class="'.$control->getClass().'">'.$value.'</textarea>
                     </div>';
 				$html .= '</div>';
 			} elseif ($this->getControlClass($control) == self::CONTROL_SELECT) {
 				$html .= '<div class="form-group">
-                    <label class="col-sm-2 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-12 control-label label-small" for="'.$control->getId().'">'.$control->getLabel().'</label>
+                    <div class="col-sm-12">
                       <select id="'.$control->getId().'" class="'.$control->getClass().'" name="'.$control->getName().'">';
 				foreach ($control->getOptions() as $id => $name) {
 					$is_selected = ($id == $value) ? ' selected' : '';

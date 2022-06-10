@@ -100,7 +100,9 @@ class Mail
             $this->adaptor->$key = $value;
         }
 
-        $this->adaptor->send();
+        if (!isFrameworkDebug()) {
+            $this->adaptor->send();
+        }
     }
 
     /**

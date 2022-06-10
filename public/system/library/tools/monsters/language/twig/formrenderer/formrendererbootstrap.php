@@ -56,8 +56,8 @@ class FormRendererBootstrap extends FormRenderer
 
                 if ($tmp_control->getControlType() == 'input') {
                     $html .= '<div class="form-group">
-                        <label class="col-sm-2 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-12 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
+                        <div class="col-sm-12">
                           <input type="'.$tmp_control->getType().'" name="'.$tmp_control->getName().'" value="'.$value.'" placeholder="'.$tmp_control->getLabel().'" id="'.$tmp_control->getId().'" class="form-control">
                         </div>';
                     if ($tmp_control->isError()) {
@@ -66,15 +66,15 @@ class FormRendererBootstrap extends FormRenderer
                     $html .= '</div>';
                 } elseif ($tmp_control->getControlType() == 'textarea') {
                     $html .= '<div class="form-group">
-                        <label class="col-sm-2 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-12 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
+                        <div class="col-sm-12">
                           <textarea name="'.$tmp_control->getName().'" rows="5" placeholder="'.$tmp_control->getLabel().'" id="'.$tmp_control->getId().'" class="form-control">'.$value.'</textarea>
                         </div>';
                     $html .= '</div>';
                 } elseif ($tmp_control->getControlType() == 'select') {
                     $html .= '<div class="form-group">
-                        <label class="col-sm-2 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-12 control-label" for="'.$tmp_control->getId().'">'.$tmp_control->getLabel().'</label>
+                        <div class="col-sm-12">
                           <select id="'.$tmp_control->getId().'" class="form-control"></select>
                         </div>';
                     if ($tmp_control->isError()) {
