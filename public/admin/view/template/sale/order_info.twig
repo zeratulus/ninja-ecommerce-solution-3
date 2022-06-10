@@ -2,19 +2,23 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="tool-panel">
-        <a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
         <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ol>
+      <div class="tool-panel">
+        <a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a>
+        <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a>
+        <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
     </div>
   </div>
   <div class="container-fluid">
     <div class="row">
+      
       <div class="col-md-4">
         <div class="card">
           <div class="card-header">
@@ -23,20 +27,24 @@
           <table class="table">
             <tbody>
               <tr>
-                <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
-                <td><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></td>
+                <td>
+                  <i class="fa fa-shopping-cart fa-fw"></i> {{ text_store }}
+                </td>
+                <td><a href="{{ store_url }}" target="_blank" class="btn btn-info btn-block">{{ store_name }}</a></td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+                <td>
+                  <i class="fa fa-calendar fa-fw"></i> {{ text_date_added }}
+                </td>
                 <td>{{ date_added }}</td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+                <td><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_method }}</td>
                 <td>{{ payment_method }}</td>
               </tr>
             {% if shipping_method %}
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+              <td><i class="fa fa-truck fa-fw"></i> {{ text_shipping_method }}</td>
               <td>{{ shipping_method }}</td>
             </tr>
             {% endif %}
@@ -45,47 +53,53 @@
           </table>
         </div>
       </div>
+
       <div class="col-md-4">
         <div class="card">
-          <div class="card-heading">
-            <h3 class="card-title"><i class="fa fa-user"></i> {{ text_customer_detail }}</h3>
+          <div class="card-header">
+            <h5 class="card-title"><i class="fa fa-user"></i> {{ text_customer_detail }}</h5>
           </div>
           <table class="table">
             <tr>
-              <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
-              <td>{% if customer %} <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> {% else %}
-                {{ firstname }} {{ lastname }}
-                {% endif %}</td>
+              <td><i class="fa fa-user fa-fw"></i> {{ text_customer }}</td>
+              <td>
+                {% if customer %}
+                  <a href="{{ customer }}" target="_blank" class="btn btn-info btn-block">{{ firstname }} {{ lastname }}</a>
+                {% else %}
+                  {{ firstname }} {{ lastname }}
+                {% endif %}
+              </td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
+              <td><i class="fa fa-group fa-fw"></i> {{ text_customer_group }}</td>
               <td>{{ customer_group }}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fa fa-envelope-o fa-fw"></i></button></td>
-              <td><a href="mailto:{{ email }}">{{ email }}</a></td>
+              <td><i class="fa fa-envelope-o fa-fw"></i> {{ text_email }}</td>
+              <td><a class="btn btn-info btn-block" href="mailto:{{ email }}">{{ email }}</a></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fa fa-phone fa-fw"></i></button></td>
-              <td>{{ telephone }}</td>
+              <td><i class="fa fa-phone fa-fw"></i> {{ text_telephone }}</td>
+              <td><a class="btn btn-info btn-block" href="tel:{{ telephone }}">{{ telephone }}</a></td>
             </tr>
           </table>
         </div>
       </div>
+      
       <div class="col-md-4">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"><i class="fa fa-cog"></i> {{ text_option }}</h3>
+            <h5 class="card-title"><i class="fa fa-cog"></i> {{ text_option }}</h5>
           </div>
           <table class="table">
             <tbody>
               <tr>
                 <td>{{ text_invoice }}</td>
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
-                <td style="width: 1%;" class="text-center">{% if not invoice_no %}
-                  <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
+                <td class="text-center">{% if not invoice_no %}
+                  <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success"><i class="fa fa-cog"></i></button>
                   {% else %}
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
+                  <button disabled="disabled" class="btn btn-success"><i class="fa fa-refresh"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -93,12 +107,12 @@
                 <td class="text-right">{{ reward }}</td>
                 <td class="text-center">{% if customer and reward %}
                   {% if not reward_total %}
-                  <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
-                  <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
                   {% endif %}
                   {% else %}
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button disabled="disabled" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -109,12 +123,12 @@
                 <td class="text-right">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
                   {% if not commission_total %}
-                  <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
-                  <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
                   {% endif %}
                   {% else %}
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button disabled="disabled" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
             </tbody>
@@ -241,6 +255,7 @@
                   <div class="col-sm-10">
                     <div class="checkbox">
                       <input type="checkbox" name="override" value="1" id="input-override" />
+                      <label for="input-override"></label>
                     </div>
                   </div>
                 </div>
@@ -249,6 +264,7 @@
                   <div class="col-sm-10">
                     <div class="checkbox">
                       <input type="checkbox" name="notify" value="1" id="input-notify" />
+                      <label for="input-notify"></label>
                     </div>
                   </div>
                 </div>
@@ -385,7 +401,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 			if (json['invoice_no']) {
 				$('#invoice').html(json['invoice_no']);
 
-				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
+				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success"><i class="fa fa-cog"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -415,7 +431,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -445,7 +461,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -475,7 +491,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -505,7 +521,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
