@@ -2,20 +2,22 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
         <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ol>
+      <div class="tool-panel">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+
+    {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -114,7 +116,12 @@
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td style="width: 1px;" class="text-center">
+                        <div class="checkbox">
+                          <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="check-all" />
+                          <label for="check-all"></label>
+                        </div>
+                      </td>
                       <td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'c.email' %}<a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>{% else %}<a href="{{ sort_email }}">{{ column_email }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'customer_group' %}<a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a> {% else %} <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>{% endif %}</td>
@@ -128,25 +135,26 @@
                   {% if customers %}
                   {% for customer in customers %}
                   <tr>
-                    <td class="text-center">{% if customer.customer_id in selected %}
-                      <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
-                      {% else %}
-                      <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
-                      {% endif %}
+                    <td class="text-center">
+                      <div class="checkbox">
+                        {% if customer.customer_id in selected %}
+                          <input type="checkbox" name="selected[]" id="row-{{ customer.customer_id }}" value="{{ customer.customer_id }}" checked="checked" />
+                        {% else %}
+                          <input type="checkbox" name="selected[]" id="row-{{ customer.customer_id }}" value="{{ customer.customer_id }}" />
+                        {% endif %}
+                        <label for="row-{{ customer.customer_id }}"></label>
+                      </div>
                     </td>
-                      <td class="text-left">{{ customer.name }}</td>
+                    <td class="text-left">{{ customer.name }}</td>
                     <td class="text-left">{{ customer.email }}</td>
                     <td class="text-left">{{ customer.customer_group }}</td>
                     <td class="text-left">{{ customer.status }}</td>
                     <td class="text-left">{{ customer.ip }}</td>
                     <td class="text-left">{{ customer.date_added }}</td>
                     <td class="text-right">
-                      <div class="btn-group" style="min-width: 65px;">
-                        <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                      </div>
+                      <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                       <div class="dropdown">
-
-                        <button type="button" data-toggle="dropdown" id="customer-menu-{{ customer.customer_id }}" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
+                        <button type="button" data-toggle="dropdown" id="customer-menu-{{ customer.customer_id }}" class="btn btn-primary dropdown-toggle"></button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customer-menu-{{ customer.customer_id }}">
                           <div class="dropdown-header">{{ text_option }}</div>
                           {% if customer.unlock %}

@@ -1,5 +1,5 @@
 <?php
-class ControllerCustomerCustomer extends Controller {
+class ControllerCustomerCustomer extends \Ninja\AdminController {
 	private $error = array();
 
 	public function index() {
@@ -381,7 +381,7 @@ class ControllerCustomerCustomer extends Controller {
 			$store_data = array();
 
 			$store_data[] = array(
-				'name' => $this->config->get('config_name'),
+				'name' => $this->config->get('config_name' . $this->language_id),
 				'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0', true)
 			);
 
