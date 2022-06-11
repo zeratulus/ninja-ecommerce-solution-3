@@ -45,8 +45,8 @@
         <!-- First row -->
         <div class="card">
             <div class="card-header text-white {{ project.getColorCss() }}">
-                <div class="tickets-card-header">
-                    <h3 class="font-weight-500 my-1 white-text"><i class="fa {{ project.getIconCss() }}"></i> {{ project.getTitle() }}</h3>
+                <div class="tickets-card-header d-flex justify-content-between align-items-center">
+                    <h3 class="font-weight-500 m-0 white-text"><i class="fa {{ project.getIconCss() }}"></i> {{ project.getTitle() }}</h3>
                     <div id="counter-{{ project.getId() }}"></div>
                     <script type="text/javascript">
                         $("#counter-{{ project.getId() }}").countdown("{{ project.getCreatedCounter() }}", {
