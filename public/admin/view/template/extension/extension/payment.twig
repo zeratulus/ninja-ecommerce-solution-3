@@ -10,14 +10,6 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   {% endif %}
-  <div class="container-fluid">
-    <!--{% if promoted_solution_1 is not empty and promoted_solution_2 is not empty %}
-      <div class="row">
-        {{ promoted_solution_1 }}
-        {{ promoted_solution_2 }}
-      </div>
-    {% endif %}-->
-  </div>
   <legend>{{ heading_title }}</legend>
   {% if hiden is not empty %}
     <div class="alert alert-info"><i class="fa fa-check-circle"></i> {{ text_hide_payment }}
@@ -25,7 +17,7 @@
     </div>
    {% endif %}
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <td class="text-left">{{ column_name }}</td>

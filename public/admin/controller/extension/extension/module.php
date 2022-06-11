@@ -2,7 +2,7 @@
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
-class ControllerExtensionExtensionModule extends Controller {
+class ControllerExtensionExtensionModule extends \Ninja\AdminController {
 	private $error = array();
 
 	public function index() {
@@ -152,26 +152,27 @@ class ControllerExtensionExtensionModule extends Controller {
 				
 				
 				if (!in_array('extension/module/' . $extension, $hiden)) {
-					$this->load->language('extension/module/' . $extension, 'extension');
+					$this->getLoader()->language('extension/module/' . $extension, 'extension');
 					$module_data = array();
 					$modules = $this->model_setting_module->getModulesByCode($extension);
 					foreach ($modules as $module) {
+                        $setting_info = json_decode($module['setting'], true);
 						$module_data[] = array(
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
-						'status'    => (isset($setting_info['status']) && $setting_info['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-						'edit'      => $this->url->link('extension/module/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'], true),
-						'delete'    => $this->url->link('extension/extension/module/delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'], true)
+						'status'    => $setting_info['status'] ? $this->getLanguage()->get('text_enabled') : $this->getLanguage()->get('text_disabled'),
+						'edit'      => $this->getUrl()->link('extension/module/' . $extension, 'user_token=' . $this->getUserToken() . '&module_id=' . $module['module_id']),
+						'delete'    => $this->getUrl()->link('extension/extension/module/delete', 'user_token=' . $this->getUserToken() . '&module_id=' . $module['module_id'])
 					);
 					}
 					$data['extensions'][] = array(
 					'name'      => $this->language->get('extension')->get('heading_title'),
 					'status'    => $this->config->get('module_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/extension/module/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/module/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'install'   => $this->getUrl()->link('extension/extension/module/install', 'user_token=' . $this->getUserToken() . '&extension=' . $extension),
+					'uninstall' => $this->getUrl()->link('extension/extension/module/uninstall', 'user_token=' . $this->getUserToken() . '&extension=' . $extension),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/module/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'edit'      => $this->getUrl()->link('extension/module/' . $extension, 'user_token=' . $this->getUserToken())
 				);
 				} else {
 					$data['hiden'] = true;
