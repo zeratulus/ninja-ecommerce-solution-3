@@ -34,7 +34,12 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td style="width: 1px;" class="text-center">
+                    <div class="checkbox">
+                      <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="check-all" />
+                      <label for="check-all"></label>
+                    </div>
+                  </td>
                   <td class="text-left">{{ column_name }}</td>
                   <td class="text-right">{{ column_sort_order }}</td>
 				  <td class="text-right">{% if sort == 'noindex' %}
@@ -50,11 +55,14 @@
                 {% for category in categories %}
                 <tr>
                   <td class="text-center">
-                    {% if category.category_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}" checked="checked" />
-                    {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}"/>
-                    {% endif %}
+                    <div class="checkbox">
+                      {% if category.category_id in selected %}
+                        <input type="checkbox" name="selected[]" value="{{ category.category_id }}" checked="checked" id="row-{{ category.category_id }}"/>
+                      {% else %}
+                        <input type="checkbox" name="selected[]" value="{{ category.category_id }}" id="row-{{ category.category_id }}"/>
+                      {% endif %}
+                      <label for="row-{{ category.category_id }}"></label>
+                    </div>
                   </td>
 				  {% if category.href %}
                   <td class="left">{{ category.indent }}<a href="{{ category.href }}">{{ category.name }}</a>&nbsp;<i class="fa fa-sort-desc"></i></td>
@@ -84,12 +92,11 @@
       </div>
     </div>
   </div>
-  
-    <script type="text/javascript"><!--
-// IE and Edge fix!
-$('button[form=\'form-category\']').on('click', function(e) {
-	$('#form-category').attr('action', $(this).attr('formaction'));
-});
- //--></script> 
 </div>
+<script>
+  // IE and Edge fix!
+  $('button[form=\'form-category\']').on('click', function(e) {
+    $('#form-category').attr('action', $(this).attr('formaction'));
+  });
+</script>
 {{ footer }}

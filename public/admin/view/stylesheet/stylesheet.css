@@ -679,6 +679,15 @@ body {
 #menu {
     margin-bottom: 25px;
 }
+#stats ul li {
+    color: #fff;
+    margin-left: -20px;
+    margin-right: 20px;
+    font-size: 12px;
+}
+#stats ul {
+    list-style: none;
+}
 #menu li a {
     text-decoration: none;
     display: block;

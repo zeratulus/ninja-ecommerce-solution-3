@@ -2,19 +2,21 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="submit" form="form-information" formaction="{{ enabled }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-default"><i class="fa fa-play"></i></button>
-		<button type="submit" form="form-information" formaction="{{ disabled }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-default"><i class="fa fa-pause"></i></button>
-		<button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-information').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
+      <div class="tool-card">
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="submit" form="form-information" formaction="{{ enabled }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-default"><i class="fa fa-play"></i></button>
+        <button type="submit" form="form-information" formaction="{{ disabled }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-default"><i class="fa fa-pause"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-information').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
     </div>
   </div>
+
   <div class="container-fluid">
     {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
@@ -26,17 +28,22 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+    <div class="card card-default">
+      <div class="card-header">
+        <h5 class="card-title"><i class="fa fa-list"></i> {{ text_list }}</h5>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-information">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td style="width: 1px;" class="text-center">
+                    <div class="checkbox">
+                      <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="check-all" />
+                      <label for="check-all"></label>
+                    </div>
+                  </td>
                   <td class="text-left">{% if sort == 'id.title' %}
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
@@ -59,11 +66,16 @@
                 {% if informations %}
                 {% for information in informations %}
                 <tr>
-                  <td class="text-center">{% if information.information_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ information.information_id }}" checked="checked" />
-                    {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ information.information_id }}" />
-                    {% endif %}</td>
+                  <td class="text-center">
+                    <div class="checkbox">
+                      {% if information.information_id in selected %}
+                        <input type="checkbox" name="selected[]" value="{{ information.information_id }}" checked="checked" id="row-{{ information.information_id }}" />
+                      {% else %}
+                        <input type="checkbox" name="selected[]" value="{{ information.information_id }}" id="row-{{ information.information_id }}" />
+                      {% endif %}
+                      <label for="row-{{ information.information_id }}"></label>
+                    </div>
+                  </td>
                   <td class="text-left">{{ information.title }}</td>
                   <td class="text-right">{{ information.sort_order }}</td>
 				  <td class="text-right">{{ information.noindex }}</td>
