@@ -70,7 +70,9 @@ body {
     background-image: url(../image/ninja-store-design/ice-mountaine-night-stars.jpg);
     height: 100vh;
 }
-
+.hidden {
+    display: none !important;
+}
 /* Height for devices larger than 576px */
 @media (min-width: 992px) {
     #intro {

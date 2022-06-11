@@ -2,9 +2,7 @@
     <div class="input-group">
 
         <div class="d-flex justify-content-between align-items-center">
-            <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}"
-                   name="query" autocomplete="off"/>
-            <a class="ml-2" data-toggle="dropdown" href="#">
+            <a class="mr-2" data-toggle="dropdown" href="#">
                 <i class="fa fa-search"></i>
                 <span class="caret"></span>
             </a>
@@ -17,6 +15,13 @@
                 <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i
                                 class="fa fa-credit-card"></i><span>{{ text_orders }}</span></a></li>
             </ul>
+
+            <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}"
+                   name="query" autocomplete="off"/>
+
+            <div id="search-loader" class="d-flex justify-content-center align-items-center ml-2">
+                <i class="fa fa-spin fa-circle-o-notch"></i>
+            </div>
         </div>
 
         <input id="oc-search-option" type="hidden" name="search-option" value="catalog"/>
@@ -25,7 +30,9 @@
 <div class="dropdown-menu autocomplete-dropdown" id="oc-search-result">
     <div class="dropdown-item"><i class="fa fa-spin fa-circle-o-notch"></i></div>
 </div>
-<script type="text/javascript">
+<script>
+    $('#search-loader').addClass('hidden');
+
     function setOption(option, text) {
         jQuery('#oc-search-option').val(option);
         jQuery('#oc-search-input').attr('placeholder', text);
@@ -48,6 +55,8 @@
             return false;
         }
 
+        $('#search-loader').removeClass('hidden');
+
         jQuery.ajax({
             type: 'get',
             url: 'index.php?route=search/search/search' + '&user_token={{ user_token }}',
@@ -57,11 +66,12 @@
                 jQuery('#oc-search-result').css('display', 'block');
 
                 if (json['error']) {
-                    jQuery('#oc-search-result').html(json['error'])
+                    jQuery('#oc-search-result').html(json['error']);
                     return;
                 }
 
-                jQuery('#oc-search-result').html(json['result'])
+                jQuery('#oc-search-result').html(json['result']);
+                $('#search-loader').addClass('hidden');
             }
         });
     });
