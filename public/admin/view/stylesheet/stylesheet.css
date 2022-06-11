@@ -124,7 +124,9 @@ body {
 .card {
     margin: 10px;
 }
-
+h5.card-title {
+    margin-bottom: 0;
+}
 .card.tile {
     position: relative;
     padding: 10px 20px;
