@@ -116,7 +116,6 @@ body {
 
 #column-left.active {
     left: 0;
-    background: #fff;
     transition: 0.4s all;
 }
 
@@ -660,14 +659,6 @@ body {
 #column-left {
     z-index: 999;
 }
-#column-left.active {
-    left: 0px;
-}
-/*#column-left.active + #content, #column-left.active + #content + #footer {*/
-/*    left: 0px;*/
-/*    margin-left: 235px;*/
-/*}*/
-
 /* Navigation */
 #navigation {
     text-transform: uppercase;
