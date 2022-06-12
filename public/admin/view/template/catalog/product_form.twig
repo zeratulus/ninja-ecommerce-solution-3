@@ -29,14 +29,14 @@
             <li class="nav-item"><a class="nav-link active" href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-links" data-toggle="tab">{{ tab_links }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-attribute" data-toggle="tab">{{ tab_attribute }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-recurring" data-toggle="tab">{{ tab_recurring }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-special" data-toggle="tab">{{ tab_special }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-reward" data-toggle="tab">{{ tab_reward }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
           <div class="tab-content">
@@ -389,12 +389,35 @@
               </div>
             </div>
             <div class="tab-pane fade" id="tab-links">
-              <div class="form-group">
-                <label class="col-sm-12 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="{{ help_manufacturer }}">{{ entry_manufacturer }}</span></label>
-                <div class="col-sm-12">
-                  <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control" />
-                  <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" />
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-12 control-label" for="select-main_category_id"><span data-toggle="tooltip" title="{{ help_main_category }}">{{ entry_main_category }}</span></label>
+                    <div class="col-sm-12">
+                      <select name="main_category_id" class="selectpicker fw">
+                        <option value="0" selected="selected">{{ text_none }}</option>
+                        {% for category in categories %}
+                          {% if category.category_id == main_category_id %}
+                            <option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
+                          {% else %}
+                            <option value="{{ category.category_id }}">{{ category.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-12 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="{{ help_manufacturer }}">{{ entry_manufacturer }}</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control" />
+                      <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" />
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <div class="form-group">
                 <label class="col-sm-12 control-label" for="input-category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
@@ -407,21 +430,7 @@
                     {% endfor %}</div>
                 </div>
               </div>
-			  <div class="form-group">
-			<label class="col-sm-12 control-label" for="select-main_category_id"><span data-toggle="tooltip" title="{{ help_main_category }}">{{ entry_main_category }}</span></label>
-			<div class="col-sm-12">
-			<select name="main_category_id" class="selectpicker">
-				<option value="0" selected="selected">{{ text_none }}</option>
-				{% for category in categories %}
-				  {% if category.category_id == main_category_id %}
-					<option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
-					{% else %}
-					<option value="{{ category.category_id }}">{{ category.name }}</option>
-				  {% endif %}
-				{% endfor %}
-			</select>
-			</div>
-			</div>
+
               <div class="form-group">
                 <label class="col-sm-12 control-label" for="input-filter"><span data-toggle="tooltip" title="{{ help_filter }}">{{ entry_filter }}</span></label>
                 <div class="col-sm-12">
