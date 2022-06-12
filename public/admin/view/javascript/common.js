@@ -146,6 +146,19 @@ function datepicker(inputSelector) {
 }
 
 $(document).ready(function() {
+	// filter
+	let filterCard = $('[id^="filter"]');
+	filterCard.find('.card-header').append('<a class="btn btn-default" id="btn-filter-collapse"><i class="fa fa-chevron-down"></i></a>');
+	$('#btn-filter-collapse').on('click', () => {
+		filterCard.find('.card-body').toggleClass('collapsed');
+		if (filterCard.find('.card-body').hasClass('collapsed')) {
+			$('#btn-filter-collapse').find('.fa').addClass('fa-chevron-down').removeClass('fa-times');
+		} else {
+			$('#btn-filter-collapse').find('.fa').addClass('fa-times').removeClass('fa-chevron-down');
+		}
+	});
+	$('#btn-filter-collapse').click();
+
 	datepicker('.date input');
 	datepicker('.time input');
 	datepicker('.datetime input');

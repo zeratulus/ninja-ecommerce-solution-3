@@ -143,6 +143,26 @@ body {
 .ticket-comment {
     overflow: hidden;
 }
+[id^="filter"] .card-header {
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    position: relative;
+}
+[id^="filter"] .card-header #btn-filter-collapse {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+}
+.card-body {
+    overflow: hidden;
+    height: auto;
+    transition: 0.4s all;
+}
+.card-body.collapsed {
+    height: 0;
+    transition: 0.4s all;
+}
 #column-left {
     position: fixed;
     left: -300px;
