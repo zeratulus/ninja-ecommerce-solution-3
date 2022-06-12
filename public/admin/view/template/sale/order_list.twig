@@ -9,7 +9,7 @@
           {% endfor %}
         </ol>
 
-        <div class=tool-panel">
+        <div class="tool-panel">
             <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
             <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></button>
             <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></button>
@@ -297,14 +297,6 @@ $('#form-order a:last-child').on('click', function(e) {
 			}
 		});
 	}
-});
-</script>
-<script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
-<script>
-$('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
 });
 </script>
 </div>

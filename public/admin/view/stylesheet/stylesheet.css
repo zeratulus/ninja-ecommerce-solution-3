@@ -114,7 +114,7 @@ body {
 #btn_tools_panel {
     position: fixed;
     right: 10px;
-    top: 80px;
+    top: 70px;
     z-index: 9;
     display: flex;
     justify-content: center;
@@ -124,7 +124,7 @@ body {
     visibility: hidden;
     position: fixed;
     right: 80px;
-    top: 80px;
+    top: 70px;
     z-index: 9;
     opacity: 0;
     transform: rotate(-90deg) translateX(300px);
@@ -132,9 +132,10 @@ body {
     padding: 8px;
     border-radius: 8px;
     width: auto;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
 }
 .tool-panel.floating.active {
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.9);
     opacity: 1;
     visibility: visible;
     transform: rotate(0deg) translateX(0px);
@@ -157,11 +158,19 @@ body {
 .card-body {
     overflow: hidden;
     height: auto;
-    transition: 0.4s all;
+    transition: 0.4s height;
 }
 .card-body.collapsed {
     height: 0;
-    transition: 0.4s all;
+    transition: 0.4s height;
+}
+.input-group .input-group-addon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-group .input-group-addon img {
+    margin-right: 4px;
 }
 #column-left {
     position: fixed;
