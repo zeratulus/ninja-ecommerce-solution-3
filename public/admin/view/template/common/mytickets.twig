@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="card-body small-comment p-2">
-                            <div>{{ comment.getHtml() }}</div>
+                            <div class="ticket-comment">{{ comment.getHtml() }}</div>
                         </div>
                     </div>
                 {% endfor %}
@@ -120,3 +120,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('.ticket-comment').readmore();
+</script>

@@ -140,6 +140,9 @@ body {
     transform: rotate(0deg) translateX(0px);
     transition: 0.4s all;
 }
+.ticket-comment {
+    overflow: hidden;
+}
 #column-left {
     position: fixed;
     left: -300px;
