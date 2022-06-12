@@ -53,33 +53,12 @@ function isEmptyString(str) {
     return str.length > 0 ? false : true;
 }
 function toolsPanelScroll() {
-	let toolsSelector = '.page-header .pull-right';
-    let isMobile = screen.width <= 768;
-    $(toolsSelector).addClass('tools-panel');
-    $(toolsSelector + ' > .btn').addClass('btn-floating circle btn-sm');
-    let pos = $(toolsSelector).position();
-    if (typeof pos !== "undefined" && !isMobile) {
-        //Stick Tool Panel
-        $(toolsSelector).removeClass('mobile');
-        if (window.pageYOffset > pos.top) {
-            $(toolsSelector).addClass('fixed');
-        } else {
-            $(toolsSelector).removeClass('fixed');
-        }
-    } else if(isMobile) {
-        //Mobile Tool Panel
-        let toolPanel = $(toolsSelector).addClass('mobile');
-        let btn = $('#btn_tools_panel');
-        if (toolPanel.find('a, button').length > 0) {
-            if (btn.length <= 0) {
-                let html = '<a id="btn_tools_panel" class="btn btn-floating circle btn-md btn-primary" onclick="switchToolMenu()"><i class="fa fa-eercast"></i></a>';
-                $('body').append(html);
-            }
-        }
-    }
+	let toolsSelector = '.tool-panel';
+    $(toolsSelector).addClass('floating');
+	let btn = $('#btn_tools_panel');
 }
 function switchToolMenu() {
-    $('.tools-panel').toggleClass('visible');
+    $('.tool-panel').toggleClass('active');
 }
 function switchButtonChange(e) {
     let toggle = $(e.target);

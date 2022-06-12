@@ -99,11 +99,47 @@ body {
 .note-sm {
     font-size: 12px !important;
 }
-
+.btn-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0 0 0 0;
+}
+.btn-circle .fa {
+    font-size: 24px;
+}
 #content {
     width: 100%;
 }
-
+#btn_tools_panel {
+    position: fixed;
+    right: 10px;
+    top: 80px;
+    z-index: 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tool-panel.floating {
+    visibility: hidden;
+    position: fixed;
+    right: 80px;
+    top: 80px;
+    z-index: 9;
+    opacity: 0;
+    transform: rotate(-90deg) translateX(300px);
+    transition: 0.4s all;
+    padding: 8px;
+    border-radius: 8px;
+    width: auto;
+}
+.tool-panel.floating.active {
+    background-color: rgba(255,255,255,0.5);
+    opacity: 1;
+    visibility: visible;
+    transform: rotate(0deg) translateX(0px);
+    transition: 0.4s all;
+}
 #column-left {
     position: fixed;
     left: -300px;
