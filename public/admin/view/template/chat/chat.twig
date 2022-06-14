@@ -1,0 +1,48 @@
+{{ header }}{{ column_left }}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12" id="content">
+          <div class="page-header">
+            <div class="container-fluid">
+              <div class="tool-panel">
+                  <a id="button-add" title="{{ button_add }}" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                  <button type="button" id="button-setting" title="{{ button_setting }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-cog"></i></button>
+              </div>
+              <h1>{{ heading_title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% for breadcrumb in breadcrumbs %}
+                            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                        {% endfor %}
+                    </ol>
+                </nav>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Chat</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for chat in chats %}
+                                <div class="fw">
+                                    #{{ chat.chat.id }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-8">
+                </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+</div>
+{{ footer }}

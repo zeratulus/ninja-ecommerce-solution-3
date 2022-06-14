@@ -63,12 +63,12 @@
                 <tr>
                   <td class="text-center">
                     <div class="checkbox">
-                      {% if category.category_id in selected %}
-                        <input type="checkbox" name="selected[]" id="row-{{ category.category_id }}" value="{{ category.category_id }}" checked="checked" />
+                      {% if category.blog_category_id in selected %}
+                        <input type="checkbox" name="selected[]" id="row-{{ category.blog_category_id }}" value="{{ category.blog_category_id }}" checked="checked" />
                       {% else %}
-                        <input type="checkbox" name="selected[]" id="row-{{ category.category_id }}" value="{{ category.category_id }}" />
+                        <input type="checkbox" name="selected[]" id="row-{{ category.blog_category_id }}" value="{{ category.blog_category_id }}" />
                       {% endif %}
-                      <label for="row-{{ category.category_id }}"></label>
+                      <label for="row-{{ category.blog_category_id }}"></label>
                     </div>
                   </td>
 				  {% if category.href %}

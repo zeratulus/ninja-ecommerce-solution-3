@@ -25,6 +25,7 @@ $_['entry_email']           = 'E-Mail *';
 $_['entry_image']           = 'Изображение';
 $_['entry_phone']           = 'Телефон *';
 $_['entry_prefered_language'] = 'Предпочитаемый язык';
+$_['entry_admin_language'] = 'Предпочитаемый язык';
 
 // Error
 $_['error_permission']      = 'У вас недостаточно прав для внесения изменений!';
