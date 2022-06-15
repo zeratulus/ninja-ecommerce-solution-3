@@ -963,7 +963,14 @@ h5.card-title {
         visibility: hidden;
     }
 }
-
+.chat-scrollbar {
+    position: relative;
+    height: 350px;
+    overflow: auto;
+}
+.card-img-35 {
+    width: 35px;
+}
 @media (min-width: 1000px) {
     #btn_gant {
         min-width: 320px !important;

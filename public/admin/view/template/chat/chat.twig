@@ -6,7 +6,7 @@
           <div class="page-header">
             <div class="container-fluid">
               <div class="tool-panel">
-                  <a id="button-add" title="{{ button_add }}" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                  <a id="button-add" title="{{ button_add }}" class="btn btn-success"><i class="fa fa-plus"></i></a>
                   <button type="button" id="button-setting" title="{{ button_setting }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-cog"></i></button>
               </div>
               <h1>{{ heading_title }}</h1>
@@ -28,16 +28,81 @@
                             <h5 class="card-title">Chat</h5>
                         </div>
                         <div class="card-body">
-                            {% for chat in chats %}
-                                <div class="fw">
-                                    #{{ chat.chat.id }}
-                                </div>
-                            {% endfor %}
+                            {% if chats %}
+                                {% for chat in chats %}
+                                    <div class="fw">
+                                        #{{ chat.chat.id }} - {{ chat.chat.title }}
+
+                                        {% for member in chat.members %}
+                                            {% if member.foreign_id != user_id and member.type != user_type %}
+                                                {% if member.type == 'Customer' %}
+                                                    {{ customers[member.foreign_id].customer_id }} {{ customers[member.foreign_id].firstname }} {{ customers[member.foreign_id].lastname }}
+                                                {% else %}
+                                                    <img src="{{ users[member.foreign_id].avatar }}" alt="{{ users[member.foreign_id].firstname }} {{ users[member.foreign_id].lastname }}">
+                                                    {{ users[member.foreign_id].user_id }} {{ users[member.foreign_id].firstname }} {{ users[member.foreign_id].lastname }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {# Last message from chat #}
+                                        {% if chat.members[chat.last_message.chat_member_id].foreign_id == user_id and chat.members[chat.last_message.chat_member_id].type == user_type %}
+                                            You: {{ chat.last_message.message }}
+                                        {% else %}
+                                            {{ chat.last_message.message }}
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="text-center fw">text_empty</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="col-sm-12 col-md-8">
+
+                    <div class="container">
+
+                        <!-- Section: Block Content -->
+                        <section>
+
+                            <div class="card">
+                                <div class="card-body chat-scrollbar">
+
+                                    {# Your message #}
+                                    <div class="media mt-3">
+                                        <img class="avatar rounded-circle card-img-35 z-depth-1 d-flex mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg" alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <p class="mt-0 font-weight-bold small mb-1">Johny Danish<span class="text-muted float-right small mt-3p">12 Nov 6:17 PM</span></p>
+                                            <p class="mb-0 font-weight-light small grey lighten-2 p-2 rounded">Working with MDB Admin on a great new app! Wanna join?</p>
+                                        </div>
+                                    </div>
+
+                                    {# Another users messages #}
+                                    <div class="media mt-3">
+                                        <div class="media-body">
+                                            <p class="mt-0 font-weight-bold small mb-1"><span class="text-muted small mt-3p">12 Nov 6:23 PM</span><span class="float-right">Alice Cooper</span></p>
+                                            <p class="mb-0 font-weight-light small primary-color text-white p-2 rounded">I would love to.</p>
+                                        </div>
+                                        <img class="avatar rounded-circle card-img-35 z-depth-1 d-flex ml-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" alt="Generic placeholder image">
+                                    </div>
+                                </div>
+
+                                <div class="card-footer white py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="form-group mb-0 col-sm-10">
+                                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="2" placeholder="Type message..."></textarea>
+                                        </div>
+                                        <button class="btn btn-primary mb-0 mr-0">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                        <!-- Section: Block Content -->
+
+                    </div>
+
                 </div>
             </div>
           </div>

@@ -84,7 +84,7 @@ class ModelChatChat extends Model
     }
 
     function getChatLastMessagesList($ids) {
-        $sql = "SELECT * FROM ".DB_PREFIX."chat_messages WHERE chat_id IN (" . $this->getDb()->arrayToInClause($ids) . ") AND MAX(date_added)";
+        $sql = "SELECT DISTINCT id, chat_id, message, chat_member_id, MAX(date_added) FROM ".DB_PREFIX."chat_messages WHERE chat_id IN (" . $this->getDb()->arrayToInClause($ids) . ") GROUP BY chat_id";
         $results = $this->getDb()->query($sql);
         return $results->rows;
     }
