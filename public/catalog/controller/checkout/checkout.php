@@ -10,6 +10,8 @@ class ControllerCheckoutCheckout extends \Ninja\NinjaController
 
     public function index()
     {
+        $this->getDocument()->addScript('catalog/view/javascript/inpost.js');
+
         // Validate cart has products and has stock.
         if ((!$this->cart->hasProducts() && empty($this->getSession()->data['vouchers'])) || (!$this->cart->hasStock() && !$this->getConfig()->get('config_stock_checkout'))) {
             $this->getResponse()->redirect($this->url->link('checkout/cart'));
