@@ -211,9 +211,26 @@ class ControllerExtensionShippingInpost extends Controller {
         } elseif ( filemtime( $inpost_file ) > (time() + (3600 * 24)) ) {
             $this->copy_file( $inpost_url , $inpost_file);
         } else {
-            die(json_encode(['success' => true, 'msg' => '<i class="fa fa-info fa-fw"></i> Lista paczkomatów jest aktualna !']));
+            die(json_encode(['success' => true, 'msg' => '<i class="fa fa-info fa-fw"></i> The list of parcel machines is up to date!']));
         }
 
+        $this->processXml($inpost_file);
+    }
+
+    public function manual_refresh()
+    {
+        ini_set('display_errors' , 1);
+        error_reporting(E_ALL);
+        header('Content-type: application/json');
+
+        $this->load->language('extension/shipping/inpost');
+
+        $inpost_file = DIR_STORAGE . 'inpost/inpost.xml';
+
+        $this->processXml($inpost_file);
+    }
+
+    private function processXml($inpost_file) {
         $sql_columns = array('name','type','postcode','province','street','buildingnumber','town','latitude','longitude','paymentavailable','status','locationdescription','operatinghours','paymentpointdescr','partnerid','paymenttype');
 
         $this->db->query("DELETE FROM `" . DB_PREFIX . "shipping_inpost`");
@@ -227,17 +244,17 @@ class ControllerExtensionShippingInpost extends Controller {
             try {
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "shipping_inpost` VALUES(" . implode("," , $query) . ")");
             } catch( Error $e ) {
-                die(json_encode(['error' => true, 'msg' => '<i class="fa fa-times fa-fw"></i> Wystąpił błąd w bazie danych: ' . $this->db->error]));
+                die(json_encode(['error' => true, 'msg' => '<i class="fa fa-times fa-fw"></i> An error has occurred in the database: ' . $this->db->error]));
             }
 
             if( !empty( $this->db->errno )) {
-                die(json_encode(['error' => true, 'msg' => '<i class="fa fa-times fa-fw"></i> Wystąpił błąd w bazie danych: ' . $this->db->error]));
+                die(json_encode(['error' => true, 'msg' => '<i class="fa fa-times fa-fw"></i> An error has occurred in the database: ' . $this->db->error]));
             }
 
             unset($query);
         }
 
-        die(json_encode(['success' => true, 'msg' => '<i class="fa fa-check fa-fw"></i> Import zakończony pomyślnie. Za chwilę zostanie załadowana lista paczkomatów.']));
+        die(json_encode(['success' => true, 'msg' => '<i class="fa fa-check fa-fw"></i> Import completed successfully. The list of parcel machines will be loaded in a moment.']));
     }
 
     protected function copy_file($src, $dst)

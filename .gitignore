@@ -3,6 +3,8 @@
 .git
 qodana
 
+dev
+
 #exclude upload\download and storage files
 storage/cache/
 storage/upload/
