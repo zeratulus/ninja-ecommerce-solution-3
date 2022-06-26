@@ -144,6 +144,7 @@ body {
 .ticket-comment {
     overflow: hidden;
 }
+
 [id^="filter"] .card-header {
     /*display: flex;*/
     /*justify-content: space-between;*/
@@ -462,6 +463,10 @@ h5.card-title {
 
 .table-tickets tbody tr:hover td:nth-child(3) a {
     color: #000;
+}
+
+.table td {
+    vertical-align: middle;
 }
 
 .modal-fluid {
